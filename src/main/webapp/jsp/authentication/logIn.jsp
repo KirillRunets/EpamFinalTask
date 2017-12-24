@@ -25,8 +25,9 @@
     </div>
 </nav>
 <div class="form">
-    <form id="signInForm" action="" method="post">
+    <br id="signInForm" action="" method="post">
         <h1><fmt:message key="label.labelForm" bundle="${rb}" /></h1>
+        <br>${errorLoginPasswordMessage}</br>
         <p id="hiddenError" class="hidden"><fmt:message key="label.error" bundle="${rb}" /></p>
         <input name="login" id="login" type="text" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
         <input name="password" id="password" type="password" title=<fmt:message key="label.inputPassword" bundle="${rb}" />" required placeholder="<fmt:message key="label.password" bundle="${rb}" />">
