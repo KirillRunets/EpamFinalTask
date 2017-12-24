@@ -31,7 +31,7 @@
         <input name="login" id="login" type="text" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
         <input name="password" id="password" type="password" title=<fmt:message key="label.inputPassword" bundle="${rb}" />" required placeholder="<fmt:message key="label.password" bundle="${rb}" />">
         <a href=""><fmt:message key="label.signUp" bundle="${rb}" /></a>
-        <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}" />"</button>
+        <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
     </form>
 </div>
 <footer class="end_footer footer navbar-inverse">
