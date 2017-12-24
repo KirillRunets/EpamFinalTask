@@ -1,0 +1,249 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+footer, header, section, aside{
+    display: flex;
+}
+
+body{
+    font-family: "Raleway", sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    min-width: 320px;
+    position: relative;
+    line-height: 1.42857;
+    -webkit-font-smoothing: antialised;
+    background: #c1bdba;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+table tbody tr:first-child td {
+    color: red;
+    /*display: none;*/
+}
+
+.button-small{
+    margin-top: 3px;
+    float: right;
+    line-height: 40px;
+    margin-right: 10px;
+    text-decoration: none;
+    border: 0;
+    outline: none;
+    border-radius: 3px;
+    padding: 0 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #1ab188;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
+
+}
+
+.button-small a{
+    color: #fff;
+}
+
+.button-small:hover a{
+    color: #fff;
+}
+
+.button-small:hover{
+    background: #179b77;
+    color: #000;
+    text-decoration: none;
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+    margin: 5px auto;
+}
+
+
+.description{
+    background-color: #d3d3d3;
+}
+
+.main-p{
+    color: #fffa4c;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size:22px;
+    text-align: center;
+}
+
+.text-column{
+    border:1px solid#fff;
+}
+
+.carousel-wrapper{
+    width: 100%;
+}
+
+.wrapper{
+    background: none;
+    width: auto;
+    max-width: 1248px;
+    margin: 100px;
+    padding: 0 24px;
+    position: relative;
+}
+
+.contact-section{
+    margin: 15px;
+}
+
+.end_footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    float: none;
+    background-color: #000;
+    line-height: 1.4;
+    color: #fff;
+}
+
+.footer-description {
+    float: left;
+    vertical-align: middle;
+    margin-top: 15px;
+}
+
+.icons {
+    float: right;
+}
+
+.end_footer a{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.section-title {
+    text-align: center;
+    font-family: 'oswald-bold',helvetica,sans-serif,arial;
+    text-transform: uppercase;
+    font-size: 1.875rem;
+    line-height: 2.375rem;
+
+}
+
+.section-text {
+    letter-spacing: .005em;
+    font-size: 14px;
+    max-width: 100%;
+    margin: auto;
+}
+
+.section-text p{
+     margin-bottom: 2.28571rem
+ }
+
+.section-text p:first-letter{
+    color: #179b77;
+    margin-bottom: 2.28571rem
+}
+
+
+.img-content{
+    margin: 0 auto;
+    width: 460px;
+    height: 310px;
+    padding: 5px;
+    border: 1px solid grey;
+}
+
+#contact-img-1{
+    width: 450px;
+    height: 300px;
+}
+
+
+.column {
+   /* float: left;*/
+    width: 80%;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 650px) {
+    .column {
+        width: 100%;
+        display: block;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 0 16px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.title {
+    color: grey;
+}
+
+/*#logout-btn{
+    display: none;
+}*/
+
+.my-section{
+    margin: 50px auto;
+}
+
+p[id="email"]{
+    color: #179b77;
+}
+
+.name-style{
+    text-align: center;
+    font-weight: 400;
+    margin: 20px 0;
+    letter-spacing: .1em;
+}
+
+.justify-text{
+    text-align: justify;
+    text-justify: inter-word;
+    margin: 0 50px;
+    background-color: #a6e1ec;
+    color: #222;
+}
+
+.li-c{
+    text-decoration: none;
+    font-family: 'Gotham SSm A','Gotham SSm B',HelveticaNeue,'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: #333D47;
+}
+
+.h2-title{
+    font-family: 'Gotham SSm A','Gotham SSm B',HelveticaNeue,'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
+    font-size: 3rem;
+    line-height: 1.5;
+    color: #333D47;
+}
+
