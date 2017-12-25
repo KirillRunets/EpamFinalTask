@@ -1,12 +1,9 @@
-package validation;
+package application.validation;
 
-import exception.AuthenticationException;
+import infrastructure.exception.AuthenticationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static validation.constant.ValidationConstant.EMAIL_PATTERN;
-import static validation.constant.ValidationConstant.PASSWORD_PATTERN;
 
 public class AuthenticationValidator {
     private static AuthenticationValidator instance;
@@ -30,10 +27,7 @@ public class AuthenticationValidator {
         return m.matches();
     }
 
-    public boolean isLogInData(String email, String password) throws AuthenticationException {
-        if (isStringEqualsPattern(email, EMAIL_PATTERN) || isStringEqualsPattern(password, PASSWORD_PATTERN)){
-            return false;
-        }
-        return true;
+    public boolean isValidateLogInData(String email, String password) throws AuthenticationException {
+        return email != null && !email.isEmpty() || password != null && !password.isEmpty();
     }
 }

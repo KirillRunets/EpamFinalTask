@@ -1,4 +1,4 @@
-package exception;
+package infrastructure.exception;
 
 public class AuthenticationException extends Exception {
     public AuthenticationException() {

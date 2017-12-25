@@ -1,14 +1,14 @@
-package command;
+package presentation.command;
 
-import exception.AuthenticationException;
+import infrastructure.exception.AuthenticationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import service.UserService;
-import validation.AuthenticationValidator;
+import application.service.UserService;
+import application.validation.AuthenticationValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static util.ConfigurationManager.getBundle;
+import static infrastructure.util.ConfigurationManager.getBundle;
 
 public class LoginCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoginCommand.class);
@@ -28,15 +28,15 @@ public class LoginCommand implements Command {
         String emailValue = req.getParameter(PARAM_NAME_EMAIL);
         String passwordValue = req.getParameter(PARAM_NAME_PASSWORD);
         try {
-            if (AuthenticationValidator.getInstance().isLogInData(emailValue, passwordValue)){
+            if (AuthenticationValidator.getInstance().isValidateLogInData(emailValue, passwordValue)){
                 if (userService.checkUser()){
                     page = getBundle(CONFIG_INDEX_KEY);
                 } else {
-                    req.setAttribute(ERROR_LABEL, "");
+                    req.setAttribute(ERROR_LABEL, "");//+
                     page = getBundle(CONFIG_LOGIN_KEY);
                 }
             } else {
-                req.setAttribute(ERROR_LABEL, "");
+                req.setAttribute(ERROR_LABEL, "");//+
                 page = getBundle(CONFIG_LOGIN_KEY);
             }
         } catch (AuthenticationException e) {

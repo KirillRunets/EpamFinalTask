@@ -1,4 +1,4 @@
-package command;
+package presentation.command;
 
 public enum CommandType {
     LOGIN, SIGNUP, LOGOUT;

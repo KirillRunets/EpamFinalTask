@@ -1,4 +1,4 @@
-package command;
+package presentation.command;
 
 import javax.servlet.http.HttpServletRequest;
 

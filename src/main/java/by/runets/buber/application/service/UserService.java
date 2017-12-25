@@ -1,4 +1,4 @@
-package service;
+package application.service;
 
 public class UserService {
     public boolean checkUser(){
