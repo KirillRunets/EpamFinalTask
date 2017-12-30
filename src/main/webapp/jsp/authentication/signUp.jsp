@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="lang" scope="session" />
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
 <fmt:setBundle basename="property/authentication/signup/signUp" var="rb" />
 <%@ page isELIgnored="false"%>
 <html>
@@ -23,6 +25,13 @@
             <li ><a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="label.homePage"  bundle="${rb}"/></a></li>
             <li class="active"> <a href="#"><fmt:message key="label.current"  bundle="${rb}"/></a></li>
         </ul>
+        <div class="top-lang-list">
+            <select id="mySelect">
+                <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
+                <option value="be" ${language == 'be' ? 'selected' : ''}>Беларуская мова</option>
+                <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+            </select>
+        </div>
     </div>
 </nav>
 <div class="form">

@@ -6,6 +6,9 @@ public class Ban extends Entity {
     private Optional<String> banType;
     private Optional<String> banDescription;
 
+    public Ban() {
+    }
+
     public Ban(int id) {
         super(id);
     }

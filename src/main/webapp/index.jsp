@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="lang" scope="session" />
-<fmt:setBundle basename="property/authentication/signup/signUp" var="rb" />
-<%@ page isELIgnored="false"%><html>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="property/authentication/login/logIn" var="rb" />
+<%@ page isELIgnored="false"%>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Final task</title>
@@ -21,11 +23,18 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
         </ul>
+        <div class="top-lang-list">
+            <select id="mySelect">
+                <option value="ru" ${sessionScope.locale == 'ru_RU' ? 'selected' : ''}>Русский</option>
+                <option value="be" ${sessionScope.locale == 'be_BY' ? 'selected' : ''}>Беларуская мова</option>
+                <option value="en" ${sessionScope.locale == 'en_US' ? 'selected' : ''}>English</option>
+            </select>
+        </div>
         <div class="top-button">
             <button class="button-small" id="aut-btn" onClick="window.location='jsp/authentication/logIn.jsp'" >Sign in</button>
-    </div>
-</nav>
+        </div>
 
+</nav>
 <div class="carousel-wrapper" id="hide_1">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">

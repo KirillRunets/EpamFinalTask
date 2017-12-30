@@ -1,12 +1,16 @@
 package by.runets.buber.infrastructure.connection;
 
+import by.runets.buber.infrastructure.constant.PropertyKey;
+import by.runets.buber.infrastructure.constant.PropertyPath;
+import by.runets.buber.infrastructure.exception.ConnectionException;
+import by.runets.buber.infrastructure.exception.IOFileException;
+import by.runets.buber.infrastructure.util.PropertyFileManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.MissingResourceException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,43 +22,38 @@ public class ConnectionPool {
     private static ReentrantLock lock = new ReentrantLock();
     private static ConnectionPool instance;
     private BlockingQueue<ProxyConnection> connectionBlockingQueue;
+    private int poolSize;
 
-    public ConnectionPool() throws SQLException {
-        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+    private ConnectionPool(){
         initialize();
     }
 
     private void initialize() {
         try {
-            DBManager dbResourceManager = DBManager.getInstance();
+            PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
 
-            dbResourceManager.initialize();
+            String url = propertyFileManager.getValue(PropertyKey.DB_URL);
+            String username = propertyFileManager.getValue(PropertyKey.DB_USER);
+            String password = propertyFileManager.getValue(PropertyKey.DB_PASSWORD);
 
-            String url = dbResourceManager.getValue(DBSettings.DB_URL);
-            String username = dbResourceManager.getValue(DBSettings.DB_USER);
-            String password = dbResourceManager.getValue(DBSettings.DB_PASSWORD);
-
-            int poolSize = Integer.parseInt(dbResourceManager.getValue(DBSettings.DB_POOL_SIZE));
-
+            poolSize= Integer.parseInt(propertyFileManager.getValue(PropertyKey.DB_POOL_SIZE));
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             connectionBlockingQueue = new ArrayBlockingQueue<>(poolSize);
-            connectionBlockingQueue.forEach((i -> {
-                try {
-                    Connection connection = (ProxyConnection) DriverManager.getConnection(url, username, password);
-                    ProxyConnection proxyConnection = new ProxyConnection(connection);
-                    connectionBlockingQueue.add(proxyConnection);
-                } catch (SQLException e) {
-                    LOGGER.error("Create database connection error", e);
-                }
-            }));
 
-        } catch (MissingResourceException e) {
-            LOGGER.fatal("Database connection error");
-            throw new RuntimeException("Database connection error", e);
+            for (int i = 0; i < poolSize; i++){
+                Connection connection = DriverManager.getConnection(url, username, password);
+                ProxyConnection proxyConnection = new ProxyConnection(connection);
+                connectionBlockingQueue.put(proxyConnection);
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal("Driver connection error");
+            throw new RuntimeException("Driver connection error", e);
+        } catch (IOFileException | InterruptedException e) {
+            LOGGER.error(e);
         }
-
     }
 
-    public static ConnectionPool getInstance() throws SQLException {
+    public static ConnectionPool getInstance(){
         if (!instanceCreated.get()) {
             lock.lock();
             try {
@@ -69,23 +68,41 @@ public class ConnectionPool {
         return instance;
     }
 
-    public ProxyConnection getConnection() {
+    public ProxyConnection getConnection()  {
         ProxyConnection connection = null;
         try {
-            connection = connectionBlockingQueue.take();
+            if (!connectionBlockingQueue.isEmpty()){
+                connection = connectionBlockingQueue.take();
+            }
         } catch (InterruptedException e) {
             LOGGER.error(e);
         }
         return connection;
     }
 
-    public void releaseConnection(ProxyConnection connection) {
-        connectionBlockingQueue.offer(connection);
+    public void releaseConnection(ProxyConnection connection) throws ConnectionException {
+        try {
+            if (connectionBlockingQueue.size() < poolSize){
+                connectionBlockingQueue.put(connection);
+            } else {
+                throw new ConnectionException("Connection pool is already filled");
+            }
+        } catch (InterruptedException e) {
+            throw new ConnectionException("Release connection to queue" + e);
+        }
     }
 
-    public void closePool() throws SQLException {
+    public void closePool() throws ConnectionException {
         for (ProxyConnection connection : connectionBlockingQueue) {
-            connection.closeConnection();
+            try {
+                connection.closeConnection();
+            } catch (SQLException e) {
+                throw new ConnectionException("Close pool exception" + e);
+            }
         }
+    }
+
+    public int getPoolSize() {
+        return poolSize;
     }
 }

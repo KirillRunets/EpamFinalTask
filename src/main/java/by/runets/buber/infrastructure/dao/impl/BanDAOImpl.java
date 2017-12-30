@@ -4,7 +4,8 @@ import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.dao.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 
 import java.sql.PreparedStatement;
@@ -15,6 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
+    private static BanDAOImpl instance;
+
+    private BanDAOImpl(){}
+
+    public static BanDAOImpl getInstance(){
+        if (instance == null){
+            instance = new BanDAOImpl();
+        }
+        return instance;
+    }
+
     @Override
     public List<Ban> findAll() throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
@@ -30,7 +42,11 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             throw new DAOException("Selection bans exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return bans;
     }
@@ -51,7 +67,11 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             throw new DAOException("Find ban exception: " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return ban;
     }
@@ -68,7 +88,11 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             throw new DAOException("Delete ban exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -85,7 +109,11 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             throw new DAOException("Insertion exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -103,7 +131,11 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             throw new DAOException("Insertion exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 

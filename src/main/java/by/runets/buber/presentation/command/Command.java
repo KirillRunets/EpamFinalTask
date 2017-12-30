@@ -1,4 +1,4 @@
-package presentation.command;
+package by.runets.buber.presentation.command;
 
 import javax.servlet.http.HttpServletRequest;
 

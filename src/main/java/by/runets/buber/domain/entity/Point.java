@@ -1,14 +1,13 @@
 package by.runets.buber.domain.entity;
 
-public class Point extends Entity {
+public class Point {
     private Double x;
     private Double y;
 
     public Point() {
     }
 
-    public Point(int id, Double x, Double y) {
-        super(id);
+    public Point(Double x, Double y) {
         this.x = x;
         this.y = y;
     }

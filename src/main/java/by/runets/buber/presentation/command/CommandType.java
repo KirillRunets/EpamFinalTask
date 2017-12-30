@@ -1,7 +1,13 @@
-package presentation.command;
+package by.runets.buber.presentation.command;
+
+import by.runets.buber.application.service.user.LoginUserService;
+import by.runets.buber.presentation.command.impl.LoginCommand;
 
 public enum CommandType {
-    LOGIN, SIGNUP, LOGOUT;
+    LOGIN(new LoginCommand(new LoginUserService())),
+    SIGNUP,
+    LOGOUT;
+
     private Command command;
 
     CommandType(Command command) {
@@ -9,7 +15,6 @@ public enum CommandType {
     }
 
     CommandType() {
-
     }
 
     public Command getCommand() {

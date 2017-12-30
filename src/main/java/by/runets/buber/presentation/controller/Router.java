@@ -1,4 +1,4 @@
-package presentation.controller;
+package by.runets.buber.presentation.controller;
 
 public class Router {
     public enum RouteType {

@@ -1,11 +1,12 @@
 package by.runets.buber.domain.entity;
 
+import java.util.Date;
 import java.util.Optional;
 
 public class Car extends Entity {
     private Optional<String> mark = Optional.empty();;
     private Optional<String> model;
-    private Optional<String> releaseDate;
+    private Optional<Date> releaseDate;
     private Optional<String> licensePlate;
     private Optional<User> carOwner;
     private Optional<Point> currentLocation;
@@ -13,7 +14,7 @@ public class Car extends Entity {
     public Car() {
     }
 
-    public Car(int id, Optional<String> mark, Optional<String> model, Optional<String> releaseDate, Optional<String> licensePlate, Optional<User> carOwner, Optional<Point> currentLocation) {
+    public Car(int id, Optional<String> mark, Optional<String> model, Optional<Date> releaseDate, Optional<String> licensePlate, Optional<User> carOwner, Optional<Point> currentLocation) {
         super(id);
         this.mark = mark;
         this.model = model;
@@ -35,10 +36,10 @@ public class Car extends Entity {
     public void setModel(Optional<String> model) {
         this.model = model;
     }
-    public Optional<String> getReleaseDate() {
+    public Optional<Date> getReleaseDate() {
         return releaseDate;
     }
-    public void setReleaseDate(Optional<String> releaseDate) {
+    public void setReleaseDate(Optional<Date> releaseDate) {
         this.releaseDate = releaseDate;
     }
     public Optional<String> getLicensePlate() {

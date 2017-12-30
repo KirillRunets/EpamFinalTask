@@ -49,12 +49,12 @@ $.extend( $.fn, {
 				// submits later.
 				validator.submitButton = event.currentTarget;
 
-				// Allow suppressing validation by adding a cancel class to the submit button
+				// Allow suppressing by.runets.buber.application.validation by adding a cancel class to the submit button
 				if ( $( this ).hasClass( "cancel" ) ) {
 					validator.cancelSubmit = true;
 				}
 
-				// Allow suppressing validation by adding the html5 formnovalidate attribute to the submit button
+				// Allow suppressing by.runets.buber.application.validation by adding the html5 formnovalidate attribute to the submit button
 				if ( $( this ).attr( "formnovalidate" ) !== undefined ) {
 					validator.cancelSubmit = true;
 				}
@@ -813,7 +813,7 @@ $.extend( $.validator, {
 			return true;
 		},
 
-		// Return the custom message for the given element and validation method
+		// Return the custom message for the given element and by.runets.buber.application.validation method
 		// specified in the element's HTML5 data attribute
 		// return the generic message if present and no method specific message is present
 		customDataMessage: function( element, method ) {
@@ -821,7 +821,7 @@ $.extend( $.validator, {
 				method.substring( 1 ).toLowerCase() ) || $( element ).data( "msg" );
 		},
 
-		// Return the custom message for the given element name and validation method
+		// Return the custom message for the given element name and by.runets.buber.application.validation method
 		customMessage: function( name, method ) {
 			var m = this.settings.messages[ name ];
 			return m && ( m.constructor === String ? m : m[ method ] );
@@ -1380,7 +1380,7 @@ $.extend( $.validator, {
 			// From https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
 			// Retrieved 2014-01-14
 			// If you have a problem with this implementation, report a bug against the above spec
-			// Or use custom methods to implement your own email validation
+			// Or use custom methods to implement your own email by.runets.buber.application.validation
 			return this.optional( element ) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test( value );
 		},
 

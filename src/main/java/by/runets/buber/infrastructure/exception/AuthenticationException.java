@@ -1,4 +1,4 @@
-package infrastructure.exception;
+package by.runets.buber.infrastructure.exception;
 
 public class AuthenticationException extends Exception {
     public AuthenticationException() {

@@ -6,6 +6,9 @@ public class Bonus extends Entity {
     private Optional<String> bonusType;
     private Optional<String> bonusDescription;
 
+    public Bonus() {
+    }
+
     public Bonus(int id) {
         super(id);
     }

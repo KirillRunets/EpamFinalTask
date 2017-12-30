@@ -3,21 +3,21 @@ package by.runets.buber.domain.entity;
 import java.util.Optional;
 
 public class Role extends Entity {
-    private Optional<String> roleName;
+    private String roleName;
 
     public Role(int id) {
         super(id);
     }
 
-    public Role(int id, Optional<String> roleName) {
+    public Role(int id, String roleName) {
         super(id);
         this.roleName = roleName;
     }
 
-    public Optional<String> getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
-    public void setRoleName(Optional<String> roleName) {
+    public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
 
@@ -41,6 +41,8 @@ public class Role extends Entity {
 
     @Override
     public String toString() {
-        return "roleName: " + roleName;
+        return "Role{" +
+                "roleName='" + roleName + '\'' +
+                '}';
     }
 }

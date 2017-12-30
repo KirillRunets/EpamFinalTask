@@ -1,21 +1,25 @@
 package by.runets.buber.infrastructure.connection;
 
+import by.runets.buber.infrastructure.exception.ConnectionException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class ProxyConnection implements Connection{
+    private final static Logger LOGGER = LogManager.getLogger(ProxyConnection.class);
     private Connection connection;
 
-    ProxyConnection(Connection connection) {
+    public ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
     void closeConnection() throws SQLException {
         connection.close();
     }
-
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -59,7 +63,11 @@ public class ProxyConnection implements Connection{
 
     @Override
     public void close() throws SQLException {
-        ConnectionPool.getInstance().releaseConnection(this);
+        try {
+            ConnectionPool.getInstance().releaseConnection(this);
+        } catch (ConnectionException e) {
+            LOGGER.error(e);
+        }
     }
 
     @Override

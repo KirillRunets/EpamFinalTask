@@ -1,4 +1,6 @@
-package presentation.command;
+package by.runets.buber.presentation.command.impl;
+
+import by.runets.buber.presentation.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 

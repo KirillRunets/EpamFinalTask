@@ -1,14 +1,12 @@
 package by.runets.buber.infrastructure.dao.impl;
 
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.dao.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
+    private static BonusDAOImpl instance;
+
+    private BonusDAOImpl(){}
+
+    public static BonusDAOImpl getInstance(){
+        if (instance == null){
+            instance = new BonusDAOImpl();
+        }
+        return instance;
+    }
     @Override
     public List<Bonus> findAll() throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
@@ -33,7 +41,11 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             throw new DAOException("Selection bonuses exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return bonuses;
     }
@@ -56,7 +68,11 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             throw new DAOException("Find bonus exception: " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return bonus;
     }
@@ -73,7 +89,11 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             throw new DAOException("Delete bonus exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -90,7 +110,11 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             throw new DAOException("Insertion exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -108,7 +132,11 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             throw new DAOException("Update exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 

@@ -1,6 +1,6 @@
-package application.validation;
+package by.runets.buber.application.validation;
 
-import infrastructure.exception.AuthenticationException;
+import by.runets.buber.infrastructure.exception.AuthenticationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +27,7 @@ public class AuthenticationValidator {
         return m.matches();
     }
 
-    public boolean isValidateLogInData(String email, String password) throws AuthenticationException {
+    public boolean isValidateLogInData(String email, String password) {
         return email != null && !email.isEmpty() || password != null && !password.isEmpty();
     }
 }

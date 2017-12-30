@@ -6,8 +6,9 @@ import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.dao.constant.RequestConstant;
-import by.runets.buber.application.parser.LocationParser;
+import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.dao.parser.LocationParser;
+import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 
 import java.sql.Date;
@@ -19,6 +20,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class CarDAOImpl implements AbstractDAO<Integer, Car> {
+    private static CarDAOImpl instance;
+
+    private CarDAOImpl(){}
+
+    public static CarDAOImpl getInstance(){
+        if (instance == null){
+            instance = new CarDAOImpl();
+        }
+        return instance;
+    }
     @Override
     public List<Car> findAll() throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
@@ -34,7 +45,11 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             throw new DAOException("Selection cars exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return cars;
     }
@@ -55,7 +70,11 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             throw new DAOException("Find car exception: " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
         return car;
     }
@@ -72,7 +91,11 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             throw new DAOException("Delete car exception " + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -93,7 +116,11 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             throw new DAOException("Insertion exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
@@ -115,7 +142,11 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             throw new DAOException("Insertion exception" + e);
         } finally {
             close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
         }
     }
 
