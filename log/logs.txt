@@ -64,3 +64,5 @@
 14:04:55 DEBUG [main] util.PropertyFileManager - null
 14:19:47 DEBUG [main] util.PropertyFileManager - property/config/config.properties
 14:19:47 DEBUG [main] util.PropertyFileManager - java.io.BufferedInputStream@222114ba
+21:24:11 DEBUG [main] user.CreateUserService - 2
+21:25:27 DEBUG [main] user.CreateUserService - 2

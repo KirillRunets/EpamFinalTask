@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class TestPropertyFileManagerTest {
     @Test
     public void testGetProperty() throws IOFileException {
-        PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
+        PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_PROPERTIES_FILE);
         String url = "jdbc:mysql://localhost:3306/buber_db?autoReconnect=true&useSSL=false";
         String login = "root";
         String password = "root";

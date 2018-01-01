@@ -4,7 +4,7 @@ import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 
@@ -33,7 +33,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         PreparedStatement preparedStatement = null;
         List<Ban> bans = new ArrayList<>();
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_ALL_BANS);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_BANS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 bans.add(getBanFromResultSet(resultSet));
@@ -57,7 +57,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         PreparedStatement preparedStatement = null;
         Ban ban = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_BAN_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_BAN_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -81,7 +81,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.DELETE_BAN_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_BAN_BY_ID);
             preparedStatement.setInt(1, ban.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -97,14 +97,16 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
     }
 
     @Override
-    public void create(Ban ban) throws DAOException {
+    public boolean create(Ban ban) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.INSERT_INTO_BAN);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BAN);
             preparedStatement.setString(1, String.valueOf(ban.getBanType()));
             preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
             preparedStatement.executeUpdate();
+            state = true;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
@@ -115,6 +117,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
                 LOGGER.error(e);
             }
         }
+        return state;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.UPDATE_BAN_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_BAN_BY_ID);
             preparedStatement.setString(1, String.valueOf(ban.getBanType()));
             preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
             preparedStatement.setInt(7, ban.getId());

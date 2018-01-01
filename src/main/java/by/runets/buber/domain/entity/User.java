@@ -40,6 +40,14 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public User(String email, String password, String firstName, String secondName, Role role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }

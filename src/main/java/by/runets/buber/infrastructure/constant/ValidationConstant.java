@@ -1,4 +1,4 @@
-package by.runets.buber.application.validation.constant;
+package by.runets.buber.infrastructure.constant;
 
 public class ValidationConstant {
     public final static String EMAIL_PATTERN = "";

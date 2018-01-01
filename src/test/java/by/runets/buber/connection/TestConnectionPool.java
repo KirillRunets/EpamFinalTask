@@ -25,8 +25,7 @@ public class TestConnectionPool {
     /*This test should throw ConnectionException*/
     @Test
     public void testReleaseConnection() throws ConnectionException, IOFileException {
-        PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
-
+        PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_PROPERTIES_FILE);
 
         int actual = Integer.parseInt(propertyFileManager.getValue(PropertyKey.DB_POOL_SIZE));
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();

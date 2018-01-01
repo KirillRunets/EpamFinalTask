@@ -6,7 +6,7 @@ import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.dao.parser.LocationParser;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
@@ -37,7 +37,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         PreparedStatement preparedStatement = null;
         List<Order> orders = new ArrayList<>();
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_ALL_ORDERS);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_ORDERS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 orders.add(getOrderFromResultSet(resultSet));
@@ -61,7 +61,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         PreparedStatement preparedStatement = null;
         Order order = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_ORDER_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -85,7 +85,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.DELETE_ORDER_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_ORDER_BY_ID);
             preparedStatement.setInt(1, order.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -101,11 +101,12 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
     }
 
     @Override
-    public void create(Order order) throws DAOException {
+    public boolean create(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.INSERT_INTO_ORDER);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER);
             preparedStatement.setDouble(1, order.getDistance());
             preparedStatement.setDouble(2, order.getTripCost());
             preparedStatement.setString(3, order.getStartPoint().toString());
@@ -114,6 +115,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
             preparedStatement.setInt(6, order.getDriver().get().getId());
             preparedStatement.setInt(7, order.getPassenger().get().getId());
             preparedStatement.executeUpdate();
+            state = true;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
@@ -124,6 +126,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
                 LOGGER.error(e);
             }
         }
+        return state;
     }
 
     @Override
@@ -131,7 +134,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.UPDATE_ORDER_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_ORDER_BY_ID);
             preparedStatement.setDouble(1, order.getDistance());
             preparedStatement.setDouble(2, order.getTripCost());
             preparedStatement.setString(3, order.getStartPoint().toString());

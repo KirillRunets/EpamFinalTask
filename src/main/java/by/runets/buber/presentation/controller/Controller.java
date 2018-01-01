@@ -1,7 +1,9 @@
 package by.runets.buber.presentation.controller;
 
+import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.PropertyPath;
 import by.runets.buber.infrastructure.constant.PropertyKey;
+import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.exception.IOFileException;
 import by.runets.buber.infrastructure.util.PropertyFileManager;
 import by.runets.buber.presentation.command.ActionFactory;
@@ -18,10 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
-@WebServlet("/Controller")
+@WebServlet("/controller")
 public class Controller extends HttpServlet {
     private final static Logger LOGGER = LogManager.getLogger(Controller.class);
     @Override
@@ -35,25 +39,17 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        Optional<Command> commandOptional = ActionFactory.defineCommand(req.getParameter("command"));
+        Optional<Command> commandOptional = ActionFactory.defineCommand(req.getParameter(RequestParameter.COMMAND));
         Command command = commandOptional.orElse(new EmptyCommand());
         String page = command.execute(req);
-
         if (page != null){
-            HttpSession session = req.getSession();
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(page);
-            req.getSession().setAttribute("locale", req.getParameter("locale"));
             requestDispatcher.forward(req, res);
         } else {
 
             /*req.getSession().setAttribute("nullPage", req.getSession().ge);
 */
-            try {
-                res.sendRedirect(new PropertyFileManager(PropertyPath.CONFIG_FILE).getValue(PropertyKey.INDEX_PAGE));
-            } catch (IOFileException e) {
-                LOGGER.fatal(e);
-                throw new RuntimeException(e);
-            }
+            res.sendRedirect(JspPagePath.INDEX_PAGE);
         }
     }
 }

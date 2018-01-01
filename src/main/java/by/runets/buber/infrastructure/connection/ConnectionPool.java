@@ -30,7 +30,7 @@ public class ConnectionPool {
 
     private void initialize() {
         try {
-            PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
+            PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_PROPERTIES_FILE);
 
             String url = propertyFileManager.getValue(PropertyKey.DB_URL);
             String username = propertyFileManager.getValue(PropertyKey.DB_USER);

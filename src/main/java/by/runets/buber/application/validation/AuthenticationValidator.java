@@ -28,6 +28,10 @@ public class AuthenticationValidator {
     }
 
     public boolean isValidateLogInData(String email, String password) {
-        return email != null && !email.isEmpty() || password != null && !password.isEmpty();
+        return email != null && !email.isEmpty() && password != null && !password.isEmpty();
+    }
+
+    public boolean isValidateRegisterData(String email, String password, String firstName, String secondName, String role){
+        return email != null && !email.isEmpty() && password != null && !password.isEmpty() && firstName != null && !firstName.isEmpty()&& secondName != null && !secondName.isEmpty()&& role != null && !role.isEmpty();
     }
 }

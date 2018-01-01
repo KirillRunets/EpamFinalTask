@@ -1,9 +1,24 @@
 package by.runets.buber.domain.entity;
 
-import java.util.Optional;
+import by.runets.buber.infrastructure.constant.UserRoleType;
 
 public class Role extends Entity {
     private String roleName;
+
+    public Role(String roleType) {
+        switch (roleType.toUpperCase()){
+            case UserRoleType.ADMIN:
+                setId(1);
+                break;
+            case UserRoleType.DRIVER:
+                setId(2);
+                break;
+            case UserRoleType.PASSENGER:
+                setId(3);
+                break;
+
+        }
+    }
 
     public Role(int id) {
         super(id);
@@ -13,13 +28,13 @@ public class Role extends Entity {
         super(id);
         this.roleName = roleName;
     }
-
     public String getRoleName() {
         return roleName;
     }
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
 
     @Override
     public boolean equals(Object o) {

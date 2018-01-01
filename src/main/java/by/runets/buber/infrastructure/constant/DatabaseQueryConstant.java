@@ -1,20 +1,20 @@
 package by.runets.buber.infrastructure.constant;
 
-public class RequestConstant {
-    private RequestConstant(){}
+public class DatabaseQueryConstant {
+    private DatabaseQueryConstant(){}
     //user
-    public final static String FIND_ALL_USERS = "SELECT email, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\\n\" +\n" +
+    public final static String FIND_ALL_USERS = "SELECT email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\\n\" +\n" +
             "INNER JOIN user_m2m_role AS ur" +
             "ON u.id = ur.u_id" +
             "INNER JOIN role AS r" +
             "ON ur.ur_id = r.r_id";
-    public final static String FIND_USER_BY_ID = "SELECT id, email, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
+    public final static String FIND_USER_BY_ID = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
             "WHERE id=?";
-    public final static String FIND_USER_BY_EMAIL_PASSWORD = "SELECT id, email, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
+    public final static String FIND_USER_BY_EMAIL_PASSWORD = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
             "INNER JOIN role AS r\n" +

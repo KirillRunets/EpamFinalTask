@@ -6,13 +6,17 @@ import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.IOFileException;
+import by.runets.buber.infrastructure.util.LocaleFileManager;
+import by.runets.buber.infrastructure.util.MessageManager;
 import by.runets.buber.infrastructure.util.PropertyFileManager;
 import by.runets.buber.presentation.command.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import java.util.Locale;
 import java.util.Optional;
 
 
@@ -28,48 +32,43 @@ public class LoginCommand implements Command {
         String page = null;
         Optional<User> user;
 
-
         String emailValue = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
         String passwordValue = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
 
         try {
-            PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
-
+            user = Optional.ofNullable(userService.authenticateUser(emailValue, passwordValue));
             if (AuthenticationValidator.getInstance().isValidateLogInData(emailValue, passwordValue)){
-                user = Optional.ofNullable(userService.authenticateUser(emailValue, passwordValue));
                 if (user.isPresent()){
-                    page = loadPageByRole(user.get().getRole().getRoleName());
+                    page = loadPageByRole(req, user);
                 } else {
-                    req.setAttribute(LabelParameter.ERROR_LABEL, "");
-                    page = propertyFileManager.getValue(PropertyKey.LOGIN_PAGE);
+                    req.setAttribute(LabelParameter.ERROR_LABEL, new LocaleFileManager(PropertyPath.LOGIN_PROPERTIES_FILE, new Locale(req.getSession().getAttribute(RequestParameter.LOCALE).toString())).getProperty(PropertyKey.ERROR_LABEL_MESSAGE));
+                    page = JspPagePath.LOGIN_PAGE;
                 }
-            } else {
-                req.setAttribute(LabelParameter.ERROR_LABEL, "");
-                page = propertyFileManager.getValue(PropertyKey.INDEX_PAGE);
             }
         }  catch (DAOException e) {
             LOGGER.error(e);
-        } catch (IOFileException e) {
-            LOGGER.fatal(e);
-            throw new RuntimeException(e);
         }
         return page;
     }
 
-    private String loadPageByRole(String role) throws IOFileException {
-        PropertyFileManager propertyFileManager = new PropertyFileManager(PropertyPath.CONFIG_FILE);
+    private String loadPageByRole(HttpServletRequest request, Optional<User> user) {
         String page = null;
-        switch (role){
+        HttpSession httpSession = request.getSession();
+        switch (user.get().getRole().getRoleName()){
             case UserRoleType.ADMIN:
-                page = propertyFileManager.getValue(PropertyKey.ADMIN_HOME_PAGE);
+                httpSession.setAttribute(UserRoleType.ADMIN, user.get());
+                page = JspPagePath.ADMIN_HOME_PAGE;
                 break;
             case UserRoleType.DRIVER:
-                page = propertyFileManager.getValue(PropertyKey.DRIVER_HOME_PAGE);
+                httpSession.setAttribute(UserRoleType.DRIVER, user.get());
+                page = JspPagePath.DRIVER_HOME_PAGE;
                 break;
             case UserRoleType.PASSENGER:
-                page = propertyFileManager.getValue(PropertyKey.PASSENGER_HOME_PAGE);
+                httpSession.setAttribute(UserRoleType.PASSENGER, user.get());
+                page = JspPagePath.PASSENGER_HOME_PAGE;
                 break;
         }
         return page;
     }
+
 }

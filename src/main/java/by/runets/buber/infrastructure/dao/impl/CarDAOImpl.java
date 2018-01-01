@@ -6,7 +6,7 @@ import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.dao.parser.LocationParser;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
@@ -36,7 +36,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         PreparedStatement preparedStatement = null;
         List<Car> cars = new ArrayList<>();
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_ALL_CARS);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_CARS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 cars.add(getCarFromResultSet(resultSet));
@@ -60,7 +60,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         PreparedStatement preparedStatement = null;
         Car car = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_CAR_BY_OWNER);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_CAR_BY_OWNER);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -84,7 +84,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.DELETE_CAR_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_CAR_BY_ID);
             preparedStatement.setInt(1, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -100,11 +100,12 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
     }
 
     @Override
-    public void create(Car car) throws DAOException {
+    public boolean create(Car car) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.INSERT_INTO_CAR);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_CAR);
             preparedStatement.setString(1, String.valueOf(car.getMark()));
             preparedStatement.setString(2, String.valueOf(car.getModel()));
             preparedStatement.setDate(3, new Date(car.getReleaseDate().get().getTime()));
@@ -112,6 +113,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement.setInt(5, car.getCarOwner().get().getId());
             preparedStatement.setString(6, car.getCurrentLocation().get().toString());
             preparedStatement.executeUpdate();
+            state = true;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
@@ -122,6 +124,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
                 LOGGER.error(e);
             }
         }
+        return state;
     }
 
     @Override
@@ -129,7 +132,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.UPDATE_CAR_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_CAR_BY_ID);
             preparedStatement.setString(1, String.valueOf(car.getMark()));
             preparedStatement.setString(2, String.valueOf(car.getModel()));
             preparedStatement.setDate(3, new Date(car.getReleaseDate().get().getTime()));

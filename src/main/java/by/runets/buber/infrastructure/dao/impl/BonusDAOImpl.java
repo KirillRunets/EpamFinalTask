@@ -4,7 +4,7 @@ import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.constant.RequestConstant;
+import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 
@@ -32,7 +32,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         PreparedStatement preparedStatement = null;
         List<Bonus> bonuses = new ArrayList<>();
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_ALL_BONUSES);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_BONUSES);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 bonuses.add(getBonusFromResultSet(resultSet));
@@ -58,7 +58,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         PreparedStatement preparedStatement = null;
         Bonus bonus = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.FIND_BONUS_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_BONUS_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -82,7 +82,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.DELETE_BONUS_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_BONUS_BY_ID);
             preparedStatement.setInt(1, bonus.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -98,14 +98,16 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     }
 
     @Override
-    public void create(Bonus bonus) throws DAOException {
+    public boolean create(Bonus bonus) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.INSERT_INTO_BONUS);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BONUS);
             preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
             preparedStatement.executeUpdate();
+            state = false;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
@@ -116,6 +118,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
                 LOGGER.error(e);
             }
         }
+        return state;
     }
 
     @Override
@@ -123,7 +126,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(RequestConstant.UPDATE_BONUS_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_BONUS_BY_ID);
             preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
             preparedStatement.setInt(7, bonus.getId());
