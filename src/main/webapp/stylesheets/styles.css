@@ -131,6 +131,10 @@ table tbody tr:first-child td {
     color: #fff;
 }
 
+.footer-description{
+    text-align: center;
+}
+
 .footer-description {
     float: left;
     vertical-align: middle;
@@ -258,5 +262,9 @@ p[id="email"]{
     font-size: 3rem;
     line-height: 1.5;
     color: #333D47;
+}
+
+#copyright{
+    text-align: center;
 }
 

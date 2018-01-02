@@ -3,10 +3,10 @@ package by.runets.buber.infrastructure.constant;
 public class DatabaseQueryConstant {
     private DatabaseQueryConstant(){}
     //user
-    public final static String FIND_ALL_USERS = "SELECT email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\\n\" +\n" +
-            "INNER JOIN user_m2m_role AS ur" +
-            "ON u.id = ur.u_id" +
-            "INNER JOIN role AS r" +
+    public final static String FIND_ALL_USERS = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
+            "INNER JOIN user_m2m_role AS ur\n" +
+            "ON u.id = ur.u_id\n" +
+            "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id";
     public final static String FIND_USER_BY_ID = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +

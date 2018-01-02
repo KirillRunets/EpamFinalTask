@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAOTest {
@@ -29,4 +30,11 @@ public class UserDAOTest {
         UserDAO dao = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
         Assert.assertEquals(true, dao.isEmailExist(email));
     }
+
+    @Test
+    public void testFindAll() throws DAOException {
+        UserDAO dao = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+        Assert.assertNotNull(dao.findAll());
+    }
+
 }

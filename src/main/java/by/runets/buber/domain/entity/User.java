@@ -24,6 +24,11 @@ public class User extends Entity {
         super(id);
     }
 
+    public User(int id, Role role) {
+        super(id);
+        this.role = role;
+    }
+
     public User(int id, String email, String password, String firstName, String secondName, Date birthDate, Ban ban, Date unBaneDate, String phoneNumber, Bonus bonus, int tripAmount, double rating, Role role) {
         super(id);
         this.email = email;

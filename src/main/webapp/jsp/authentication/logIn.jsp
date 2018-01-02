@@ -46,24 +46,7 @@
         <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
     </form>
 </div>
-<footer class="end_footer footer navbar-inverse">
-    <div class="container">
-        <div class="col-md-12">
-            <div class="footer-description">
-                <nav>
-                    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="label.homePage" bundle="${rb}" /></a>
-                </nav>
-            </div>
-            <div class="icons">
-                <ul class="social-icons">
-                    <li><a href="" class="social-icon"> <i class="fa fa-facebook"></i></a></li>
-                    <li><a href="" class="social-icon"> <i class="fa fa-twitter"></i></a></li>
-                    <li><a href="" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 </body>
 </html>

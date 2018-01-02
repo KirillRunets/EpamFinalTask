@@ -9,7 +9,7 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.util.PasswordEncrypt;
 
-public class CreateUserService {
+public class RegisterUserService {
     public boolean registerUser(String email, String password, String firstName, String secondName, String role) throws DAOException {
         User user = new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
         UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);

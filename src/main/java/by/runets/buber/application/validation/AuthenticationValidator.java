@@ -1,6 +1,5 @@
 package by.runets.buber.application.validation;
 
-import by.runets.buber.infrastructure.exception.AuthenticationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

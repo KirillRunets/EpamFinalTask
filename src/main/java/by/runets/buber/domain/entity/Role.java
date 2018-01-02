@@ -5,8 +5,8 @@ import by.runets.buber.infrastructure.constant.UserRoleType;
 public class Role extends Entity {
     private String roleName;
 
-    public Role(String roleType) {
-        switch (roleType.toUpperCase()){
+    public Role(String roleName) {
+        switch (roleName.toUpperCase()){
             case UserRoleType.ADMIN:
                 setId(1);
                 break;
@@ -18,6 +18,7 @@ public class Role extends Entity {
                 break;
 
         }
+        this.roleName = roleName;
     }
 
     public Role(int id) {

@@ -1,6 +1,6 @@
 package by.runets.buber.presentation.command.impl;
 
-import by.runets.buber.application.service.user.CreateUserService;
+import by.runets.buber.application.service.user.RegisterUserService;
 import by.runets.buber.application.validation.AuthenticationValidator;
 import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.DAOException;
@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 
 public class SignUpCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(SignUpCommand.class);
-    private CreateUserService userService;
+    private RegisterUserService userService;
 
-    public SignUpCommand(CreateUserService createUserService) {
+    public SignUpCommand(RegisterUserService createUserService) {
         userService = createUserService;
     }
 
