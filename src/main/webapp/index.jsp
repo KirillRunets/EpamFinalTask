@@ -9,21 +9,6 @@
     <meta charset="UTF-8">
 </head>
 <body class="main-body">
-    <c:choose>
-        <c:when test="${not empty sessionScope.user}">
-            <c:if test="${sessionScope.user.ADMIN}" >
-                <jsp:forward page="jsp/admin/admin_home.jsp"/>
-            </c:if>
-            <c:if test="${sessionScope.user.DRIVER}">
-                <jsp:forward page="jsp/driver/driver_home.jsp"/>
-            </c:if>
-            <c:if test="${sessionScope.user.PASSENGER}">
-                <jsp:forward page="jsp/passenger/passenger_home.jsp"/>
-            </c:if>
-        </c:when>
-        <c:otherwise>
-            <jsp:forward page="jsp/main.jsp"/>
-        </c:otherwise>
-    </c:choose>
+    <jsp:forward page="jsp/main.jsp"/>
 </body>
 </html>

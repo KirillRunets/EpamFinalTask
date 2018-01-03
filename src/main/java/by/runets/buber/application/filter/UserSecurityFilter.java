@@ -26,21 +26,17 @@ public class UserSecurityFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        User admin;
-        User driver;
-        User passenger;
+        User user = null;
 
         if (session != null){
-            admin = (User) session.getAttribute(UserRoleType.ADMIN);
-            driver = (User) session.getAttribute(UserRoleType.DRIVER);
-            passenger = (User) session.getAttribute(UserRoleType.PASSENGER);
-            if (admin != null){
+            user = (User) session.getAttribute(UserRoleType.USER);
+            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN)){
                 session.getServletContext().getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);
             }
-            if (driver != null){
+            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
                 session.getServletContext().getRequestDispatcher(JspPagePath.DRIVER_HOME_PAGE).forward(req, res);
             }
-            if (passenger != null){
+            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)){
                 session.getServletContext().getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
             }
         }

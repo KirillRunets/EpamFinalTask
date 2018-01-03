@@ -4,17 +4,17 @@ import java.util.Date;
 import java.util.Optional;
 
 public class Car extends Entity {
-    private Optional<String> mark = Optional.empty();;
-    private Optional<String> model;
-    private Optional<Date> releaseDate;
-    private Optional<String> licensePlate;
-    private Optional<User> carOwner;
-    private Optional<Point> currentLocation;
+    private String mark;;
+    private String model;
+    private Date releaseDate;
+    private String licensePlate;
+    private User carOwner;
+    private Point currentLocation;
 
     public Car() {
     }
 
-    public Car(int id, Optional<String> mark, Optional<String> model, Optional<Date> releaseDate, Optional<String> licensePlate, Optional<User> carOwner, Optional<Point> currentLocation) {
+    public Car(int id, String mark, String model, Date releaseDate, String licensePlate, User carOwner, Point currentLocation) {
         super(id);
         this.mark = mark;
         this.model = model;
@@ -24,40 +24,51 @@ public class Car extends Entity {
         this.currentLocation = currentLocation;
     }
 
-    public Optional<String> getMark() {
+    public String getMark() {
         return mark;
     }
-    public void setMark(Optional<String> mark) {
+
+    public void setMark(String mark) {
         this.mark = mark;
     }
-    public Optional<String> getModel() {
+
+    public String getModel() {
         return model;
     }
-    public void setModel(Optional<String> model) {
+
+    public void setModel(String model) {
         this.model = model;
     }
-    public Optional<Date> getReleaseDate() {
+
+    public Date getReleaseDate() {
         return releaseDate;
     }
-    public void setReleaseDate(Optional<Date> releaseDate) {
+
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
-    public Optional<String> getLicensePlate() {
+
+    public String getLicensePlate() {
         return licensePlate;
     }
-    public void setLicensePlate(Optional<String> licensePlate) {
+
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
-    public Optional<User> getCarOwner() {
+
+    public User getCarOwner() {
         return carOwner;
     }
-    public void setCarOwner(Optional<User> carOwner) {
+
+    public void setCarOwner(User carOwner) {
         this.carOwner = carOwner;
     }
-    public Optional<Point> getCurrentLocation() {
+
+    public Point getCurrentLocation() {
         return currentLocation;
     }
-    public void setCurrentLocation(Optional<Point> currentLocation) {
+
+    public void setCurrentLocation(Point currentLocation) {
         this.currentLocation = currentLocation;
     }
 

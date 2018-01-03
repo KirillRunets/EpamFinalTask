@@ -6,6 +6,7 @@
 <%@ page isELIgnored="false"%>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">

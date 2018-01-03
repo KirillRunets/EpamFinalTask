@@ -3,6 +3,7 @@ package by.runets.buber.presentation.command.impl.user;
 import by.runets.buber.application.service.user.DeleteUserService;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
@@ -30,11 +31,11 @@ public class DeleteUserCommand implements Command {
 
         try {
             deleteUserService.delete(new User(Integer.parseInt(id), new Role(role)));
+            page = role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE;
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
 
-        //reload page
-        return null;
+        return page;
     }
 }

@@ -12,6 +12,7 @@ public class PropertyKey {
 
 
     //keys to config.properties file which provides pages data
-    public final static String ERROR_LABEL_MESSAGE = "label.error";
+    public final static String LOGIN_ERROR_LABEL_MESSAGE = "label.loginError";
+    public final static String SIGN_UP_ERROR_LABEL_MESSAGE = "label.signUpError";
 
 }

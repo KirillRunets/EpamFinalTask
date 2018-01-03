@@ -164,7 +164,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setInt(12, user.getId());//set id to WHERE
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Update exception" + e);
         } finally {
             close(preparedStatement);
             try {

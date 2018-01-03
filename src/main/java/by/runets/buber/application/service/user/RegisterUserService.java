@@ -10,17 +10,12 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.util.PasswordEncrypt;
 
 public class RegisterUserService {
-    public boolean registerUser(String email, String password, String firstName, String secondName, String role) throws DAOException {
-        User user = new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
+    public void registerUser(User user) throws DAOException {
         UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
         UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-        boolean state = false;
-        if (userDAO.create(user)){
-            if (userRoleDAO.createUserRoleCommunication(user)){
-                state = true;
-            }
+        if (user != null){
+            userDAO.create(user);
+            userRoleDAO.createUserRoleCommunication(user);
         }
-
-        return state;
     }
 }

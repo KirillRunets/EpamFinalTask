@@ -1,8 +1,8 @@
 package by.runets.buber.domain.entity;
 
 public class Point {
-    private Double x;
-    private Double y;
+    private double x;
+    private double y;
 
     public Point() {
     }
@@ -32,19 +32,21 @@ public class Point {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         Point point = (Point) o;
 
-        if (x != null ? !x.equals(point.x) : point.x != null) return false;
-        return y != null ? y.equals(point.y) : point.y == null;
+        if (Double.compare(point.x, x) != 0) return false;
+        return Double.compare(point.y, y) == 0;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (x != null ? x.hashCode() : 0);
-        result = 31 * result + (y != null ? y.hashCode() : 0);
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 

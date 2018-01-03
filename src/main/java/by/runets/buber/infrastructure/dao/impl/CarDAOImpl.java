@@ -11,10 +11,7 @@ import by.runets.buber.infrastructure.dao.parser.LocationParser;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -108,10 +105,10 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_CAR);
             preparedStatement.setString(1, String.valueOf(car.getMark()));
             preparedStatement.setString(2, String.valueOf(car.getModel()));
-            preparedStatement.setDate(3, new Date(car.getReleaseDate().get().getTime()));
+            preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
             preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
-            preparedStatement.setInt(5, car.getCarOwner().get().getId());
-            preparedStatement.setString(6, car.getCurrentLocation().get().toString());
+            preparedStatement.setInt(5, car.getCarOwner().getId());
+            preparedStatement.setString(6, car.getCurrentLocation().toString());
             preparedStatement.executeUpdate();
             state = true;
         } catch (SQLException e) {
@@ -135,10 +132,23 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_CAR_BY_ID);
             preparedStatement.setString(1, String.valueOf(car.getMark()));
             preparedStatement.setString(2, String.valueOf(car.getModel()));
-            preparedStatement.setDate(3, new Date(car.getReleaseDate().get().getTime()));
+            if (car.getReleaseDate() == null){
+                preparedStatement.setNull(3, Types.INTEGER);
+            } else {
+                preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
+            }
             preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
-            preparedStatement.setInt(5, car.getCarOwner().get().getId());
-            preparedStatement.setString(6, car.getCurrentLocation().get().toString());
+            if (car.getCarOwner() == null) {
+                preparedStatement.setNull(5, Types.INTEGER);
+            } else {
+                preparedStatement.setInt(5, car.getCarOwner().getId());
+            }
+            preparedStatement.setInt(5, car.getCarOwner().getId());
+            if (car.getCurrentLocation() == null){
+                preparedStatement.setString(6, new Point().toString());
+            } else {
+                preparedStatement.setString(6, car.getCurrentLocation().toString());
+            }
             preparedStatement.setInt(7, car.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -157,13 +167,17 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         Car car = new Car();
         List<Double> coordinates = new ArrayList<>();
         car.setId(resultSet.getInt("id"));
-        car.setMark(Optional.ofNullable(resultSet.getString("mark")));
-        car.setModel(Optional.ofNullable(resultSet.getString("model")));
-        car.setReleaseDate(Optional.ofNullable(resultSet.getDate("release_date")));
-        car.setLicensePlate(Optional.ofNullable(resultSet.getString("license_plate")));
-        car.setCarOwner(Optional.of(new User(resultSet.getInt("car_owner"))));
+        car.setMark( resultSet.getString("mark"));
+        car.setModel(resultSet.getString("model"));
+        car.setReleaseDate(resultSet.getDate("release_date"));
+        car.setLicensePlate(resultSet.getString("license_plate"));
+        car.setCarOwner(new User(resultSet.getInt("car_owner")));
         coordinates = LocationParser.parseLocation(resultSet.getString("current_location"));
-        car.setCurrentLocation(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
+        if (coordinates != null && !coordinates.isEmpty()){
+            car.setCurrentLocation(new Point(coordinates.get(0), coordinates.get(1)));
+        } else {
+            car.setCurrentLocation(new Point());
+        }
         return car;
     }
 }

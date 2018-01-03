@@ -16,6 +16,7 @@ public class User extends Entity {
     private int tripAmount;
     private double rating;
     private Role role;
+    private Car car;
 
     public User() {
     }
@@ -29,7 +30,7 @@ public class User extends Entity {
         this.role = role;
     }
 
-    public User(int id, String email, String password, String firstName, String secondName, Date birthDate, Ban ban, Date unBaneDate, String phoneNumber, Bonus bonus, int tripAmount, double rating, Role role) {
+    public User(int id, String email, String password, String firstName, String secondName, Date birthDate, Ban ban, Date unBaneDate, String phoneNumber, Bonus bonus, int tripAmount, double rating, Role role, Car car) {
         super(id);
         this.email = email;
         this.password = password;
@@ -43,9 +44,19 @@ public class User extends Entity {
         this.tripAmount = tripAmount;
         this.rating = rating;
         this.role = role;
+        this.car = car;
     }
 
     public User(String email, String password, String firstName, String secondName, Role role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+    }
+
+    public User(int id, String email, String password, String firstName, String secondName, Role role) {
+        super(id);
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -125,6 +136,12 @@ public class User extends Entity {
     public void setRole(Role role) {
         this.role = role;
     }
+    public Car getCar() {
+        return car;
+    }
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -145,7 +162,8 @@ public class User extends Entity {
         if (unBaneDate != null ? !unBaneDate.equals(user.unBaneDate) : user.unBaneDate != null) return false;
         if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
         if (bonus != null ? !bonus.equals(user.bonus) : user.bonus != null) return false;
-        return role != null ? role.equals(user.role) : user.role == null;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        return car != null ? car.equals(user.car) : user.car == null;
     }
 
     @Override
@@ -165,6 +183,7 @@ public class User extends Entity {
         temp = Double.doubleToLongBits(rating);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (car != null ? car.hashCode() : 0);
         return result;
     }
 
@@ -183,6 +202,7 @@ public class User extends Entity {
                 ", tripAmount=" + tripAmount +
                 ", rating=" + rating +
                 ", role=" + role +
+                ", car=" + car +
                 '}';
     }
 }

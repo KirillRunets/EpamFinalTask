@@ -8,7 +8,7 @@ html {
 
 
 footer, header, section, aside{
-    display: flex;
+    display: block;
 }
 
 body{
@@ -20,9 +20,8 @@ body{
     line-height: 1.42857;
     -webkit-font-smoothing: antialised;
     background: #c1bdba;
-    display: flex;
+    display: block;
     min-height: 100vh;
-    flex-direction: column;
 }
 
 table tbody tr:first-child td {
@@ -267,4 +266,66 @@ p[id="email"]{
 #copyright{
     text-align: center;
 }
+
+.description-wrapper{
+    background-color: #fff;
+    margin: 25px 0;
+    color: #7b93ff;
+    border-radius: 2px;
+    padding: 15px;
+}
+
+.description-wrapper h2{
+    color: #333;
+}
+
+.description-wrapper a{
+    color: #7b93ff;
+}
+
+.description-wrapper hr{
+    border: none; /* Убираем границу */
+    background-color: #c1bdba; /* Цвет линии */
+    color:  #c1bdba; /* Цвет линии для IE6-7 */
+    height: 1px;
+}
+
+
+.tab-group {
+    list-style: none;
+    padding: 0;
+    margin: 15px 25px;
+}
+.tab-group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.tab-group li a {
+    display: block;
+    text-decoration: none;
+    padding: 15px;
+    background: rgba(149, 168, 165, 0.25);
+    color: #a0b3b0;
+    font-size: 20px;
+    float: left;
+    width: 25%;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+.tab-group li a:hover {
+    background: #179b77;
+    color: #ffffff;
+}
+.tab-group .active a {
+    background: #1ab188;
+    color: #ffffff;
+}
+
+.tab-content > div:last-child {
+    display: none;
+}
+
 

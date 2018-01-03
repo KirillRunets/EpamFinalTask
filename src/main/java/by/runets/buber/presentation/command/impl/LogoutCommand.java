@@ -16,15 +16,12 @@ public class LogoutCommand implements Command {
         HttpSession httpSession = req.getSession(false);
 
         if (httpSession != null && httpSession.getAttribute(UserRoleType.ADMIN) != null ){
-            httpSession.invalidate();
             httpSession.removeAttribute(UserRoleType.ADMIN);
         }
         if (httpSession != null && httpSession.getAttribute(UserRoleType.DRIVER) != null){
-            httpSession.invalidate();
             httpSession.removeAttribute(UserRoleType.DRIVER);
         }
         if (httpSession != null && httpSession.getAttribute(UserRoleType.PASSENGER) != null){
-            httpSession.invalidate();
             httpSession.removeAttribute(UserRoleType.PASSENGER);
         }
 

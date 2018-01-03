@@ -41,7 +41,7 @@ public class LoginCommand implements Command {
                 if (user.isPresent()){
                     page = loadPageByRole(req, user);
                 } else {
-                    req.setAttribute(LabelParameter.ERROR_LABEL, new LocaleFileManager(PropertyPath.LOGIN_PROPERTIES_FILE, new Locale(req.getSession().getAttribute(RequestParameter.LOCALE).toString())).getProperty(PropertyKey.ERROR_LABEL_MESSAGE));
+                    req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(req.getSession(false).getAttribute(RequestParameter.LOCALE).toString()).getProperty(PropertyKey.LOGIN_ERROR_LABEL_MESSAGE));
                     page = JspPagePath.LOGIN_PAGE;
                 }
             }
@@ -56,15 +56,15 @@ public class LoginCommand implements Command {
         HttpSession httpSession = request.getSession();
         switch (user.get().getRole().getRoleName()){
             case UserRoleType.ADMIN:
-                httpSession.setAttribute(UserRoleType.ADMIN, user.get());
+                httpSession.setAttribute(UserRoleType.USER, user.get());
                 page = JspPagePath.ADMIN_HOME_PAGE;
                 break;
             case UserRoleType.DRIVER:
-                httpSession.setAttribute(UserRoleType.DRIVER, user.get());
+                httpSession.setAttribute(UserRoleType.USER, user.get());
                 page = JspPagePath.DRIVER_HOME_PAGE;
                 break;
             case UserRoleType.PASSENGER:
-                httpSession.setAttribute(UserRoleType.PASSENGER, user.get());
+                httpSession.setAttribute(UserRoleType.USER, user.get());
                 page = JspPagePath.PASSENGER_HOME_PAGE;
                 break;
         }

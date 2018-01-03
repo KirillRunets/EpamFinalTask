@@ -39,6 +39,7 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        LOGGER.debug(req.getParameter(RequestParameter.COMMAND));
         Optional<Command> commandOptional = ActionFactory.defineCommand(req.getParameter(RequestParameter.COMMAND));
         Command command = commandOptional.orElse(new EmptyCommand());
         String page = command.execute(req);

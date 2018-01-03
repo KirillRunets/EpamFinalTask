@@ -22,16 +22,15 @@ public class DatabaseQueryConstant {
             "WHERE email=? AND password=?";
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
-    public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating, bonus=?, trip_amount=? WHERE id=?";
+    public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
     public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
     //car
     public final static String FIND_ALL_CARS = "SELECT mark, model, release_date, license_plate, car_owner, current_location FROM car";
-    public final static String FIND_CAR_BY_OWNER = "SELECT id, mark, model, release_date, license_plate, current_location FROM car WHERE car_owner=?";
+    public final static String FIND_CAR_BY_OWNER = "SELECT id, mark, model, car_owner, release_date, license_plate, current_location FROM car WHERE car_owner=?";
     public final static String DELETE_CAR_BY_ID = "DELETE FROM car WHERE id=?";
     public final static String INSERT_INTO_CAR = "INSERT INTO car(mark, model, release_date, license_plate, car_owner, current_location) VALUES(?,?,?,?,?,?)";
     public final static String UPDATE_CAR_BY_ID = "UPDATE car SET mark=?, model=?, release_date=?, license_plate=?, car_owner=?, current_location=? WHERE id=?";
-
     //order
     public final static String FIND_ALL_ORDERS = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order";
     public final static String FIND_ORDER_BY_ID = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order WHERE t_id=?";

@@ -8,7 +8,9 @@ public class LocationParser {
     private final static String DELIMITER = " ";
     public static List<Double> parseLocation(String location){
         List<Double> coordinates = new ArrayList<>();
-        Arrays.stream(location.split(DELIMITER)).forEach(i -> coordinates.add(Double.parseDouble(i)));
+        if (location != null && !location.isEmpty()){
+            Arrays.stream(location.split(DELIMITER)).forEach(i -> coordinates.add(Double.parseDouble(i)));
+        }
         return coordinates;
     }
 }
