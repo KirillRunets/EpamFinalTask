@@ -22,7 +22,7 @@ public class DatabaseQueryConstant {
             "WHERE email=? AND password=?";
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
-    public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, password=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
+    public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
     public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
     //car

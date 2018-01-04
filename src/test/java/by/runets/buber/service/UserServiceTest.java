@@ -58,8 +58,10 @@ public class UserServiceTest {
 
     @Test
     public void deleteUserTest() throws ServiceException {
+        String id = "2";
+        String role = "driver";
         DeleteUserService deleteUserService = new DeleteUserService();
-        deleteUserService.delete(deleteUser);
+        deleteUserService.delete(id, role);
     }
 
     @Test

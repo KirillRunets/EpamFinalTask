@@ -105,7 +105,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_USER, Statement.RETURN_GENERATED_KEYS);
-            setUserToPrepareStatement(user, preparedStatement);
+            setUserToInsertPS(user, preparedStatement);
             preparedStatement.executeUpdate();
             setGeneratedId(user, preparedStatement);
             state = true;
@@ -122,7 +122,28 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         return state;
     }
 
-    private void setUserToPrepareStatement(User user, PreparedStatement preparedStatement) throws SQLException {
+    private void setUserToUpdatePS(User user, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, user.getEmail());
+        preparedStatement.setString(2, user.getFirstName());
+        preparedStatement.setString(3, user.getSecondName());
+        if (user.getBan() != null && user.getUnBaneDate() != null && user.getBirthDate() != null && user.getBonus() != null){
+            preparedStatement.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
+            preparedStatement.setInt(5, user.getBan().getId());
+            preparedStatement.setDate(6, new java.sql.Date(user.getUnBaneDate().getTime()));
+            preparedStatement.setInt(9, user.getBonus().getId());
+        } else {
+            preparedStatement.setNull(4, Types.INTEGER);
+            preparedStatement.setNull(5, Types.INTEGER);
+            preparedStatement.setNull(6, Types.INTEGER);
+            preparedStatement.setNull(9, Types.INTEGER);
+        }
+        preparedStatement.setString(7, user.getPhoneNumber());
+        preparedStatement.setDouble(8, user.getRating());
+        preparedStatement.setInt(10, user.getTripAmount());
+        preparedStatement.setInt(11, user.getId());//set id to WHERE
+    }
+
+    private void setUserToInsertPS(User user, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, user.getEmail());
         preparedStatement.setString(2, PasswordEncrypt.encryptPassword(user.getPassword()));
         preparedStatement.setString(3, user.getFirstName());
@@ -160,8 +181,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_USER_BY_ID);
-            setUserToPrepareStatement(user, preparedStatement);
-            preparedStatement.setInt(12, user.getId());//set id to WHERE
+            setUserToUpdatePS(user, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Update exception" + e);

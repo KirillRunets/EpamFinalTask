@@ -64,6 +64,18 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public User(int id, String email, String firstName, String secondName, Date birthDate, double rating, int tripAmount, String phoneNumber, Role role) {
+        super(id);
+        this.email = email;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.tripAmount = tripAmount;
+        this.rating = rating;
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property/authentication/login/logIn" var="rb" />
 <%@ page isELIgnored="false"%>
 <html>
@@ -23,14 +23,7 @@
             <li ><a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="label.homePage" bundle="${rb}" /></a></li>
             <li class="active"> <a href="#"><fmt:message key="label.currentPage" bundle="${rb}" /></a></li>
         </ul>
-        <div class="top-lang-list">
-            <select id="mySelect" name="locale" onchange="location = this.options[this.selectedIndex].value;">
-                <option disabled selected><fmt:message key="label.language" bundle="${rb}" /></option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU">Русский</option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=be_BY">Мова</option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_US">English</option>
-            </select>
-        </div>
+        <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
     </div>
 </nav>
 <div class="form">

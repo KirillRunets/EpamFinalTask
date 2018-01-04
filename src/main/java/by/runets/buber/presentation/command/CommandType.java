@@ -1,16 +1,11 @@
 package by.runets.buber.presentation.command;
 
-import by.runets.buber.application.service.user.DeleteUserService;
-import by.runets.buber.application.service.user.ReadUserService;
-import by.runets.buber.application.service.user.RegisterUserService;
-import by.runets.buber.application.service.user.LoginUserService;
-import by.runets.buber.presentation.command.impl.ChangeLocaleCommand;
-import by.runets.buber.presentation.command.impl.LoginCommand;
-import by.runets.buber.presentation.command.impl.LogoutCommand;
-import by.runets.buber.presentation.command.impl.SignUpCommand;
+import by.runets.buber.application.service.user.*;
+import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.user.DeleteUserCommand;
 import by.runets.buber.presentation.command.impl.user.ReadDriverCommand;
 import by.runets.buber.presentation.command.impl.user.ReadPassengerCommand;
+import by.runets.buber.presentation.command.impl.user.UpdateDriverCommand;
 
 public enum CommandType {
     LOGIN(new LoginCommand(new LoginUserService())),
@@ -19,7 +14,10 @@ public enum CommandType {
     LOGOUT(new LogoutCommand()),
     FIND_ALL_DRIVER(new ReadDriverCommand(new ReadUserService())),
     FIND_ALL_PASSENGER(new ReadPassengerCommand(new ReadUserService())),
-    DELETE_USER(new DeleteUserCommand(new DeleteUserService()));
+    DELETE_USER(new DeleteUserCommand(new DeleteUserService())),
+    LOAD_EDIT_DRIVER(new LoadEditDriverPageCommand(new ReadUserService())),
+    UPDATE_DRIVER(new UpdateDriverCommand(new UpdateUserService())),
+    HOME_PAGE(new HomePageCommand());
 
     private Command command;
 

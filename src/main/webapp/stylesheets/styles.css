@@ -328,4 +328,21 @@ p[id="email"]{
     display: none;
 }
 
+#btn-load1{
+    display: none;
+}
+
+#btn-load2{
+    display: none;
+}
+
+.line{
+    cursor: pointer;
+}
+
+.hover_color
+{ background-color: #c1bdba !important; }
+.click_color
+{ background-color: #90ee90 !important; }
+
 

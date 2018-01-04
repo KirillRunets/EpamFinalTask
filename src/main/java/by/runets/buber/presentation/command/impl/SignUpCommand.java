@@ -1,7 +1,7 @@
 package by.runets.buber.presentation.command.impl;
 
 import by.runets.buber.application.service.user.RegisterUserService;
-import by.runets.buber.application.validation.AuthenticationValidator;
+import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
@@ -35,13 +35,14 @@ public class SignUpCommand implements Command {
         User user = new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
 
         try {
-            if (AuthenticationValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role)){
+            if (RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role)){
                 userService.registerUser(user);
                 page = JspPagePath.LOGIN_PAGE;
             }
         } catch (DAOException e) {
             LOGGER.error(e);
-            req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(req.getSession(false).getAttribute(RequestParameter.LOCALE).toString()).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE));
+            String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
+            req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE));
             page = JspPagePath.SIGN_UP_PAGE;
         }
 

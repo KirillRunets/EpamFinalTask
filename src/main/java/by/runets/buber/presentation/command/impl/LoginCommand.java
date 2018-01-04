@@ -1,14 +1,11 @@
 package by.runets.buber.presentation.command.impl;
 
 import by.runets.buber.application.service.user.LoginUserService;
-import by.runets.buber.application.validation.AuthenticationValidator;
+import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.DAOException;
-import by.runets.buber.infrastructure.exception.IOFileException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
-import by.runets.buber.infrastructure.util.MessageManager;
-import by.runets.buber.infrastructure.util.PropertyFileManager;
 import by.runets.buber.presentation.command.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.Locale;
 import java.util.Optional;
 
 
@@ -37,11 +33,12 @@ public class LoginCommand implements Command {
 
         try {
             user = Optional.ofNullable(userService.authenticateUser(emailValue, passwordValue));
-            if (AuthenticationValidator.getInstance().isValidateLogInData(emailValue, passwordValue)){
+            if (RequestValidator.getInstance().isValidateLogInData(emailValue, passwordValue)){
                 if (user.isPresent()){
                     page = loadPageByRole(req, user);
                 } else {
-                    req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(req.getSession(false).getAttribute(RequestParameter.LOCALE).toString()).getProperty(PropertyKey.LOGIN_ERROR_LABEL_MESSAGE));
+                    String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
+                    req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.LOGIN_ERROR_LABEL_MESSAGE));
                     page = JspPagePath.LOGIN_PAGE;
                 }
             }

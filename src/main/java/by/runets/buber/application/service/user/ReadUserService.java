@@ -1,6 +1,5 @@
 package by.runets.buber.application.service.user;
 
-import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.DAOType;
@@ -19,7 +18,6 @@ public class ReadUserService {
     public List<User> find(String role) throws ServiceException {
         List<User> userList = new ArrayList<>();
         List<User> userListByRole = new ArrayList<>();
-
 
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
@@ -44,5 +42,16 @@ public class ReadUserService {
         }
 
         return userListByRole;
+    }
+
+    public User find(int id) throws ServiceException {
+        User user = null;
+        try {
+            UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+            user = userDAO.find(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Find user service " + e);
+        }
+        return user;
     }
 }

@@ -15,14 +15,8 @@ public class LogoutCommand implements Command {
 
         HttpSession httpSession = req.getSession(false);
 
-        if (httpSession != null && httpSession.getAttribute(UserRoleType.ADMIN) != null ){
-            httpSession.removeAttribute(UserRoleType.ADMIN);
-        }
-        if (httpSession != null && httpSession.getAttribute(UserRoleType.DRIVER) != null){
-            httpSession.removeAttribute(UserRoleType.DRIVER);
-        }
-        if (httpSession != null && httpSession.getAttribute(UserRoleType.PASSENGER) != null){
-            httpSession.removeAttribute(UserRoleType.PASSENGER);
+        if (httpSession != null){
+            httpSession.removeAttribute(UserRoleType.USER);
         }
 
         page = JspPagePath.INDEX_PAGE;

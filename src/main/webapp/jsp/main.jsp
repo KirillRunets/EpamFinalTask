@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property/main/main" var="rb" />
 <%@ page isELIgnored="false"%>
 <html>
@@ -22,14 +22,7 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="#"><fmt:message key="label.home" bundle="${rb}" /></a></li>
         </ul>
-        <div class="top-lang-list">
-            <select id="mySelect" name="locale" onchange="location = this.options[this.selectedIndex].value;">
-                <option disabled selected><fmt:message key="label.language" bundle="${rb}" /></option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=ru_RU">Русский</option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=be_BY">Мова</option>
-                <option value="${pageContext.request.contextPath}/controller?command=change_locale&locale=en_US">English</option>
-            </select>
-        </div>
+        <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
             <button class="button-small" id="aut-btn" onClick="window.location='jsp/authentication/logIn.jsp'" ><fmt:message key="label.signIn" bundle="${rb}" /></button>
         </div>
