@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReadDriverCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(ReadDriverCommand.class);

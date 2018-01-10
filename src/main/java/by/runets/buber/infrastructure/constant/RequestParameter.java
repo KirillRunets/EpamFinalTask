@@ -10,7 +10,6 @@ public class RequestParameter {
     public final static String COMMAND = "command";
     public final static String LOCALE = "locale";
     public final static String DEFAULT_LOCALE = "ru_RU";
-    //user
     public final static String USER_ID = "user_id";
     public final static String FIRST_NAME = "firstName";
     public final static String SECOND_NAME = "secondName";
@@ -19,12 +18,18 @@ public class RequestParameter {
     public final static String RATING = "rating";
     public final static String PHONE_NUMBER = "phoneNumber";
     public final static String TRIP_AMOUNT = "tripAmount";
+    public final static String UNBAN_DATE = "unbanDate";
+    public final static String BAN_DESCRIPTION = "banDescription";
     public final static String USER_ROLE = "user_role";
-    public final static String MODIFIED_DRIVER = "modified_driver";
-    public final static String MODIFIED_PASSENGER = "modified_passenger";
-    public final static String DRIVER = "driver";
+    public final static String USER = "user";
+    public final static String BAN_ID = "ban_id";
+    //
+    public final static String CAR_ID = "car_id";
+    public final static String CAR_OWNER = "car_owner";
+    public final static String MARK = "mark";
+    public final static String MODEL = "model";
+    public final static String RELEASE_DATE = "release_date";
 
-    public final static String DELETED_USER = "deleted_user";
 
     public final static String URI = "uri";
 }

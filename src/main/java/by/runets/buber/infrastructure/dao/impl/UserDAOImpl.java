@@ -126,15 +126,24 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         preparedStatement.setString(1, user.getEmail());
         preparedStatement.setString(2, user.getFirstName());
         preparedStatement.setString(3, user.getSecondName());
-        if (user.getBan() != null && user.getUnBaneDate() != null && user.getBirthDate() != null && user.getBonus() != null){
+        if (user.getBirthDate() != null){
             preparedStatement.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
-            preparedStatement.setInt(5, user.getBan().getId());
-            preparedStatement.setDate(6, new java.sql.Date(user.getUnBaneDate().getTime()));
-            preparedStatement.setInt(9, user.getBonus().getId());
         } else {
             preparedStatement.setNull(4, Types.INTEGER);
+        }
+        if (user.getBan() != null){
+            preparedStatement.setInt(5, user.getBan().getId());
+        } else {
             preparedStatement.setNull(5, Types.INTEGER);
+        }
+        if (user.getUnBaneDate() != null){
+            preparedStatement.setDate(6, new java.sql.Date(user.getUnBaneDate().getTime()));
+        } else {
             preparedStatement.setNull(6, Types.INTEGER);
+        }
+        if (user.getBonus() != null){
+            preparedStatement.setInt(9, user.getBonus().getId());
+        } else {
             preparedStatement.setNull(9, Types.INTEGER);
         }
         preparedStatement.setString(7, user.getPhoneNumber());
@@ -327,4 +336,50 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         }
         return user;
     }
+
+    @Override
+    public void setBanToUser(User user) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SET_BAN_TO_USER);
+            if (user.getBan() != null){
+                preparedStatement.setInt(1, user.getBan().getId());
+                preparedStatement.setDate(2, new java.sql.Date(user.getUnBaneDate().getTime()));
+            } else {
+                preparedStatement.setNull(1, Types.INTEGER);
+                preparedStatement.setNull(2, Types.INTEGER);
+            }
+            preparedStatement.setInt(3, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("SET ban to user exception " + e);
+        } finally {
+            close(preparedStatement);
+            try {
+                ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            } catch (ConnectionException e) {
+                LOGGER.error(e);
+            }
+        }
+    }
+
+
+    @Override
+    public List<User> readBannedUsers() throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        List<User> userList = new ArrayList<>();
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_BANNED_USERS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                userList.add(getUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Read banned users dao exception" + e);
+        }
+        return userList;
+    }
+
 }

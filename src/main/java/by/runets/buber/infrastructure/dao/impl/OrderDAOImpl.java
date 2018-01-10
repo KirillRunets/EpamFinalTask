@@ -61,7 +61,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         PreparedStatement preparedStatement = null;
         Order order = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_ID);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_PASSENGER_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -158,7 +158,8 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
         Order order = new Order();
-        List<Double> coordinates = new ArrayList<>();
+        List<Double> coordinates = null;
+
         order.setId(resultSet.getInt("t_id"));
         order.setDistance(resultSet.getDouble("distance"));
         order.setTripCost(resultSet.getDouble("trip_cost"));
@@ -169,6 +170,7 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         order.setOrderDate(resultSet.getDate("date"));
         order.setDriver(Optional.of(new User(resultSet.getInt("driver_id"))));
         order.setPassenger(Optional.of(new User(resultSet.getInt("passenger_id"))));
+
         return order;
     }
 }

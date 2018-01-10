@@ -35,12 +35,24 @@ public class RequestValidator {
     }
 
     public boolean isValidateDriverData(String id, String email, String firstName, String secondName, String birthDate, String phoneNumber, String rating, String tripAmount, String role){
-        return id != null && !id.isEmpty() && email != null && !email.isEmpty() && birthDate != null && !birthDate.isEmpty()
+        return id != null && !id.isEmpty()
+                && email != null && !email.isEmpty()
+                && birthDate != null && !birthDate.isEmpty()
                 && firstName != null && !firstName.isEmpty()
                 && secondName != null && !secondName.isEmpty()
                 && phoneNumber != null && !phoneNumber.isEmpty()
                 && rating != null && !rating.isEmpty()
                 && tripAmount != null && !tripAmount.isEmpty()
                 && role != null && !role.isEmpty();
+    }
+
+    public boolean isValidate(String string){
+        return string != null && !string.isEmpty();
+    }
+
+    public boolean isValidateBanData(String id, String date, String banId){
+        return id != null && !id.isEmpty()
+                && date != null && !date.isEmpty()
+                && banId != null && !banId.isEmpty();
     }
 }

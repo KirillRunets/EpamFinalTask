@@ -9,11 +9,10 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class CreateCarService {
     public void create(Car car) throws ServiceException {
-        AbstractDAO abstractDAO = null;
         try {
-            abstractDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
-            if (car != null){
-                abstractDAO.create(car);
+            AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+            if (car != null && carDAO != null){
+                carDAO.create(car);
             }
         } catch (DAOException e) {
             throw new ServiceException("Create service exception " + e);

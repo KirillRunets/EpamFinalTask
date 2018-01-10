@@ -4,7 +4,6 @@ public class NumberFormatLocaleFactory {
     public static String factory(String locale){
         String pattern = null;
         switch (locale){
-
             case "en_US":
                 pattern = "MM/dd/yyyy";
                 break;

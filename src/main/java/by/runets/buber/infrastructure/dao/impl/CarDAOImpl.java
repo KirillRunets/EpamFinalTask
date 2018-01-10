@@ -103,12 +103,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_CAR);
-            preparedStatement.setString(1, String.valueOf(car.getMark()));
-            preparedStatement.setString(2, String.valueOf(car.getModel()));
-            preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
-            preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
-            preparedStatement.setInt(5, car.getCarOwner().getId());
-            preparedStatement.setString(6, car.getCurrentLocation().toString());
+            setInsertPrepareStatement(preparedStatement, car);
             preparedStatement.executeUpdate();
             state = true;
         } catch (SQLException e) {
@@ -122,6 +117,23 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             }
         }
         return state;
+    }
+
+    private void setInsertPrepareStatement(PreparedStatement preparedStatement, Car car) throws SQLException {
+        preparedStatement.setString(1, car.getMark());
+        preparedStatement.setString(2, car.getModel());
+        preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
+        if (car.getLicensePlate() != null){
+            preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
+        } else{
+            preparedStatement.setNull(4, Types.INTEGER);
+        }
+        preparedStatement.setInt(5, car.getCarOwner().getId());
+        if (car.getCurrentLocation() != null){
+            preparedStatement.setString(6, car.getCurrentLocation().toString());
+        } else{
+            preparedStatement.setNull(6, Types.INTEGER);
+        }
     }
 
     @Override
@@ -165,7 +177,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
 
     private Car getCarFromResultSet(ResultSet resultSet) throws SQLException {
         Car car = new Car();
-        List<Double> coordinates = new ArrayList<>();
+        List<Double> coordinates = null;
         car.setId(resultSet.getInt("id"));
         car.setMark( resultSet.getString("mark"));
         car.setModel(resultSet.getString("model"));

@@ -16,14 +16,16 @@ public class UpdateUserService {
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-            AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+            AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
 
+            //if admin change user role
             if (user.getRole() != null){
                 userRoleDAO.updateUserRoleCommunication(user);
             }
+
             if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
                 if (user.getCar() != null){
-                    abstractDAO.update(user.getCar());
+                    carDAO.update(user.getCar());
                 }
             }
 
@@ -34,3 +36,5 @@ public class UpdateUserService {
         }
     }
 }
+
+

@@ -34,7 +34,17 @@ public class UserDAOTest {
     @Test
     public void testFindAll() throws DAOException {
         UserDAO dao = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+        System.out.println(dao.findAll());
         Assert.assertNotNull(dao.findAll());
     }
+
+    @Test
+    public void testReadBannedUsers() throws DAOException {
+        UserDAO dao = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+        System.out.println(dao.readBannedUsers());
+        Assert.assertNotNull(dao.readBannedUsers());
+    }
+
+
 
 }

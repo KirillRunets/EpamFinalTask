@@ -1,10 +1,9 @@
 package by.runets.buber.domain.entity;
 
-import java.util.Optional;
 
 public class Ban extends Entity {
-    private Optional<String> banType;
-    private Optional<String> banDescription;
+    private String banType;
+    private String banDescription;
 
     public Ban() {
     }
@@ -13,22 +12,22 @@ public class Ban extends Entity {
         super(id);
     }
 
-    public Ban(int id, Optional<String> banType, Optional<String> banDescription) {
+    public Ban(int id, String banType, String banDescription) {
         super(id);
         this.banType = banType;
         this.banDescription = banDescription;
     }
 
-    public Optional<String> getBanType() {
+    public String getBanType() {
         return banType;
     }
-    public void setBanType(Optional<String> banType) {
+    public void setBanType(String banType) {
         this.banType = banType;
     }
-    public Optional<String> getBanDescription() {
+    public String getBanDescription() {
         return banDescription;
     }
-    public void setBanDescription(Optional<String> banDescription) {
+    public void setBanDescription(String banDescription) {
         this.banDescription = banDescription;
     }
 

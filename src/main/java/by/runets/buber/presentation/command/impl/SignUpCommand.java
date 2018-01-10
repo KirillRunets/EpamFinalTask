@@ -25,17 +25,9 @@ public class SignUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
-
-        String email = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
-        String password = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
-        String firstName = req.getParameter(CommandParameter.PARAM_NAME_FIRST_NAME);
-        String secondName = req.getParameter(CommandParameter.PARAM_NAME_SECOND_NAME);
-        String role = req.getParameter(CommandParameter.PARAM_NAME_ROLE);
-
-        User user = new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
-
+        User user = init(req);
         try {
-            if (RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role)){
+            if (RequestValidator.getInstance().isValidateRegisterData(user.getEmail(), user.getPassword(), user.getFirstName(), user.getSecondName(), user.getRole().getRoleName())){
                 userService.registerUser(user);
                 page = JspPagePath.LOGIN_PAGE;
             }
@@ -45,7 +37,17 @@ public class SignUpCommand implements Command {
             req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE));
             page = JspPagePath.SIGN_UP_PAGE;
         }
-
         return page;
     }
+
+    private User init(HttpServletRequest req){
+        String email = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
+        String password = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
+        String firstName = req.getParameter(CommandParameter.PARAM_NAME_FIRST_NAME);
+        String secondName = req.getParameter(CommandParameter.PARAM_NAME_SECOND_NAME);
+        String role = req.getParameter(CommandParameter.PARAM_NAME_ROLE);
+
+        return new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
+    }
+
 }

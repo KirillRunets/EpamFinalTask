@@ -1,9 +1,6 @@
 package by.runets.buber.service;
 
-import by.runets.buber.application.service.user.DeleteUserService;
-import by.runets.buber.application.service.user.ReadUserService;
-import by.runets.buber.application.service.user.RegisterUserService;
-import by.runets.buber.application.service.user.UpdateUserService;
+import by.runets.buber.application.service.user.*;
 import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
@@ -17,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
+
 
 public class UserServiceTest {
     private User createUser;
@@ -81,4 +79,13 @@ public class UserServiceTest {
         updateUser.setCar(car);
         updateUserService.update(updateUser);
     }
+
+    @Test
+    public void testReadBannedUserService() throws ServiceException {
+        ReadBanUserService readBanUserService = new ReadBanUserService();
+        System.out.println(readBanUserService.read());
+        Assert.assertNotNull(readBanUserService.read());
+    }
+
+
 }

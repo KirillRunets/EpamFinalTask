@@ -1,13 +1,17 @@
 package by.runets.buber.application.service.car;
 
 import by.runets.buber.domain.entity.Car;
+import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.DAOType;
+import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
+import by.runets.buber.infrastructure.dao.UserDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReadCarService {
     public Car findCarByOwner(Integer id) throws ServiceException {
@@ -30,5 +34,52 @@ public class ReadCarService {
             throw new ServiceException("Find all cars exception " + e);
         }
         return cars;
+    }
+
+    public List<Car> findValidCars() throws ServiceException {
+        List<Car> carList = null;
+        List<User> userList = null;
+        try {
+        UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+            AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+            userList = userDAO.findAll();
+            carList = carDAO.findAll();
+            joinUserToCar(userList, carList);
+        } catch (DAOException e) {
+            throw new ServiceException("Find valid cars exception " + e);
+        }
+        return filterValidCar(carList);
+    }
+
+    private void joinUserToCar(List<User> userList, List<Car> carList){
+        userList.forEach(user -> {
+            carList.stream()
+                    .filter(car -> car.getCarOwner().getId() == user.getId())
+                    .forEach(car -> car.setCarOwner(user));
+        });
+    }
+
+    private List<Car> filterValidCar(List<Car> carList){
+        return carList.stream()
+                .filter(car -> car.getCarOwner().getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN))
+                .collect(Collectors.toList());
+    }
+
+    private Car getCarFromList(List<Car> cars, int id){
+        return cars.stream()
+                .filter(car -> car.getId() == id)
+                .findFirst()
+                .get();
+    }
+
+    public Car findCarById(int id) throws ServiceException {
+        List<Car> cars = null;
+        try {
+            AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+            cars = carDAO.findAll();
+        } catch (DAOException e) {
+            throw new ServiceException("Find all cars exception " + e);
+        }
+        return getCarFromList(cars, id);
     }
 }

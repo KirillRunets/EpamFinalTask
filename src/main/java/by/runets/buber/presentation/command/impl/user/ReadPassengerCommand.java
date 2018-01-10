@@ -2,6 +2,8 @@ package by.runets.buber.presentation.command.impl.user;
 
 import by.runets.buber.application.service.user.ReadUserService;
 import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
@@ -27,12 +29,13 @@ public class ReadPassengerCommand implements Command{
 
         try {
             passengerList = readUserService.find(UserRoleType.PASSENGER);
+            if (passengerList != null){
+                req.setAttribute(LabelParameter.PASSENGER_LIST_LABEL, passengerList);
+                page = JspPagePath.PASSENGER_ALL_INFO_PAGE;
+            }
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
-
-        //set list to attribute
-        //set page
 
         return page;
     }

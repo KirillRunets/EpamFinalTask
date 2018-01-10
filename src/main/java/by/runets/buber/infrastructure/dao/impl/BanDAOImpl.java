@@ -145,8 +145,8 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
     private Ban getBanFromResultSet(ResultSet resultSet) throws SQLException {
         Ban ban = new Ban();
         ban.setId(resultSet.getInt("b_id"));
-        ban.setBanType(Optional.ofNullable(resultSet.getString("b_name")));
-        ban.setBanDescription(Optional.ofNullable(resultSet.getString("b_description")));
+        ban.setBanType(resultSet.getString("b_name"));
+        ban.setBanDescription(resultSet.getString("b_description"));
         return ban;
     }
 }

@@ -3,6 +3,7 @@ package by.runets.buber.infrastructure.constant;
 public class DatabaseQueryConstant {
     private DatabaseQueryConstant(){}
     //user
+    public final static String SET_BAN_TO_USER = "UPDATE user SET ban=?, unban_date=?  WHERE id=?";
     public final static String FIND_ALL_USERS = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
@@ -19,28 +20,33 @@ public class DatabaseQueryConstant {
             "ON u.id = ur.u_id\n" +
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
-            "WHERE email=? AND password=?";
+            "WHERE BINARY email=? AND password=?";
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
     public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
     public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
+    public final static String FIND_BANNED_USERS = "SELECT id, email, password, first_name, second_name, ban, unban_date,  birth_date, phone_number, rating, trip_amount, bonus, r_name, r_id FROM user AS u\n" +
+            "INNER JOIN user_m2m_role AS ur\n" +
+            "ON u.id = ur.u_id\n" +
+            "INNER JOIN role AS r\n" +
+            "ON ur.ur_id = r.r_id\n" +
+            "WHERE ban IS NOT NULL AND unban_date IS NOT NULL";
     //car
-    public final static String FIND_ALL_CARS = "SELECT mark, model, release_date, license_plate, car_owner, current_location FROM car";
+    public final static String FIND_ALL_CARS = "SELECT id, mark, model, release_date, license_plate, car_owner, current_location FROM car";
     public final static String FIND_CAR_BY_OWNER = "SELECT id, mark, model, car_owner, release_date, license_plate, current_location FROM car WHERE car_owner=?";
     public final static String DELETE_CAR_BY_ID = "DELETE FROM car WHERE id=?";
     public final static String INSERT_INTO_CAR = "INSERT INTO car(mark, model, release_date, license_plate, car_owner, current_location) VALUES(?,?,?,?,?,?)";
     public final static String UPDATE_CAR_BY_ID = "UPDATE car SET mark=?, model=?, release_date=?, license_plate=?, car_owner=?, current_location=? WHERE id=?";
     //order
     public final static String FIND_ALL_ORDERS = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order";
-    public final static String FIND_ORDER_BY_ID = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order WHERE t_id=?";
+    public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM `order` WHERE passenger_id=?";
     public final static String DELETE_ORDER_BY_ID = "DELETE FROM order WHERE t_id=?";
     public final static String INSERT_INTO_ORDER = "INSERT INTO order(distance, trip_cost, departure_point,destination_point, date, driver_id, passenger_id) VALUES(?,?,?,?,?,?,?)";
     public final static String UPDATE_ORDER_BY_ID = "UPDATE order SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=? WHERE t_id=?";
 
     //ban
-    public final static String FIND_ALL_BANS = "SELECT b_name, b_description FROM ban_reason";
-    public final static String FIND_BAN_BY_ID = "SELECT b_name, b_description FROM ban_reason WHERE b_id=?";
+    public final static String FIND_ALL_BANS = "SELECT b_id, b_name, b_description FROM ban_reason";
+    public final static String FIND_BAN_BY_ID = "SELECT b_id, b_name, b_description FROM ban_reason WHERE b_id=?";
     public final static String DELETE_BAN_BY_ID = "DELETE FROM ban_reason WHERE b_id=?";
     public final static String INSERT_INTO_BAN = "INSERT INTO ban_reason(b_name, b_description) VALUES(?, ?)";
     public final static String UPDATE_BAN_BY_ID = "UPDATE ban_reason SET b_name=?, b_description=?";

@@ -15,26 +15,28 @@
             <a class="navbar-brand" href="">Buber</a>
         </div>
         <ul class="nav navbar-nav">
-            <li ><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home" bundle="${rb}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home"
+                                                                                                   bundle="${rb}"/></a>
+            </li>
             <li class="active"><a href="#"><fmt:message key="label.title" bundle="${rb}"/></a></li>
         </ul>
         <div class="top-lang-list">
             <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         </div>
         <div class="top-button">
-            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.LogOut" bundle="${rb}"/></button>
+            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
+                    key="label.LogOut" bundle="${rb}"/></button>
         </div>
     </div>
 </nav>
-<section class="my-section">
+<section class="my-section" id="table-section">
     <div class="container">
-        <table class="table">
+        <table id="driver-table" class="table">
             <h2><fmt:message key="label.driverInformation" bundle="${rb}"/></h2>
             <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
             <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
             <th><fmt:message key="label.email" bundle="${rb}"/></th>
             <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-            <th><fmt:message key="label.ban" bundle="${rb}"/></th>
             <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
             <th><fmt:message key="label.rating" bundle="${rb}"/></th>
             <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
@@ -45,12 +47,6 @@
                     <td>${driver.secondName}</td>
                     <td>${driver.email}</td>
                     <td>${driver.birthDate}</td>
-                    <c:if test="${empty driver.ban}">
-                        <td><fmt:message key="label.emptyBan" bundle="${rb}"/></td>
-                    </c:if>
-                    <c:if test="${not empty driver.ban}">
-                        <td>${driver.ban.banDescription}</td>
-                    </c:if>
                     <td>${driver.phoneNumber}</td>
                     <td>${driver.rating}</td>
                     <td>${driver.tripAmount}</td>
@@ -64,11 +60,17 @@
             </c:forEach>
         </table>
         <div class="button-container">
-            <button id="btn-load2" class="button-small" onclick="reLoad('/controller?command=load_edit_driver&user_id=')"><fmt:message key="label.edit" bundle="${rb}"/></button>
-            <button id="btn-load1" class="button-small" onclick="reLoad('/controller?command=delete_user&user_role=driver&user_id=')"><fmt:message key="label.delete" bundle="${rb}"/></button>
+            <button id="btn-load2" class="button-small" onclick="reLoad('/controller?command=load_edit_user&user_id=')">
+                <fmt:message key="label.edit" bundle="${rb}"/></button>
+            <button id="btn-load1" class="button-small"
+                    onclick="reLoad('/controller?command=delete_user&user_role=driver&user_id=')"><fmt:message
+                    key="label.delete" bundle="${rb}"/></button>
+            <button id="ban-button" class="button-small" onclick="reLoad('/controller?command=fill_ban_form&user_id=')">
+                <fmt:message key="label.ban" bundle="${rb}"/></button>
         </div>
     </div>
 </section>
+
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>

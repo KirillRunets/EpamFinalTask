@@ -9,6 +9,6 @@
     <meta charset="UTF-8">
 </head>
 <body class="main-body">
-    <jsp:forward page="jsp/main.jsp"/>
+<jsp:forward page="jsp/main.jsp"/>
 </body>
 </html>

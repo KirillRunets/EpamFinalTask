@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title><fmt:message key="label.title" bundle="${rb}"/></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">
@@ -39,6 +39,7 @@
                         <li><a href="${pageContext.request.contextPath}/controller?command=find_all_driver" class="social-icon"><i class="fa fa-users" aria-hidden="true"></i> <fmt:message key="label.showDriver"  bundle="${rb}" /></a></li>
                         <li><a href="${pageContext.request.contextPath}/controller?command=find_all_passenger" class="social-icon"><i class="fa fa-users" aria-hidden="true"></i> <fmt:message key="label.showPassenger"  bundle="${rb}" /></a></li>
                         <li><a href="${pageContext.request.contextPath}/jsp/authentication/signUp.jsp" class="social-icon"><i class="fa fa-user-plus" aria-hidden="true"></i> <fmt:message key="label.addUser"  bundle="${rb}" /></a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=show_banned_users" class="social-icon"><i class="fa fa-user-plus" aria-hidden="true"></i> <fmt:message key="label.ban"  bundle="${rb}" /></a></li>
                     </ul>
                 </div>
             </div>
@@ -47,10 +48,8 @@
                     <h2><i class="fa fa-taxi" aria-hidden="true"></i> <fmt:message key="label.car" bundle="${rb}" /></h2>
                     <hr>
                     <ul>
-                        <li><a href="" class="social-icon"><i class="fa fa-taxi" aria-hidden="true"></i> <fmt:message key="label.showTaxi"  bundle="${rb}" /></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-car" aria-hidden="true"></i> <fmt:message key="label.addTaxi"  bundle="${rb}" /></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-minus-circle" aria-hidden="true"></i> <fmt:message key="label.deleteTaxi"  bundle="${rb}" /></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-cog" aria-hidden="true"></i> <fmt:message key="label.editTaxi"  bundle="${rb}" /></a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=find_all_valid_cars" class="social-icon"><i class="fa fa-taxi" aria-hidden="true"></i> <fmt:message key="label.showTaxi"  bundle="${rb}" /></a></li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=load_valid_car_to_add"" class="social-icon"><i class="fa fa-car" aria-hidden="true"></i> <fmt:message key="label.addTaxi"  bundle="${rb}" /></a></li>
                     </ul>
                 </div>
             </div>

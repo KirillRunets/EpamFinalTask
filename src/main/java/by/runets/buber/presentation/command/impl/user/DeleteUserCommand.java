@@ -26,32 +26,39 @@ public class DeleteUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req)  {
-
         String page = null;
-        List<User> userList = null;
 
         String id = req.getParameter(RequestParameter.USER_ID);
         String role = req.getParameter(RequestParameter.USER_ROLE);
+
         try {
             deleteUserService.delete(id, role);
-            if (role.equalsIgnoreCase(UserRoleType.DRIVER)){
-                userList = new ReadUserService().find(UserRoleType.DRIVER);
-                if (userList != null){
-                    req.setAttribute(LabelParameter.DRIVER_LIST_LABEL, userList);
-                }
-                page = JspPagePath.DRIVER_ALL_INFO_PAGE;
-            }
-            if (role.equalsIgnoreCase(UserRoleType.PASSENGER)){
-                userList = new ReadUserService().find(UserRoleType.PASSENGER);
-                if (userList != null){
-                    //req.setAttribute(LabelParameter.DRIVER_LIST_LABEL, userList);
-                }
-                page = JspPagePath.DRIVER_HOME_PAGE;
-            }
+            page = switchUserRole(req, role);
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
 
+        return page;
+    }
+
+    private String setDataToPageByRole(HttpServletRequest req, String role, String listLabel) throws ServiceException {
+        List<User> userList = new ReadUserService().find(role);
+        if (userList != null){
+            req.setAttribute(listLabel, userList);
+        }
+        return role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE;
+    }
+
+    private String switchUserRole(HttpServletRequest req, String role) throws ServiceException {
+        String page = null;
+        switch (role.toUpperCase()){
+            case UserRoleType.DRIVER:
+                page = setDataToPageByRole(req, UserRoleType.DRIVER, LabelParameter.DRIVER_LIST_LABEL);
+                break;
+            case UserRoleType.PASSENGER:
+                page = setDataToPageByRole(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER_LIST_LABEL);
+                break;
+        }
         return page;
     }
 }
