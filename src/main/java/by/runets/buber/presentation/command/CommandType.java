@@ -24,7 +24,7 @@ public enum CommandType {
     FIND_ALL_PASSENGER(new ReadPassengerCommand(new ReadUserService())),
     DELETE_USER(new DeleteUserCommand(new DeleteUserService())),
     LOAD_EDIT_USER(new LoadEditUserPageCommand(new ReadUserService())),
-    UPDATE_DRIVER(new UpdateUserCommand(new UpdateUserService())),
+    EDIT_USER(new UpdateUserCommand(new UpdateUserService())),
     HOME_PAGE(new HomePageCommand()),
     BAN_USER(new SetBanCommand(new SetBanService())),
     UNBAN_USER(new DeleteBanCommand(new RevokeBanService())),

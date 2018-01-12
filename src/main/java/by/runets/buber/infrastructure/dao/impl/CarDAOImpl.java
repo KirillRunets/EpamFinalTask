@@ -19,14 +19,16 @@ import java.util.Optional;
 public class CarDAOImpl implements AbstractDAO<Integer, Car> {
     private static CarDAOImpl instance;
 
-    private CarDAOImpl(){}
+    private CarDAOImpl() {
+    }
 
-    public static CarDAOImpl getInstance(){
-        if (instance == null){
+    public static CarDAOImpl getInstance() {
+        if (instance == null) {
             instance = new CarDAOImpl();
         }
         return instance;
     }
+
     @Override
     public List<Car> findAll() throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
@@ -35,18 +37,14 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_CARS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 cars.add(getCarFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Selection cars exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return cars;
     }
@@ -60,18 +58,14 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_CAR_BY_OWNER);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 car = getCarFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException("Find car exception: " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return car;
     }
@@ -87,12 +81,8 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Delete car exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -109,12 +99,8 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return state;
     }
@@ -123,15 +109,15 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         preparedStatement.setString(1, car.getMark());
         preparedStatement.setString(2, car.getModel());
         preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
-        if (car.getLicensePlate() != null){
+        if (car.getLicensePlate() != null) {
             preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
-        } else{
+        } else {
             preparedStatement.setNull(4, Types.INTEGER);
         }
         preparedStatement.setInt(5, car.getCarOwner().getId());
-        if (car.getCurrentLocation() != null){
+        if (car.getCurrentLocation() != null) {
             preparedStatement.setString(6, car.getCurrentLocation().toString());
-        } else{
+        } else {
             preparedStatement.setNull(6, Types.INTEGER);
         }
     }
@@ -144,7 +130,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_CAR_BY_ID);
             preparedStatement.setString(1, String.valueOf(car.getMark()));
             preparedStatement.setString(2, String.valueOf(car.getModel()));
-            if (car.getReleaseDate() == null){
+            if (car.getReleaseDate() == null) {
                 preparedStatement.setNull(3, Types.INTEGER);
             } else {
                 preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
@@ -156,7 +142,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
                 preparedStatement.setInt(5, car.getCarOwner().getId());
             }
             preparedStatement.setInt(5, car.getCarOwner().getId());
-            if (car.getCurrentLocation() == null){
+            if (car.getCurrentLocation() == null) {
                 preparedStatement.setString(6, new Point().toString());
             } else {
                 preparedStatement.setString(6, car.getCurrentLocation().toString());
@@ -166,12 +152,8 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -179,13 +161,13 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         Car car = new Car();
         List<Double> coordinates = null;
         car.setId(resultSet.getInt("id"));
-        car.setMark( resultSet.getString("mark"));
+        car.setMark(resultSet.getString("mark"));
         car.setModel(resultSet.getString("model"));
         car.setReleaseDate(resultSet.getDate("release_date"));
         car.setLicensePlate(resultSet.getString("license_plate"));
         car.setCarOwner(new User(resultSet.getInt("car_owner")));
         coordinates = LocationParser.parseLocation(resultSet.getString("current_location"));
-        if (coordinates != null && !coordinates.isEmpty()){
+        if (coordinates != null && !coordinates.isEmpty()) {
             car.setCurrentLocation(new Point(coordinates.get(0), coordinates.get(1)));
         } else {
             car.setCurrentLocation(new Point());

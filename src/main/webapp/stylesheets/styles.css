@@ -24,9 +24,8 @@ body{
     min-height: 100vh;
 }
 
-table tbody tr:first-child td {
-    color: red;
-    /*display: none;*/
+.button-container{
+    margin-bottom: 60px;
 }
 
 .button-small{
@@ -437,4 +436,27 @@ p[id="email"]{
     background: #fff;
     display: block;
     min-height: 100vh;
+}
+
+.wrap{
+    margin-left: -150px;
+}
+
+.driver-form{
+    display: block;
+    padding: 0 50px;
+    height: 500px;
+}
+
+.driver-form input{
+    height: 35px;
+    width: 100%;
+    margin: 10px 0px;
+    line-height: 0.8;
+    padding: 0 10px;
+}
+
+.driver-form button{
+    width: 50%;
+    float: right;
 }

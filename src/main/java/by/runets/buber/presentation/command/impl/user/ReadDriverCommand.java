@@ -40,4 +40,8 @@ public class ReadDriverCommand implements Command {
 
         return page;
     }
+
+    /*private void checkAuthorizedUser(HttpServletRequest req){
+        User user = req.getSession(false).getAttribute(UserRoleType)
+    }*/
 }

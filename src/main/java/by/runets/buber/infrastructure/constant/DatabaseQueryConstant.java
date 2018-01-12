@@ -15,17 +15,17 @@ public class DatabaseQueryConstant {
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
             "WHERE id=?";
-    public final static String FIND_USER_BY_EMAIL_PASSWORD = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
+    public final static String FIND_USER_BY_EMAIL_PASSWORD = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount,  r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
-            "WHERE BINARY email=? AND password=?";
+            "WHERE BINARY email=? AND BINARY password=?";
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
     public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
     public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    public final static String FIND_BANNED_USERS = "SELECT id, email, password, first_name, second_name, ban, unban_date,  birth_date, phone_number, rating, trip_amount, bonus, r_name, r_id FROM user AS u\n" +
+    public final static String FIND_BANNED_USERS = "SELECT id, email, password, first_name, second_name, ban, unban_date, birth_date, phone_number, rating, trip_amount, bonus, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
             "INNER JOIN role AS r\n" +
@@ -39,7 +39,14 @@ public class DatabaseQueryConstant {
     public final static String UPDATE_CAR_BY_ID = "UPDATE car SET mark=?, model=?, release_date=?, license_plate=?, car_owner=?, current_location=? WHERE id=?";
     //order
     public final static String FIND_ALL_ORDERS = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order";
-    public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM `order` WHERE passenger_id=?";
+    public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
+            "INNER JOIN user AS u\n" +
+            "ON u.id = `order`.driver_id\n" +
+            "WHERE passenger_id=?;";
+    public final static String FIND_ORDER_BY_DRIVER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
+            "INNER JOIN user AS u\n" +
+            "ON u.id = `order`.passenger_id\n" +
+            "WHERE driver_id=?;";
     public final static String DELETE_ORDER_BY_ID = "DELETE FROM order WHERE t_id=?";
     public final static String INSERT_INTO_ORDER = "INSERT INTO order(distance, trip_cost, departure_point,destination_point, date, driver_id, passenger_id) VALUES(?,?,?,?,?,?,?)";
     public final static String UPDATE_ORDER_BY_ID = "UPDATE order SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=? WHERE t_id=?";

@@ -20,7 +20,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="">Buber</a>
+                <a class="navbar-brand" href="#">Buber</a>
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#"><fmt:message key="label.orders" bundle="${rb}" /></a></li>
@@ -31,34 +31,7 @@
             </div>
         </div>
     </nav>
-    <div class="nav-side-menu">
-        <div class="brand">Brand Logo</div>
-        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
-        <div class="menu-list">
-
-            <ul id="menu-content" class="menu-content collapse out">
-                <li class="active">
-                    <a href="#"><i class="fa fa-globe fa-lg"></i><fmt:message key="label.orders" bundle="${rb}" /></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-user fa-lg"></i> <fmt:message key="label.profile" bundle="${rb}" />
-
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <a href="#"><i class="fa fa-car fa-lg"></i><fmt:message key="label.vehicle" bundle="${rb}" /></a>
-                    </a>
-                </li>
-
-                <li>
-                    <a><i class="fa fa-gift fa-lg"></i><fmt:message key="label.rewards" bundle="${rb}" /></a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <c:import url="${pageContext.request.contextPath}/jsp/driver/driver_sidebar.jsp"/>
     <section class="my-section">
         <div class="content-wrapper">
             <div class="container-fluid">
@@ -95,24 +68,19 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <c:forEach items="${orderList}" var="order">
-                                    <tr class="line" id="${order.id}">
-                                        <td>${order.date}</td>
-                                        <td>${order.cost}</td>
-                                        <td>${order.email}</td>
-                                        <td>${order.birthDate}</td>
-                                        <td>${user.phoneNumber}</td>
-                                        <td>${user.rating}</td>
-                                        <td>${user.tripAmount}</td>
-                                        <td>${user.role.roleName}</td>
-                                        <c:if test="${not empty user.car.mark}">
-                                            <td>${user.car.mark}</td>
-                                        </c:if>
-                                        <td>${user.ban.banType}</td>
-                                        <td>${user.ban.banDescription}</td>
-                                        <td>${user.unBaneDate}</td>
-                                    </tr>
-                                </c:forEach>
+                                    <c:forEach items="${sessionScope.USER.orderSet}" var="order">
+                                        <tr class="line" id="${order.id}">
+                                            <td>${order.orderDate}</td>
+                                            <td>${order.tripCost}</td>
+                                            <td>${order.distance}</td>
+                                            <td>${order.startPoint.get()}</td>
+                                            <td>${order.destinationPoint.get()}</td>
+                                            <td>${order.passenger.get().firstName}</td>
+                                            <td>${order.passenger.get().secondName}</td>
+                                            <td>${order.passenger.get().phoneNumber}</td>
+                                            <td>${order.passenger.get().rating}</td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

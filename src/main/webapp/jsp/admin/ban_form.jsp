@@ -50,7 +50,7 @@
             </c:forEach>
             </table>
             <input type="date" name="unbanDate"/>
-            <button id="ban-button" type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
+            <button id="ban-button" type="submit" onclick="banCommand();" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
         </form>
     </div>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>

@@ -31,15 +31,14 @@ public class UpdateUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String page = null;
-
-        User logInUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
-        boolean isAdmin = logInUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
+        boolean isAdmin = false;
 
         try {
             User user = init(req);
+            isAdmin = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
             if (user != null){
                 updateUserService.update(user);
-                page = isAdmin ? switchPageByAdmin(user.getRole().getRoleName(), req) : switchPageByUser(user.getRole().getRoleName(), req);
+                page = isAdmin ? switchPageByAdmin(user, req) : switchPageByUser(user, req);
             }
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
@@ -48,27 +47,29 @@ public class UpdateUserCommand implements Command {
         return page;
     }
 
-    private String switchPageByAdmin(String role, HttpServletRequest req) throws ServiceException {
+    private String switchPageByAdmin(User user, HttpServletRequest req) throws ServiceException {
         String page = null;
-        switch (role){
+        switch (user.getRole().getRoleName()){
             case UserRoleType.DRIVER:
-                page = setDataToPage(req, UserRoleType.DRIVER, LabelParameter.DRIVER_LIST_LABEL, true);
+                page = setDataToPage(req, UserRoleType.DRIVER, LabelParameter.DRIVER_LIST_LABEL);
                 break;
             case UserRoleType.PASSENGER:
-                page = setDataToPage(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER_LIST_LABEL, true);
+                page = setDataToPage(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER_LIST_LABEL);
                 break;
         }
         return page;
     }
 
-    private String switchPageByUser(String role, HttpServletRequest req) throws ServiceException {
+    private String switchPageByUser(User user, HttpServletRequest req) throws ServiceException {
         String page = null;
-        switch (role){
+        switch (user.getRole().getRoleName()){
             case UserRoleType.DRIVER:
-                page = setDataToPage(req, UserRoleType.DRIVER, LabelParameter.DRIVER, false);
+                req.getSession(false).setAttribute(UserRoleType.USER, user);
+                page = JspPagePath.DRIVER_PROFILE_PAGE;
                 break;
             case UserRoleType.PASSENGER:
-                page = setDataToPage(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER, false);
+                req.getSession(false).setAttribute(UserRoleType.USER, user);
+                page = JspPagePath.PASSENGER_PROFILE_PAGE;
                 break;
         }
         return page;
@@ -76,6 +77,7 @@ public class UpdateUserCommand implements Command {
 
     private User init(HttpServletRequest req) throws ParseException {
         User user = null;
+        User sessionUser = (User) req.getSession().getAttribute(UserRoleType.USER);
         String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
 
         String id = req.getParameter(RequestParameter.USER_ID);
@@ -90,17 +92,33 @@ public class UpdateUserCommand implements Command {
         String numberFormatPattern = NumberFormatLocaleFactory.factory(locale);
 
         if (RequestValidator.getInstance().isValidateDriverData(id, email, firstName, secondName, birthDate, rating, tripAmount, phoneNumber, role)) {
-            user = new User(Integer.parseInt(id), email, firstName, secondName, new SimpleDateFormat(numberFormatPattern).parse(birthDate), Double.parseDouble(rating), Integer.parseInt(tripAmount), phoneNumber, new Role(role));
+            switch (sessionUser.getRole().getRoleName().toUpperCase()){
+                case UserRoleType.ADMIN:
+                    user = new User(Integer.parseInt(id), email, firstName, secondName, new SimpleDateFormat(numberFormatPattern).parse(birthDate), Double.parseDouble(rating), Integer.parseInt(tripAmount), phoneNumber, new Role(role));
+                    break;
+                case UserRoleType.DRIVER:
+                case UserRoleType.PASSENGER:
+                    user = sessionUser;
+                    user.setEmail(email);
+                    user.setFirstName(firstName);
+                    user.setSecondName(secondName);
+                    user.setBirthDate(new SimpleDateFormat(numberFormatPattern).parse(birthDate));
+                    user.setRating(Double.parseDouble(rating));
+                    user.setTripAmount(Integer.parseInt(tripAmount));
+                    user.setPhoneNumber(phoneNumber);
+                    user.setRole(new Role(role));
+                    break;
+            }
         }
+
         return user;
     }
 
-    private String setDataToPage(HttpServletRequest req, String role, String listLabel, boolean isAdmin) throws ServiceException {
+    private String setDataToPage(HttpServletRequest req, String role, String listLabel) throws ServiceException {
         List<User> userList = new ReadUserService().find(role);
-        if (userList != null){
+        if (userList != null && listLabel != null){
             req.setAttribute(listLabel, userList);
         }
-        return isAdmin ? role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE
-                : role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_HOME_PAGE : JspPagePath.PASSENGER_HOME_PAGE;
+        return role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE;
     }
 }

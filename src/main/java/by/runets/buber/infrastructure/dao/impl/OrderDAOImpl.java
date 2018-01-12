@@ -5,27 +5,29 @@ import by.runets.buber.domain.entity.Point;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
+import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
+import by.runets.buber.infrastructure.dao.OrderDAO;
 import by.runets.buber.infrastructure.dao.parser.LocationParser;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
+public class OrderDAOImpl implements OrderDAO {
     private static OrderDAOImpl instance;
 
-    private OrderDAOImpl(){}
+    private OrderDAOImpl() {
+    }
 
-    public static OrderDAOImpl getInstance(){
-        if (instance == null){
+    public static OrderDAOImpl getInstance() {
+        if (instance == null) {
             instance = new OrderDAOImpl();
         }
         return instance;
@@ -39,18 +41,14 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_ORDERS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Selection orders exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return orders;
     }
@@ -64,18 +62,14 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_PASSENGER_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 order = getOrderFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException("Find order exception: " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return order;
     }
@@ -91,12 +85,8 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         } catch (SQLException e) {
             throw new DAOException("Delete order exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -119,12 +109,8 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return state;
     }
@@ -147,12 +133,8 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -172,5 +154,87 @@ public class OrderDAOImpl implements AbstractDAO<Integer, Order> {
         order.setPassenger(Optional.of(new User(resultSet.getInt("passenger_id"))));
 
         return order;
+    }
+
+    private Order getOrderFromResultSet(ResultSet resultSet, String role) throws SQLException {
+        Order order = new Order();
+        List<Double> coordinates = null;
+
+        order.setId(resultSet.getInt("t_id"));
+        order.setDistance(resultSet.getDouble("distance"));
+        order.setTripCost(resultSet.getDouble("trip_cost"));
+        coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
+        order.setStartPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
+        coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
+        order.setDestinationPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
+        order.setOrderDate(resultSet.getDate("date"));
+        switch (role) {
+            case UserRoleType.DRIVER:
+                int id = resultSet.getInt("passenger_id");
+                String email = resultSet.getString("email");
+                String firstName = resultSet.getString("first_name");
+                String secondName = resultSet.getString("second_name");
+                Date birthDate = resultSet.getDate("birth_date");
+                int tripAmount = resultSet.getInt("trip_amount");
+                String phoneNumber = resultSet.getString("phone_number");
+                int rating = resultSet.getInt("rating");
+                order.setPassenger(Optional.of(new User(id, email, firstName, secondName, birthDate, rating, tripAmount, phoneNumber)));
+                break;
+            case UserRoleType.PASSENGER:
+                id = resultSet.getInt("driver_id");
+                email = resultSet.getString("email");
+                firstName = resultSet.getString("first_name");
+                secondName = resultSet.getString("second_name");
+                birthDate = resultSet.getDate("birth_date");
+                tripAmount = resultSet.getInt("trip_amount");
+                phoneNumber = resultSet.getString("phone_number");
+                rating = resultSet.getInt("rating");
+                order.setDriver(Optional.of(new User(id, email, firstName, secondName, birthDate, rating, tripAmount, phoneNumber)));
+                break;
+        }
+
+        return order;
+    }
+
+    @Override
+    public Set<Order> findAllOrdersByDriverId(Integer id) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        Set<Order> orders = new LinkedHashSet<>();
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_DRIVER_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(getOrderFromResultSet(resultSet, UserRoleType.DRIVER));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find order list by id exception: " + e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement);
+        }
+        return orders;
+    }
+
+    @Override
+    public Set<Order> findAllOrdersByPassengerId(Integer id) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        Set<Order> orders = new LinkedHashSet<>();
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ORDER_BY_PASSENGER_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(getOrderFromResultSet(resultSet, UserRoleType.PASSENGER));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find order list by id exception: " + e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement);
+        }
+        return orders;
     }
 }

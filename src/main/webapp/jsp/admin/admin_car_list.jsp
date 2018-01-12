@@ -7,13 +7,16 @@
 <html>
 <head>
     <title><fmt:message key="label.carInfo" bundle="${rb}"/></title>
+    <link href="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">
+    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
 </head>
-<body>
+<body class="custom-body">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -32,33 +35,62 @@
         </div>
     </nav>
     <section class="my-section">
-        <div class="container">
-            <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
-                <input type="hidden" name="command" id="car_command_id" value="">
-                <input type="hidden" name="car_id" id="car_id" value="">
-                <table class="table">
-                    <h2><fmt:message key="label.carInfo" bundle="${rb}"/></h2>
-                    <th><fmt:message key="label.mark" bundle="${rb}"/></th>
-                    <th><fmt:message key="label.model" bundle="${rb}"/></th>
-                    <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
-                    <c:forEach items="${adminCarList}" var="car">
-                        <tr class="line" id="${car.id}">
-                            <td>${car.mark}</td>
-                            <td>${car.model}</td>
-                            <td>${car.releaseDate}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <div class="button-container">
-                    <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message key="label.delete" bundle="${rb}"/></button>
-                    <button id="btn-load2" class="button-small" onclick="loadCommand('car');"><fmt:message key="label.edit" bundle="${rb}"/></button>
+        <div class="wrap">
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <i class="fa fa-table"></i> Data Table Example</div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                                    <input type="hidden" name="command" id="car_command_id" value="">
+                                    <input type="hidden" name="car_id" id="car_id" value="">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th><fmt:message key="label.mark" bundle="${rb}"/></th>
+                                            <th><fmt:message key="label.model" bundle="${rb}"/></th>
+                                            <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th><fmt:message key="label.mark" bundle="${rb}"/></th>
+                                            <th><fmt:message key="label.model" bundle="${rb}"/></th>
+                                            <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        <c:forEach items="${adminCarList}" var="car">
+                                            <tr class="line" id="${car.id}">
+                                                <td>${car.mark}</td>
+                                                <td>${car.model}</td>
+                                                <td>${car.releaseDate}</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message key="label.delete" bundle="${rb}"/></button>
+                            <button id="btn-load2" class="button-small" onclick="loadCommand('car');"><fmt:message key="label.edit" bundle="${rb}"/></button>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
-    <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

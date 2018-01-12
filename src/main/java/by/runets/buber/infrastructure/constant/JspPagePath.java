@@ -6,7 +6,9 @@ public class JspPagePath {
     public final static String LOGIN_PAGE = "jsp/authentication/logIn.jsp";
     public final static String ERROR_PAGE = "";
 
+    public final static String DRIVER_PROFILE_PAGE = "/jsp/driver/driver_profile.jsp";
     public final static String DRIVER_HOME_PAGE = "/jsp/driver/driver_home.jsp";
+    public final static String PASSENGER_PROFILE_PAGE = "/jsp/passenger/passenger_profile.jsp";
     public final static String PASSENGER_HOME_PAGE = "/jsp/passenger/passenger_home.jsp";
     public final static String ADMIN_HOME_PAGE = "/jsp/admin/admin_home.jsp";
     public final static String SIGN_UP_PAGE = "jsp/authentication/signUp.jsp";

@@ -1,6 +1,8 @@
 package by.runets.buber.application.validation;
 
 
+import by.runets.buber.infrastructure.constant.ValidationConstant;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,23 +29,28 @@ public class RequestValidator {
     }
 
     public boolean isValidateLogInData(String email, String password) {
-        return email != null && !email.isEmpty() && password != null && !password.isEmpty();
+        return isStringEqualsPattern(email, ValidationConstant.EMAIL_PATTERN)
+                && isStringEqualsPattern(password, ValidationConstant.PASSWORD_PATTERN);
     }
 
     public boolean isValidateRegisterData(String email, String password, String firstName, String secondName, String role){
-        return email != null && !email.isEmpty() && password != null && !password.isEmpty() && firstName != null && !firstName.isEmpty()&& secondName != null && !secondName.isEmpty()&& role != null && !role.isEmpty();
+        return isStringEqualsPattern(email, ValidationConstant.EMAIL_PATTERN)
+                && isStringEqualsPattern(password, ValidationConstant.PASSWORD_PATTERN)
+                && isStringEqualsPattern(firstName, ValidationConstant.NAME_PATTERN)
+                && isStringEqualsPattern(secondName, ValidationConstant.NAME_PATTERN)
+                && isStringEqualsPattern(role, ValidationConstant.USER_ROLE_PATTERN);
     }
 
     public boolean isValidateDriverData(String id, String email, String firstName, String secondName, String birthDate, String phoneNumber, String rating, String tripAmount, String role){
-        return id != null && !id.isEmpty()
-                && email != null && !email.isEmpty()
+        return isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN)
+                && isStringEqualsPattern(email, ValidationConstant.EMAIL_PATTERN)
                 && birthDate != null && !birthDate.isEmpty()
-                && firstName != null && !firstName.isEmpty()
-                && secondName != null && !secondName.isEmpty()
-                && phoneNumber != null && !phoneNumber.isEmpty()
-                && rating != null && !rating.isEmpty()
-                && tripAmount != null && !tripAmount.isEmpty()
-                && role != null && !role.isEmpty();
+                && isStringEqualsPattern(firstName, ValidationConstant.NAME_PATTERN)
+                && isStringEqualsPattern(secondName, ValidationConstant.NAME_PATTERN)
+                && isStringEqualsPattern(phoneNumber, ValidationConstant.PHONE_NUMBER_PATTERN)
+                && isStringEqualsPattern(rating, ValidationConstant.FLOAT_NUMBER_PATTERN)
+                && isStringEqualsPattern(tripAmount, ValidationConstant.INTEGER_NUMBER_PATTERN)
+                && isStringEqualsPattern(role, ValidationConstant.USER_ROLE_PATTERN);
     }
 
     public boolean isValidate(String string){
@@ -51,8 +58,8 @@ public class RequestValidator {
     }
 
     public boolean isValidateBanData(String id, String date, String banId){
-        return id != null && !id.isEmpty()
+        return  isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN)
                 && date != null && !date.isEmpty()
-                && banId != null && !banId.isEmpty();
+                && isStringEqualsPattern(banId, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
 }

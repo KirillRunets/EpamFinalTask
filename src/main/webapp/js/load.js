@@ -19,18 +19,9 @@ $(document).ready(function() {
             $("#btn-load2").show();
             $("#ban-button").show();
             $("#bonus-button").show();
-            document.getElementById('ban_id').value = selectedRowId;
         }
     });
 });
-
-function getSelectedRowId() {
-    return selectedRowId;
-}
-
-function reLoad(command) {
-    window.location.href = command + selectedRowId;
-}
 
 function redirectPage(uri) {
     window.location.href = uri;
@@ -43,23 +34,18 @@ function deleteCommand(type) {
             document.getElementById('car_id').value = selectedRowId;
             break;
         case "user":
+            document.getElementById('user_command_id').value = 'delete_user';
+            document.getElementById('user_id').value = selectedRowId;
             break;
         case "ban":
+            document.getElementById('ban_command_id').value = 'unban_user';
+            document.getElementById('user_id').value = selectedRowId;
             break;
     }
 }
 
-function editCommand(type) {
-    switch (type){
-        case "car":
-            document.getElementById('car_command_id').value = 'edit_car';
-            document.getElementById('car_id').value = selectedRowId;
-            break;
-        case "user":
-            break;
-        case "ban":
-            break;
-    }
+function banCommand() {
+    document.getElementById('ban_id').value = selectedRowId;
 }
 
 function loadCommand(type) {
@@ -68,9 +54,14 @@ function loadCommand(type) {
             document.getElementById('car_command_id').value = 'load_valid_car_to_edit';
             document.getElementById('car_id').value = selectedRowId;
             break;
-        case "user":
+        case 'user':
+            document.getElementById('user_command_id').value = 'load_edit_user';
+            document.getElementById('user_id').value = selectedRowId;
             break;
-        case "ban":
+        case 'ban':
+            document.getElementById('user_command_id').value = 'fill_ban_form';
+            document.getElementById('user_id').value = selectedRowId;
             break;
     }
+
 }

@@ -1,7 +1,5 @@
 package by.runets.buber.infrastructure.constant;
 
-import by.runets.buber.infrastructure.dao.UserRoleDAO;
-
 public class UserRoleType {
     private UserRoleType(){}
 

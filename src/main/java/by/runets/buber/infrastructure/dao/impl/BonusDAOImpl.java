@@ -18,14 +18,16 @@ import java.util.Optional;
 public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     private static BonusDAOImpl instance;
 
-    private BonusDAOImpl(){}
+    private BonusDAOImpl() {
+    }
 
-    public static BonusDAOImpl getInstance(){
-        if (instance == null){
+    public static BonusDAOImpl getInstance() {
+        if (instance == null) {
             instance = new BonusDAOImpl();
         }
         return instance;
     }
+
     @Override
     public List<Bonus> findAll() throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
@@ -34,22 +36,17 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_BONUSES);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 bonuses.add(getBonusFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Selection bonuses exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return bonuses;
     }
-
 
 
     @Override
@@ -61,18 +58,15 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_BONUS_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 bonus = getBonusFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException("Find bonus exception: " + e);
         } finally {
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+
         }
         return bonus;
     }
@@ -88,12 +82,8 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Delete bonus exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -111,12 +101,8 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return state;
     }
@@ -134,12 +120,8 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Update exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 

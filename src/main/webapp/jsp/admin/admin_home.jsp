@@ -8,8 +8,8 @@
 <head>
     <meta charset="UTF-8">
     <title><fmt:message key="label.title" bundle="${rb}"/></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">

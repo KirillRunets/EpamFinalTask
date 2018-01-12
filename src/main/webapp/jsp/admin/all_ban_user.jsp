@@ -7,8 +7,15 @@
 <html>
 <head>
     <title><fmt:message key="label.title" bundle="${rb}"/></title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
+    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
 </head>
-<body>
+<body class="custom-body">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -27,57 +34,96 @@
     </div>
 </nav>
 <section class="my-section">
-    <div class="container">
-        <table class="table">
-            <h2><fmt:message key="label.userBannedInfo" bundle="${rb}"/></h2>
-            <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
-            <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-            <th><fmt:message key="label.email" bundle="${rb}"/></th>
-            <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-            <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
-            <th><fmt:message key="label.rating" bundle="${rb}"/></th>
-            <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-            <c:if test="${not empty driver.car.mark}">
-                <th><fmt:message key="label.car" bundle="${rb}"/></th>
-            </c:if>
-            <th><fmt:message key="label.role" bundle="${rb}"/></th>
-            <th><fmt:message key="label.ban" bundle="${rb}"/></th>
-            <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
-            <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
-            <c:forEach items="${userList}" var="user">
-                <c:if test="${not empty userList}">
-                    <tr class="line" id="${user.id}">
-                        <td>${user.firstName}</td>
-                        <td>${user.secondName}</td>
-                        <td>${user.email}</td>
-                        <td>${user.birthDate}</td>
-                        <td>${user.phoneNumber}</td>
-                        <td>${user.rating}</td>
-                        <td>${user.tripAmount}</td>
-                        <td>${user.role.roleName}</td>
-                        <c:if test="${not empty user.car.mark}">
-                            <td>${user.car.mark}</td>
-                        </c:if>
-                        <td>${user.ban.banType}</td>
-                        <td>${user.ban.banDescription}</td>
-                        <td>${user.unBaneDate}</td>
-                    </tr>
-                </c:if>
-                <c:if test="${empty userList}">
-                    <tr>
-                        <td><fmt:message key="label.emptyList" bundle="${rb}"/></td>
-                    </tr>
-                </c:if>
-            </c:forEach>
-        </table>
-        <div class="button-container">
-            <button id="btn-load1" class="button-small" onclick="reLoad('/controller?command=unban_user&user_id=')"><fmt:message key="label.delete" bundle="${rb}"/></button>
+    <div class="wrap">
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Data Table Example</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" id="ban_command_id" value="">
+                                <input type="hidden" name="user_id" id="user_id" value="">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.email" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.rating" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
+                                        <c:if test="${not empty driver.car.mark}">
+                                            <th><fmt:message key="label.car" bundle="${rb}"/></th>
+                                        </c:if>
+                                        <th><fmt:message key="label.role" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.ban" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.email" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.rating" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
+                                        <c:if test="${not empty driver.car.mark}">
+                                            <th><fmt:message key="label.car" bundle="${rb}"/></th>
+                                        </c:if>
+                                        <th><fmt:message key="label.role" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.ban" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <c:forEach items="${userList}" var="user">
+                                        <c:if test="${not empty userList}">
+                                            <tr class="line" id="${user.id}">
+                                                <td>${user.firstName}</td>
+                                                <td>${user.secondName}</td>
+                                                <td>${user.email}</td>
+                                                <td>${user.birthDate}</td>
+                                                <td>${user.phoneNumber}</td>
+                                                <td>${user.rating}</td>
+                                                <td>${user.tripAmount}</td>
+                                                <td>${user.role.roleName}</td>
+                                                <c:if test="${not empty user.car.mark}">
+                                                    <td>${user.car.mark}</td>
+                                                </c:if>
+                                                <td>${user.ban.banType}</td>
+                                                <td>${user.ban.banDescription}</td>
+                                                <td>${user.unBaneDate}</td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                                <div class="button-container">
+                                    <button id="btn-load1" class="button-small" onclick="deleteCommand('ban');"><fmt:message key="label.delete" bundle="${rb}"/></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
-<script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>
+<script src="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.js"></script>
+<script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

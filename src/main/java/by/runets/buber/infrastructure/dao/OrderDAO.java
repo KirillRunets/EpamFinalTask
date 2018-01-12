@@ -1,4 +1,11 @@
 package by.runets.buber.infrastructure.dao;
 
-public interface OrderDAO {
+import by.runets.buber.domain.entity.Order;
+import by.runets.buber.infrastructure.exception.DAOException;
+
+import java.util.Set;
+
+public interface OrderDAO extends AbstractDAO<Integer, Order> {
+    Set<Order> findAllOrdersByDriverId(Integer id) throws DAOException;
+    Set<Order> findAllOrdersByPassengerId(Integer id) throws DAOException;
 }

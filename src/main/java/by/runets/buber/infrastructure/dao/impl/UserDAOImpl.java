@@ -20,10 +20,11 @@ import java.util.List;
 public class UserDAOImpl implements UserRoleDAO, UserDAO {
     private static UserDAOImpl instance;
 
-    private UserDAOImpl(){}
+    private UserDAOImpl() {
+    }
 
-    public static UserDAOImpl getInstance(){
-        if (instance == null){
+    public static UserDAOImpl getInstance() {
+        if (instance == null) {
             instance = new UserDAOImpl();
         }
         return instance;
@@ -37,18 +38,14 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ALL_USERS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 users.add(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Selection users exception " + e);
         } finally {
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
         }
         return users;
     }
@@ -62,18 +59,14 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_USER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException("Find user exception: " + e);
         } finally {
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
         }
         return user;
     }
@@ -89,12 +82,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Delete user exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -112,12 +101,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return state;
     }
@@ -126,22 +111,22 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         preparedStatement.setString(1, user.getEmail());
         preparedStatement.setString(2, user.getFirstName());
         preparedStatement.setString(3, user.getSecondName());
-        if (user.getBirthDate() != null){
+        if (user.getBirthDate() != null) {
             preparedStatement.setDate(4, new java.sql.Date(user.getBirthDate().getTime()));
         } else {
             preparedStatement.setNull(4, Types.INTEGER);
         }
-        if (user.getBan() != null){
+        if (user.getBan() != null) {
             preparedStatement.setInt(5, user.getBan().getId());
         } else {
             preparedStatement.setNull(5, Types.INTEGER);
         }
-        if (user.getUnBaneDate() != null){
+        if (user.getUnBaneDate() != null) {
             preparedStatement.setDate(6, new java.sql.Date(user.getUnBaneDate().getTime()));
         } else {
             preparedStatement.setNull(6, Types.INTEGER);
         }
-        if (user.getBonus() != null){
+        if (user.getBonus() != null) {
             preparedStatement.setInt(9, user.getBonus().getId());
         } else {
             preparedStatement.setNull(9, Types.INTEGER);
@@ -149,7 +134,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         preparedStatement.setString(7, user.getPhoneNumber());
         preparedStatement.setDouble(8, user.getRating());
         preparedStatement.setInt(10, user.getTripAmount());
-        preparedStatement.setInt(11, user.getId());//set id to WHERE
+        preparedStatement.setInt(11, user.getId());
     }
 
     private void setUserToInsertPS(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -157,7 +142,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         preparedStatement.setString(2, PasswordEncrypt.encryptPassword(user.getPassword()));
         preparedStatement.setString(3, user.getFirstName());
         preparedStatement.setString(4, user.getSecondName());
-        if (user.getBan() != null && user.getUnBaneDate() != null && user.getBirthDate() != null && user.getBonus() != null){
+        if (user.getBan() != null && user.getUnBaneDate() != null && user.getBirthDate() != null && user.getBonus() != null) {
             preparedStatement.setDate(5, new java.sql.Date(user.getBirthDate().getTime()));
             preparedStatement.setInt(6, user.getBan().getId());
             preparedStatement.setDate(7, new java.sql.Date(user.getUnBaneDate().getTime()));
@@ -177,8 +162,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
             if (generatedKeys.next()) {
                 user.setId(generatedKeys.getInt(1));
-            }
-            else {
+            } else {
                 throw new DAOException("Creating user failed, no ID obtained.");
             }
         }
@@ -195,12 +179,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Update exception" + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -236,11 +216,6 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             throw new DAOException("INSERT user role communication exception " + e);
         } finally {
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return state;
     }
@@ -257,12 +232,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("UPDATE user role communication exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -278,11 +249,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             throw new DAOException("DELETE user role communication exception " + e);
         } finally {
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+
         }
     }
 
@@ -295,20 +263,16 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_EMAIL_EXIST);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 state = true;
             }
         } catch (SQLException e) {
             throw new DAOException("Find user exception: " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
-        return state ;
+        return state;
     }
 
     @Override
@@ -321,18 +285,14 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DAOException("Find user exception: " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
         return user;
     }
@@ -343,7 +303,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SET_BAN_TO_USER);
-            if (user.getBan() != null){
+            if (user.getBan() != null) {
                 preparedStatement.setInt(1, user.getBan().getId());
                 preparedStatement.setDate(2, new java.sql.Date(user.getUnBaneDate().getTime()));
             } else {
@@ -355,12 +315,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("SET ban to user exception " + e);
         } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
-            try {
-                ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            } catch (ConnectionException e) {
-                LOGGER.error(e);
-            }
         }
     }
 
@@ -373,7 +329,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_BANNED_USERS);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 userList.add(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {

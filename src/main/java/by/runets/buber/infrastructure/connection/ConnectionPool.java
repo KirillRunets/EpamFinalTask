@@ -53,6 +53,11 @@ public class ConnectionPool {
         }
     }
 
+    @Override
+    protected void finalize() throws ConnectionException {
+        closePool();
+    }
+
     public static ConnectionPool getInstance(){
         if (!instanceCreated.get()) {
             lock.lock();
@@ -80,19 +85,15 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void releaseConnection(ProxyConnection connection) throws ConnectionException {
-        try {
-            if (connectionBlockingQueue.size() < poolSize){
-                connectionBlockingQueue.put(connection);
-            } else {
-                throw new ConnectionException("Connection pool is already filled");
-            }
-        } catch (InterruptedException e) {
-            throw new ConnectionException("Release connection to queue" + e);
+    public void releaseConnection(ProxyConnection connection) {
+        lock.lock();
+        if (!connectionBlockingQueue.contains(connection)) {
+            connectionBlockingQueue.offer(connection);
         }
+        lock.unlock();
     }
 
-    public void closePool() throws ConnectionException {
+    private void closePool() throws ConnectionException {
         for (ProxyConnection connection : connectionBlockingQueue) {
             try {
                 connection.closeConnection();

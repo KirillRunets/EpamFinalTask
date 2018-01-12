@@ -95,15 +95,11 @@ public class LoginCommand implements Command {
         req.setAttribute(LabelParameter.PASSWORD, passwordValue);
         return JspPagePath.LOGIN_PAGE;
     }
-
 }
 
 
 /*
-* 0. Must go to hospital
-* 1. Check isBanUser method
-* 2. Create driver home page
-* 3. Read driver info
-* 4. Delete driver info
-* 5. Edit driver info
-* */
+        * 3. Read driver info
+        * 4. Delete driver info
+        * 5. Edit driver info
+        * */

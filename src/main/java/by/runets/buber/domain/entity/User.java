@@ -1,7 +1,7 @@
 package by.runets.buber.domain.entity;
 
 import java.util.Date;
-import java.util.Optional;
+import java.util.Set;
 
 public class User extends Entity {
     private String email;
@@ -17,7 +17,7 @@ public class User extends Entity {
     private double rating;
     private Role role;
     private Car car;
-    private Order order;
+    private Set<Order> orders;
 
     public User() {
     }
@@ -83,23 +83,15 @@ public class User extends Entity {
         this.role = role;
     }
 
-    public User(int id, String email, String password, String firstName, String secondName, Date birthDate, Ban ban, Date unBaneDate, String phoneNumber, Bonus bonus, int tripAmount, double rating, Role role, Car car, Order order) {
+    public User(int id, String email, String firstName, String secondName, Date birthDate, int rating, int tripAmount, String phoneNumber) {
         super(id);
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthDate = birthDate;
-        this.ban = ban;
-        this.unBaneDate = unBaneDate;
         this.phoneNumber = phoneNumber;
-        this.bonus = bonus;
         this.tripAmount = tripAmount;
-        this.rating = rating;
-        this.role = role;
-        this.car = car;
-        this.order = order;
-    }
+        this.rating = rating;}
 
     public String getEmail() {
         return email;
@@ -179,14 +171,14 @@ public class User extends Entity {
     public void setCar(Car car) {
         this.car = car;
     }
-    public Order getOrder() {
-        return order;
-    }
-    public void setOrder(Order order) {
-        this.order = order;
-    }
     public User getUser(){
         return this;
+    }
+    public Set<Order> getOrderSet() {
+        return orders;
+    }
+    public void setOrderSet(Set<Order> orderSet) {
+        this.orders = orderSet;
     }
 
     @Override
@@ -210,7 +202,7 @@ public class User extends Entity {
         if (bonus != null ? !bonus.equals(user.bonus) : user.bonus != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (car != null ? !car.equals(user.car) : user.car != null) return false;
-        return order != null ? order.equals(user.order) : user.order == null;
+        return orders != null ? orders.equals(user.orders) : user.orders == null;
     }
 
     @Override
@@ -231,7 +223,7 @@ public class User extends Entity {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (car != null ? car.hashCode() : 0);
-        result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (orders != null ? orders.hashCode() : 0);
         return result;
     }
 
@@ -251,7 +243,7 @@ public class User extends Entity {
                 ", rating=" + rating +
                 ", role=" + role +
                 ", car=" + car +
-                ", order=" + order +
+                ", orderSet=" + orders +
                 '}';
     }
 }

@@ -7,6 +7,15 @@
 <html>
 <head>
     <title><fmt:message key="label.title" bundle="${rb}" /></title>
+    <link href="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css"/>
+    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -27,38 +36,67 @@
     </div>
 </nav>
 <section class="my-section">
-    <div class="container">
-        <table class="table">
-            <h2><fmt:message key="label.passengerInformation" bundle="${rb}"/></h2>
-            <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
-            <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-            <th><fmt:message key="label.email" bundle="${rb}"/></th>
-            <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-            <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
-            <th><fmt:message key="label.rating" bundle="${rb}"/></th>
-            <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-            <c:forEach items="${passengerList}" var="passenger">
-                <tr class="line" id="${passenger.id}">
-                    <td>${passenger.firstName}</td>
-                    <td>${passenger.secondName}</td>
-                    <td>${passenger.email}</td>
-                    <td>${passenger.birthDate}</td>
-                    <td>${passenger.phoneNumber}</td>
-                    <td>${passenger.rating}</td>
-                    <td>${passenger.tripAmount}</td>
-                </tr>
-            </c:forEach>
-        </table>
-        <div class="button-container">
-            <button id="btn-load2" class="button-small" onclick="reLoad('/controller?command=load_edit_user&user_id=')"><fmt:message key="label.edit" bundle="${rb}"/></button>
-            <button id="btn-load1" class="button-small" onclick="reLoad('/controller?command=delete_user&user_role=passenger&user_id=')"><fmt:message key="label.delete" bundle="${rb}"/></button>
-            <button id="ban-button" class="button-small" onclick="reLoad('/controller?command=fill_ban_form&user_id=')"><fmt:message key="label.ban" bundle="${rb}"/></button>
+    <div class="wrap">
+
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-table"></i> Data Table Example
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form name="driverListForm" action="${pageContext.request.contextPath}/controller"
+                                  method="POST">
+                                <input type="hidden" name="command" id="user_command_id" value="">
+                                <input type="hidden" name="user_id" id="user_id" value="">
+                                <input type="hidden" name="user_role" value="passenger">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <h2><fmt:message key="label.passengerInformation" bundle="${rb}"/></h2>
+                                        <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.email" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.rating" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${passengerList}" var="passenger">
+                                    <tr class="line" id="${passenger.id}">
+                                        <td>${passenger.firstName}</td>
+                                        <td>${passenger.secondName}</td>
+                                        <td>${passenger.email}</td>
+                                        <td>${passenger.birthDate}</td>
+                                        <td>${passenger.phoneNumber}</td>
+                                        <td>${passenger.rating}</td>
+                                        <td>${passenger.tripAmount}</td>
+                                    </tr>
+                                    </c:forEach>
+                                </table>
+                                <div class="button-container">
+                                    <button id="btn-load1" class="button-small" onclick="deleteCommand('user');"><fmt:message key="label.delete" bundle="${rb}"/></button>
+                                    <button id="btn-load2" class="button-small" onclick="loadCommand('user');"><fmt:message key="label.edit" bundle="${rb}"/></button>
+                                    <button id="ban-button" class="button-small" onclick="loadCommand('ban')"><fmt:message key="label.ban" bundle="${rb}"/></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
-<script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>
+<script src="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.js"></script>
+<script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

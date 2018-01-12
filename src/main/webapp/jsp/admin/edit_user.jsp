@@ -33,7 +33,7 @@
     <div id="signUpDriver">
         <form id="signInForm" name="signInForm" action="${pageContext.request.contextPath}/controller" method="POST">
             <h1><fmt:message key="label.labelForm" bundle="${rb}"/></h1>
-            <input type="hidden" name="command" value="update_driver"/>
+            <input type="hidden" name="command" value="edit_user"/>
             <input type="hidden" name="user_id" value="${user.id}"/>
             <div id="hiddenError">
                 <br/>
