@@ -8,6 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 public class HomePageCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
-        return JspPagePath.INDEX_PAGE;
+        return JspPagePath.MAIN_PAGE;
     }
 }

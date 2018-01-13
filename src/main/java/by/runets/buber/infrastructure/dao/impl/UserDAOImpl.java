@@ -126,13 +126,13 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } else {
             preparedStatement.setNull(6, Types.INTEGER);
         }
-        if (user.getBonus() != null) {
+        preparedStatement.setString(7, user.getPhoneNumber());
+        preparedStatement.setDouble(8, user.getRating());
+        if (user.getBonus() != null && user.getBonus().getId() != 0) {
             preparedStatement.setInt(9, user.getBonus().getId());
         } else {
             preparedStatement.setNull(9, Types.INTEGER);
         }
-        preparedStatement.setString(7, user.getPhoneNumber());
-        preparedStatement.setDouble(8, user.getRating());
         preparedStatement.setInt(10, user.getTripAmount());
         preparedStatement.setInt(11, user.getId());
     }
@@ -258,16 +258,14 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
     public boolean isEmailExist(String email) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
-        boolean state = false;
+        boolean state;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_EMAIL_EXIST);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                state = true;
-            }
+            state = resultSet.next();
         } catch (SQLException e) {
-            throw new DAOException("Find user exception: " + e);
+            throw new DAOException("Check email exception: " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -336,6 +334,40 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             throw new DAOException("Read banned users dao exception" + e);
         }
         return userList;
+    }
+
+    @Override
+    public int changePassword(String newPassword, int id) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        int countUpdateRow = 0;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_PASSWORD_BY_ID);
+            preparedStatement.setString(1, PasswordEncrypt.encryptPassword(newPassword));
+            preparedStatement.setInt(2, id);
+            countUpdateRow = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Update password dao exception" + e);
+        }
+        return countUpdateRow;
+    }
+
+    @Override
+    public String findPassword(int id) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        String password = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SELECT_USER_PASSWORD);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                password = resultSet.getString("password");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Select password dao exception" + e);
+        }
+        return password;
     }
 
 }

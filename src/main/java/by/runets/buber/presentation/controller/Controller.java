@@ -51,7 +51,7 @@ public class Controller extends HttpServlet {
 
             /*req.getSession().setAttribute("nullPage", req.getSession().ge);
 */
-            res.sendRedirect(JspPagePath.INDEX_PAGE);
+            res.sendRedirect(JspPagePath.MAIN_PAGE);
         }
     }
 }

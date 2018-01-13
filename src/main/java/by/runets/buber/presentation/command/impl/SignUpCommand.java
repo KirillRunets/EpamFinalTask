@@ -6,12 +6,14 @@ import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.DAOException;
+import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.infrastructure.util.PasswordEncrypt;
 import by.runets.buber.presentation.command.Command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 
 public class SignUpCommand implements Command {
@@ -26,40 +28,38 @@ public class SignUpCommand implements Command {
     public String execute(HttpServletRequest req) {
         String page = null;
 
+        String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
+        User user = null;
         try {
-            User user = init(req);
-            if (user != null){
-                userService.registerUser(user);
-                page = JspPagePath.LOGIN_PAGE;
-            } else {
-                page = JspPagePath.SIGN_UP_PAGE;
-            }
-        } catch (DAOException e) {
+            user = init(req);
+            page = user != null && userService.registerUser(user)
+                    ? JspPagePath.LOGIN_PAGE
+                    : setErrorAttribute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE), user);
+        } catch (ServiceException e) {
             LOGGER.error(e);
-            page = JspPagePath.SIGN_UP_PAGE;
+        } catch (AuthenticationException e) {
+            LOGGER.error(e);
+            page = setErrorAttribute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.EMAIL_EXIST_LABEL_MESSAGE), user);
         }
+
         return page;
     }
 
     private User init(HttpServletRequest req){
-        User user = null;
-
-        String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
         String email = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
         String password = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
         String firstName = req.getParameter(CommandParameter.PARAM_NAME_FIRST_NAME);
         String secondName = req.getParameter(CommandParameter.PARAM_NAME_SECOND_NAME);
         String role = req.getParameter(CommandParameter.PARAM_NAME_ROLE);
 
-        if (RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role)){
-            user = new User(email, PasswordEncrypt.encryptPassword(password), firstName, secondName, new Role(role));
-        } else {
-            req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE));
-        }
+        return RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role) ? new User(email, password, firstName, secondName, new Role(role)) : null;
+    }
 
-        return user;
+    private String setErrorAttribute(HttpServletRequest req, String label, String message, User user){
+        req.setAttribute(label, message);
+        req.setAttribute(UserRoleType.USER, user);
+        return JspPagePath.SIGN_UP_PAGE;
     }
 }
 
-//req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE));
 

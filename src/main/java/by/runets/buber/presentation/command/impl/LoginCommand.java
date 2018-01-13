@@ -97,9 +97,3 @@ public class LoginCommand implements Command {
     }
 }
 
-
-/*
-        * 3. Read driver info
-        * 4. Delete driver info
-        * 5. Edit driver info
-        * */

@@ -21,6 +21,8 @@ public class DatabaseQueryConstant {
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
             "WHERE BINARY email=? AND BINARY password=?";
+    public final static String SELECT_USER_PASSWORD = "SELECT password FROM user WHERE id=?";
+    public final static String UPDATE_PASSWORD_BY_ID = "UPDATE user SET password=? WHERE id=?";
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
     public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/index.jsp"}, servletNames = {"controller"})
+@WebFilter(urlPatterns = {"/"}, servletNames = {"controller"})
 public class HomePageFilter implements Filter {
     private final static Logger LOGGER = LogManager.getLogger(HomePageFilter.class);
     @Override
@@ -30,16 +30,21 @@ public class HomePageFilter implements Filter {
 
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
-            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN)) {
-                req.getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);
+            if (user != null){
+                switch (user.getRole().getRoleName().toUpperCase()){
+                    case UserRoleType.ADMIN:
+                        req.getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);
+                        break;
+                    case UserRoleType.DRIVER:
+                        req.getRequestDispatcher(JspPagePath.DRIVER_HOME_PAGE).forward(req, res);
+                        break;
+                    case UserRoleType.PASSENGER:
+                        req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
+                        break;
+                }
+            } else {
+                req.getRequestDispatcher(JspPagePath.MAIN_PAGE).forward(req, res);
             }
-            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)) {
-                req.getRequestDispatcher(JspPagePath.DRIVER_HOME_PAGE).forward(req, res);
-            }
-            if (user != null && user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)) {
-                req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
-            }
-
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

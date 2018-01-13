@@ -46,13 +46,14 @@
   -webkit-transform: translateY(6px);
   transform: translateY(6px);
   left: 13px;
-  color: red;
+  color: #ff4f4a;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
   font-size: 14px;
   font-weight: 400;
 }
+
 .form label.req {
   margin: 2px;
   color: #1ab188;
@@ -152,7 +153,7 @@ textarea {
 
 /* Add a red text color and an "x" icon when the requirements are wrong */
 .invalid {
-  color: red;
+  color: white;
 }
 
 .invalid:before {

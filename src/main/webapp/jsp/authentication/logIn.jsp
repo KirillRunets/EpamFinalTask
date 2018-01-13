@@ -31,10 +31,11 @@
         <h1><fmt:message key="label.labelForm" bundle="${rb}" /></h1>
         <input type="hidden" name="command" value="login" />
         <div id="hiddenError">
-        <br/>
-            ${errorEmailPasswordMessage}
-        <br/></div>
-        <input name="email" id="email" type="text" value="${email}" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
+            <br/>
+            ${errorLabel}
+            <br/>
+        </div>
+        <input name="email" id="email" type="email" value="${email}" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
         <input name="password" id="password" type="password" value="${password}" title=<fmt:message key="label.inputPassword" bundle="${rb}" />" required placeholder="<fmt:message key="label.password" bundle="${rb}" />">
         <a href="${pageContext.request.contextPath}/jsp/authentication/signUp.jsp"><fmt:message key="label.signUp" bundle="${rb}" /></a>
         <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>

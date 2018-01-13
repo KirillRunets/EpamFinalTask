@@ -35,7 +35,8 @@ public enum CommandType {
     EDIT_CAR(new EditCarCommand(new EditCarService())),
     LOAD_VALID_CAR_TO_EDIT(new LoadValidCarToEditCommand(new ReadCarService())),
     LOAD_VALID_CAR_TO_ADD(new LoadValidCarToAdd()),
-    ADD_CAR(new CreateValidCarCommand(new CreateCarService()));
+    ADD_CAR(new CreateValidCarCommand(new CreateCarService())),
+    CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService()));
 
     private Command command;
 

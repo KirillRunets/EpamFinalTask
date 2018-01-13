@@ -19,7 +19,7 @@ public class LogoutCommand implements Command {
             httpSession.removeAttribute(UserRoleType.USER);
         }
 
-        page = JspPagePath.INDEX_PAGE;
+        page = JspPagePath.MAIN_PAGE;
 
         return page;
     }

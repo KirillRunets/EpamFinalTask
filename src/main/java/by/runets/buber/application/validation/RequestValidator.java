@@ -29,8 +29,8 @@ public class RequestValidator {
     }
 
     public boolean isValidateLogInData(String email, String password) {
-        return isStringEqualsPattern(email, ValidationConstant.EMAIL_PATTERN)
-                && isStringEqualsPattern(password, ValidationConstant.PASSWORD_PATTERN);
+        return email != null && !email.isEmpty()
+                && password != null && !password.isEmpty();
     }
 
     public boolean isValidateRegisterData(String email, String password, String firstName, String secondName, String role){
@@ -61,5 +61,11 @@ public class RequestValidator {
         return  isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN)
                 && date != null && !date.isEmpty()
                 && isStringEqualsPattern(banId, ValidationConstant.INTEGER_NUMBER_PATTERN);
+    }
+
+    public boolean isValidateChangePasswordData(String oldPassword, String newPassword, String id){
+        return isStringEqualsPattern(oldPassword, ValidationConstant.PASSWORD_PATTERN)
+                && isStringEqualsPattern(newPassword, ValidationConstant.PASSWORD_PATTERN)
+                && isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
 }

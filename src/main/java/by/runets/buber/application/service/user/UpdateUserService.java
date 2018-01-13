@@ -15,18 +15,14 @@ public class UpdateUserService {
     public void update(User user) throws ServiceException {
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-            UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-            AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
 
-            //if admin change user role
-            if (user.getRole() != null){
-                userRoleDAO.updateUserRoleCommunication(user);
-            }
-
-            if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
-                if (user.getCar() != null){
-                    carDAO.update(user.getCar());
-                }
+            switch (user.getRole().getRoleName().toUpperCase()){
+                case UserRoleType.DRIVER:
+                    updateDriverBusinessTool(user);
+                    break;
+                case UserRoleType.PASSENGER:
+                    updatePassengerBusinessTool(user);
+                    break;
             }
 
             userDAO.update(user);
@@ -34,6 +30,24 @@ public class UpdateUserService {
         } catch (DAOException e) {
             throw new ServiceException("Update user exception " + e);
         }
+    }
+
+
+
+    private void changeUserRole(User user) throws DAOException {
+        UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+        userRoleDAO.updateUserRoleCommunication(user);
+    }
+
+    private void updateDriverBusinessTool(User user) throws DAOException {
+        AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+        if (user.getCar() != null){
+            carDAO.update(user.getCar());
+        }
+    }
+
+    private void updatePassengerBusinessTool(User user){
+
     }
 }
 

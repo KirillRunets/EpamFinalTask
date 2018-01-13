@@ -48,7 +48,7 @@
                                 <input type="hidden" name="command" value="signup" />
                                 <div id="hiddenError">
                                     <br/>
-                                    ${errorEmailMessage}
+                                    ${errorLabel}
                                     <br/>
                                 </div>
                                 <div class="top-row">
@@ -68,28 +68,37 @@
                                     </div>
                                     <div class="field-wrap">
                                         <label><fmt:message key="label.changePassword"  bundle="${rb}"/></label>
-                                        <input type="submit" name="changePassword" class="button button-block" value="<fmt:message key="label.changePassword"  bundle="${rb}"/>" />
+                                        <input type="button" name="changePassword" class="button button-block" id="modal-button" value="<fmt:message key="label.changePassword"  bundle="${rb}"/>" />
                                     </div>
                                 </div>
                                 <label><fmt:message key="label.birthDate"  bundle="${rb}"/></label>
-                                <input  name="birthDate" type="date" value="${sessionScope.USER.birthDate}"  required  bundle="${rb}"/>
+                                <input name="birthDate" type="date" value="${sessionScope.USER.birthDate}"  required/>
                                 <label><fmt:message key="label.phoneNumber"  bundle="${rb}"/></label>
-                                <input  name="phoneNumber" type="text" value="${sessionScope.USER.phoneNumber}" required placeholder=<fmt:message key="label.phoneNumber"  bundle="${rb}"/>>
+                                <input  name="phoneNumber" id="phoneNumber" type="text" value="${sessionScope.USER.phoneNumber}" required placeholder=<fmt:message key="label.phoneNumber"  bundle="${rb}"/>>
                                 <button type="submit" class="button button-block"><fmt:message key="label.submit"   bundle="${rb}"/></button>
                             </form>
                         </div>
+                    </div>
+                </div>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <c:import url="${pageContext.request.contextPath}/jsp/change_password.jsp"/>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>
     <script src="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/jquery/jquery.mask.js"></script>
     <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/load.js"></script>
+    <script src="${pageContext.request.contextPath}/js/modal.js"></script>
 </body>
 </html>

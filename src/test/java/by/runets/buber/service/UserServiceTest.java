@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 
 
@@ -29,9 +30,9 @@ public class UserServiceTest {
 
 
     @Test
-    public void testRegisterUser() throws ConnectionException, DAOException {
+    public void testRegisterUser() throws ConnectionException, DAOException, ServiceException, AuthenticationException {
         RegisterUserService createUserService = new RegisterUserService();
-        createUserService.registerUser(createUser);
+        Assert.assertTrue(createUserService.registerUser(createUser));
     }
 
     @Test
