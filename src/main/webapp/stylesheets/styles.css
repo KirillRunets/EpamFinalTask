@@ -452,6 +452,15 @@ p[id="email"]{
     padding: 0 10px;
 }
 
+.driver-form select{
+    height: 35px;
+    width: 100%;
+    margin: 10px 0px;
+    line-height: 0.8;
+    padding: 0 10px;
+}
+
+
 .driver-form button{
     width: 50%;
     float: right;
@@ -492,4 +501,8 @@ p[id="email"]{
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#changeLocaleForm{
+    margin-top: -20px;
 }

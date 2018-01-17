@@ -28,6 +28,7 @@ public class RequestParameter {
     public final static String CAR_OWNER = "car_owner";
     public final static String MARK = "mark";
     public final static String MODEL = "model";
+    public final static String LICENSE_PLATE = "licensePlate";
     public final static String RELEASE_DATE = "release_date";
     public final static String OLD_PASSWORD = "old_password";
     public final static String NEW_PASSWORD = "new_password";

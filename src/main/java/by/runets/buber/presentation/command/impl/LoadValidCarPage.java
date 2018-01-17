@@ -5,7 +5,7 @@ import by.runets.buber.presentation.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class LoadValidCarToAdd implements Command {
+public class LoadValidCarPage implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         return JspPagePath.CAR_FORM_PAGE;

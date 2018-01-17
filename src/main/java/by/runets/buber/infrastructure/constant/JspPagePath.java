@@ -17,9 +17,10 @@ public class JspPagePath {
 
     public final static String ALL_BANNED_USERS_PAGE = "jsp/admin/all_ban_user.jsp";
     public final static String BAN_FORM_PAGE = "jsp/admin/ban_form.jsp";
-    public final static String ADMIN_CAR_LIST = "jsp/admin/admin_car_list.jsp";
-    public final static String DRIVER_CAR = "";
+    public final static String ADMIN_CAR_LIST_PAGE = "jsp/admin/admin_car_list.jsp";
+    public final static String DRIVER_CAR_PROFILE_PAGE = "jsp/driver/car_profile.jsp";
     public final static String CAR_FORM_PAGE = "jsp/admin/car_form.jsp";
+
 
     public final static String ERROR_USER_NOTIFICATION = "jsp/error_user_notification.jsp";
     public final static String CHANGE_PASSWORD_PAGE = "/jsp/change_password.jsp";

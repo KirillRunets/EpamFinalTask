@@ -1,4 +1,5 @@
 var selectedRowId = null;
+var click = 0;
 $(document).ready(function() {
     $(".line").click(function(event){
         var id = $(this).attr('id');
@@ -65,3 +66,9 @@ function loadCommand(type) {
     }
 
 }
+
+function submitForm(id) {
+    document.getElementById(id).submit();
+}
+
+

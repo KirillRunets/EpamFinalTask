@@ -10,8 +10,8 @@ public class ChangeLocaleCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String uri = req.getParameter(RequestParameter.URI);
-
         String locale = req.getParameter(RequestParameter.LOCALE);
+
         HttpSession httpSession = req.getSession();
         httpSession.setAttribute(RequestParameter.LOCALE, locale);
 

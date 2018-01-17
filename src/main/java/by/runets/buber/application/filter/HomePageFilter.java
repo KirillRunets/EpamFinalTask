@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/"}, servletNames = {"controller"})
+@WebFilter(urlPatterns = {"/jsp/main.jsp"}, servletNames = {"controller"})
 public class HomePageFilter implements Filter {
     private final static Logger LOGGER = LogManager.getLogger(HomePageFilter.class);
     @Override

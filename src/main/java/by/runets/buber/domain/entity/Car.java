@@ -26,6 +26,14 @@ public class Car extends Entity {
         this.carOwner = user;
     }
 
+    public Car(String mark, String model, Date date, User user, String licensePlate){
+        this.mark = mark;
+        this.model = model;
+        this.releaseDate = date;
+        this.carOwner = user;
+        this.licensePlate = licensePlate;
+    }
+
     public Car(int id, String mark, String model, Date date, User user){
         super(id);
         this.mark = mark;

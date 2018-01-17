@@ -25,33 +25,19 @@ public class CarCommand {
         return car;
     }
 
-    private String setCarListToPage(HttpServletRequest req, String label) throws ServiceException {
+    private String setCarListToPage(HttpServletRequest req, String label, User user) throws ServiceException {
         List<Car> carList = new ReadCarService().findValidCars();
         if (carList != null){
             req.setAttribute(label, carList);
         }
-        return JspPagePath.ADMIN_CAR_LIST;
+        return user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN) ? JspPagePath.ADMIN_CAR_LIST_PAGE : JspPagePath.DRIVER_CAR_PROFILE_PAGE;
     }
 
-    private String setCarToPage(HttpServletRequest req, String label, int id) throws ServiceException {
-        Car car = new ReadCarService().findCarByOwner(id);
-        if (car != null){
-            req.setAttribute(label, car);
-        }
-        return JspPagePath.DRIVER_CAR;
-    }
 
     String switchUserRole(HttpServletRequest req) throws ServiceException {
         String page = null;
         User user = (User) req.getSession(false).getAttribute(UserRoleType.USER);
-        switch (user.getRole().getRoleName().toUpperCase()){
-            case UserRoleType.ADMIN:
-                page = setCarListToPage(req, LabelParameter.ADMIN_CAR_LIST);
-                break;
-            case UserRoleType.DRIVER:
-                page = setCarToPage(req, LabelParameter.DRIVER, user.getId());
-                break;
-        }
+        page = setCarListToPage(req, LabelParameter.ADMIN_CAR_LIST, user);
         return page;
     }
 }

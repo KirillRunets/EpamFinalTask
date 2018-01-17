@@ -6,8 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
-public class ReadValidCarCommand extends CarCommand implements Command{
-    private final static Logger LOGGER = LogManager.getLogger(ReadValidCarCommand.class);
+public class ReadCarCommand extends CarCommand implements Command{
+    private final static Logger LOGGER = LogManager.getLogger(ReadCarCommand.class);
 
     @Override
     public String execute(HttpServletRequest req) {
