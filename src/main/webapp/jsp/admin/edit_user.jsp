@@ -34,7 +34,7 @@
         <form id="signInForm" name="signInForm" action="${pageContext.request.contextPath}/controller" method="POST">
             <h1><fmt:message key="label.labelForm" bundle="${rb}"/></h1>
             <input type="hidden" name="command" value="edit_user"/>
-            <input type="hidden" name="user_id" value="${user.id}"/>
+            <input type="hidden" name="user_id" value="${sessionScope.user.id}"/>
             <div id="hiddenError">
                 <br/>
                 ${errorEmailPasswordMessage}
@@ -43,11 +43,11 @@
             <div class="top-row">
                 <div class="field-wrap">
                     <label><fmt:message key="label.firstName" bundle="${rb}"/></label>
-                    <c:if test="${not empty user.firstName}">
-                        <input name="firstName" value="${user.firstName}" type="text" required placeholder=
+                    <c:if test="${not empty sessionScope.user.firstName}">
+                        <input name="firstName" value="${sessionScope.user.firstName}" type="text" required placeholder=
                             <fmt:message key="label.firstNamePlaceholder" bundle="${rb}"/>>
                     </c:if>
-                    <c:if test="${empty user.firstName}">
+                    <c:if test="${empty sessionScope.user.firstName}">
                         <input name="firstName" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text"
                                required placeholder=<fmt:message key="label.firstNamePlaceholder" bundle="${rb}"/>>
                     </c:if>
@@ -55,56 +55,56 @@
                 <div class="field-wrap">
                     <label><fmt:message key="label.secondName" bundle="${rb}"/></label>
 
-                    <c:if test="${not empty user.secondName}">
-                        <input name="secondName" value="${user.secondName}" type="text" required placeholder=<fmt:message key="label.secondNamePlaceholder" bundle="${rb}"/>>
+                    <c:if test="${not empty sessionScope.user.secondName}">
+                        <input name="secondName" value="${sessionScope.user.secondName}" type="text" required placeholder=<fmt:message key="label.secondNamePlaceholder" bundle="${rb}"/>>
                     </c:if>
-                    <c:if test="${empty user.secondName}">
+                    <c:if test="${empty sessionScope.user.secondName}">
                         <input name="secondName" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message key="label.secondNamePlaceholder" bundle="${rb}"/>>
                     </c:if>
                 </div>
             </div>
             <label>E-mail:</label>
-            <c:if test="${not empty user.email}">
-                <input name="email" value="${user.email}" type="text" required placeholder=<fmt:message
+            <c:if test="${not empty sessionScope.user.email}">
+                <input name="email" value="${sessionScope.user.email}" type="text" required placeholder=<fmt:message
                         key="label.emailPlaceholder" bundle="${rb}"/>>
             </c:if>
-            <c:if test="${empty user.email}">
+            <c:if test="${empty sessionScope.user.email}">
                 <input name="email" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text"
                        required placeholder=<fmt:message key="label.emailPlaceholder" bundle="${rb}"/>>
             </c:if>
             <label><fmt:message key="label.birthDate" bundle="${rb}"/> </label>
-            <c:if test="${not empty user.birthDate}">
-                <input type="date" name="birthDate"  value="${user.birthDate}">
+            <c:if test="${not empty sessionScope.user.birthDate}">
+                <input type="date" name="birthDate"  value="${sessionScope.user.birthDate}">
             </c:if>
-            <c:if test="${empty user.birthDate}">
+            <c:if test="${empty sessionScope.user.birthDate}">
                 <input type="date" name="birthDate" value="<fmt:message key="label.empty"  bundle="${rb}"/>">
             </c:if>
             <label><fmt:message key="label.phoneNumber" bundle="${rb}"/> </label>
-            <c:if test="${not empty user.phoneNumber}">
-                <input name="phoneNumber" value="${user.phoneNumber}" type="text" required placeholder=<fmt:message
+            <c:if test="${not empty sessionScope.user.phoneNumber}">
+                <input name="phoneNumber" value="${sessionScope.user.phoneNumber}" type="text" required placeholder=<fmt:message
                         key="label.phoneNumberPlaceHolder" bundle="${rb}"/>>
             </c:if>
-            <c:if test="${empty user.phoneNumber}">
+            <c:if test="${empty sessionScope.user.phoneNumber}">
                 <input name="phoneNumber" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message
                         key="label.phoneNumberPlaceHolder" bundle="${rb}"/>>
             </c:if>
             <label><fmt:message key="label.rating" bundle="${rb}"/> </label>
-            <c:if test="${not empty user.rating}">
-                <input name="rating" value="${user.rating}" type="text" required placeholder=<fmt:message
+            <c:if test="${not empty sessionScope.user.rating}">
+                <input name="rating" value="${sessionScope.user.rating}" type="text" required placeholder=<fmt:message
                         key="label.ratingPlaceHolder" bundle="${rb}"/>>
             </c:if>
-            <c:if test="${empty user.rating}">
+            <c:if test="${empty sessionScope.user.rating}">
                 <input name="rating" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message
                         key="label.ratingPlaceHolder" bundle="${rb}"/>>
             </c:if>
 
             <label><fmt:message key="label.tripAmount" bundle="${rb}"/> </label>
 
-            <c:if test="${not empty user.tripAmount}">
-                <input name="tripAmount" value="${user.tripAmount}" type="text" required placeholder=<fmt:message
+            <c:if test="${not empty sessionScope.user.tripAmount}">
+                <input name="tripAmount" value="${sessionScope.user.tripAmount}" type="text" required placeholder=<fmt:message
                         key="label.tripAmountPlaceHolder" bundle="${rb}"/>>
             </c:if>
-            <c:if test="${empty user.tripAmount}">
+            <c:if test="${empty sessionScope.user.tripAmount}">
                 <input name="tripAmount" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message
                         key="label.tripAmountPlaceHolder" bundle="${rb}"/>>
             </c:if>

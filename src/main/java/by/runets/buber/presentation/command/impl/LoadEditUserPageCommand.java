@@ -6,6 +6,7 @@ import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,20 +21,23 @@ public class LoadEditUserPageCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
-        String page = null;
+    public Router execute(HttpServletRequest req) {
         User user = null;
+        Router router = new Router();
+
 
         String userId = req.getParameter(RequestParameter.USER_ID);
 
         try {
             user = readUserService.find(Integer.parseInt(userId));
-            req.setAttribute(RequestParameter.USER, user);
-            page = JspPagePath.EDIT_USER_PAGE;
+            req.getSession().setAttribute(RequestParameter.USER, user);
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
 
-        return page;
+        router.setPagePath(JspPagePath.EDIT_USER_PAGE);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 }

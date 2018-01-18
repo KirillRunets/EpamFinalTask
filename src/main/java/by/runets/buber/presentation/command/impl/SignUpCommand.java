@@ -10,6 +10,7 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.infrastructure.util.PasswordEncrypt;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,8 @@ public class SignUpCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
 
         String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
@@ -41,16 +43,18 @@ public class SignUpCommand implements Command {
             LOGGER.error(e);
             page = setErrorAttribute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.EMAIL_EXIST_LABEL_MESSAGE), user);
         }
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.FORWARD);
 
-        return page;
+        return router;
     }
 
     private User init(HttpServletRequest req){
-        String email = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
-        String password = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
-        String firstName = req.getParameter(CommandParameter.PARAM_NAME_FIRST_NAME);
-        String secondName = req.getParameter(CommandParameter.PARAM_NAME_SECOND_NAME);
-        String role = req.getParameter(CommandParameter.PARAM_NAME_ROLE);
+        String email = req.getParameter(RequestParameter.EMAIL);
+        String password = req.getParameter(RequestParameter.PASSWORD);
+        String firstName = req.getParameter(RequestParameter.FIRST_NAME);
+        String secondName = req.getParameter(RequestParameter.SECOND_NAME);
+        String role = req.getParameter(RequestParameter.USER_ROLE);
 
         return RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role) ? new User(email, password, firstName, secondName, new Role(role)) : null;
     }

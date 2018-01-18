@@ -68,4 +68,5 @@ public class RequestValidator {
                 && isStringEqualsPattern(newPassword, ValidationConstant.PASSWORD_PATTERN)
                 && isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
+
 }

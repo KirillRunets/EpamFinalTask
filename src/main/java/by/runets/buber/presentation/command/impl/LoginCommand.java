@@ -9,6 +9,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,12 +28,13 @@ public class LoginCommand implements Command {
         this.userService = userService;
     }
 
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
         Optional<User> user;
 
-        String emailValue = req.getParameter(CommandParameter.PARAM_NAME_EMAIL);
-        String passwordValue = req.getParameter(CommandParameter.PARAM_NAME_PASSWORD);
+        String emailValue = req.getParameter(RequestParameter.EMAIL);
+        String passwordValue = req.getParameter(RequestParameter.PASSWORD);
 
         try {
             if (RequestValidator.getInstance().isValidateLogInData(emailValue, passwordValue)){
@@ -42,7 +44,12 @@ public class LoginCommand implements Command {
         }  catch (DAOException | ServiceException e) {
             LOGGER.error(e);
         }
-        return page;
+
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(page);
+
+
+        return router;
     }
 
     private boolean isBanUser(Optional<User> user) throws ServiceException {
@@ -54,8 +61,10 @@ public class LoginCommand implements Command {
 
 
     private String loadPageByRole(HttpServletRequest request, Optional<User> user) {
+        Router router = new Router();
         String page = null;
         HttpSession httpSession = request.getSession();
+
         if (user.isPresent()){
             switch (user.get().getRole().getRoleName()){
                 case UserRoleType.ADMIN:
@@ -73,10 +82,11 @@ public class LoginCommand implements Command {
             }
         }
 
+
         return page;
     }
 
-    private String loadPageByBanUser(HttpServletRequest req, Optional<User> user){
+    private String  loadPageByBanUser(HttpServletRequest req, Optional<User> user){
         String page = null;
 
         if (user.isPresent()){

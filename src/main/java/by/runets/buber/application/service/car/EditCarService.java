@@ -8,12 +8,15 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class EditCarService {
-    public void edit(Car car) throws ServiceException {
+    public boolean edit(Car car) throws ServiceException {
+        boolean state = false;
         try {
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             abstractDAO.update(car);
+            state = true;
         } catch (DAOException e) {
             throw new ServiceException("Update car exception " + e);
         }
+        return state;
     }
 }

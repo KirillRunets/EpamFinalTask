@@ -40,13 +40,9 @@
 </nav>
 <section class="my-section">
     <div class="wrap">
-
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-table"></i> Data Table Example
-                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="driverListForm" action="${pageContext.request.contextPath}/controller"
@@ -69,7 +65,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${driverList}" var="driver">
+                                    <c:forEach items="${sessionScope.driverList}" var="driver">
                                     <tr class="line" id="${driver.id}">
                                         <td>${driver.firstName}</td>
                                         <td>${driver.secondName}</td>

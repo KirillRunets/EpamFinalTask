@@ -7,15 +7,23 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+import java.util.List;
+
 public class CreateCarService {
-    public void create(Car car) throws ServiceException {
+    public boolean create(Car car) throws ServiceException {
+        boolean isCreated = true;
         try {
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
-            if (car != null && carDAO != null){
-                carDAO.create(car);
-            }
+            isCreated = car != null && !isCarExist(carDAO, car) && carDAO.create(car);
         } catch (DAOException e) {
             throw new ServiceException("Create service exception " + e);
         }
+        return isCreated;
+    }
+
+    private boolean isCarExist(AbstractDAO carDAO, Car newCar) throws DAOException {
+        List<Car> carList = carDAO.findAll();
+        return carList.stream()
+                .anyMatch(car -> car.getLicensePlate() != null && car.getLicensePlate().equalsIgnoreCase(newCar.getLicensePlate()));
     }
 }

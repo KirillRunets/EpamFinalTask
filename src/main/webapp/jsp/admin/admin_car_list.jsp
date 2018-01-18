@@ -39,8 +39,6 @@
             <div class="content-wrapper">
                 <div class="container-fluid">
                     <div class="card mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-table"></i> Data Table Example</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
@@ -62,7 +60,7 @@
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <c:forEach items="${adminCarList}" var="car">
+                                        <c:forEach items="${sessionScope.adminCarList}" var="car">
                                             <tr class="line" id="${car.id}">
                                                 <td>${car.mark}</td>
                                                 <td>${car.model}</td>
@@ -71,13 +69,12 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
-
+                                    <div class="button-container">
+                                        <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message key="label.delete" bundle="${rb}"/></button>
+                                        <button id="btn-load2" class="button-small" onclick="loadCommand('car');"><fmt:message key="label.edit" bundle="${rb}"/></button>
+                                    </div>
                                 </form>
                             </div>
-                        </div>
-                        <div class="button-container">
-                            <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message key="label.delete" bundle="${rb}"/></button>
-                            <button id="btn-load2" class="button-small" onclick="loadCommand('car');"><fmt:message key="label.edit" bundle="${rb}"/></button>
                         </div>
                     </div>
                 </div>
@@ -85,6 +82,7 @@
         </div>
     </section>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+    <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>

@@ -43,15 +43,24 @@ public class Controller extends HttpServlet {
         LOGGER.debug(req.getParameter(RequestParameter.COMMAND));
         Optional<Command> commandOptional = ActionFactory.defineCommand(req.getParameter(RequestParameter.COMMAND));
         Command command = commandOptional.orElse(new EmptyCommand());
-        String page = command.execute(req);
-        if (page != null){
+        Router router = command.execute(req);
+        if (router != null){
+            String page = router.getPagePath();
+            if (router.getRouteType() == Router.RouteType.FORWARD) {
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher(page);
+                requestDispatcher.forward(req, res);
+            } else {
+                res.sendRedirect(req.getContextPath() + page);
+            }
+        } else {
+            req.getSession().invalidate();
+            res.sendRedirect(JspPagePath.MAIN_PAGE);
+        }
+       /* if (page != null){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(page);
             requestDispatcher.forward(req, res);
         } else {
 
-            /*req.getSession().setAttribute("nullPage", req.getSession().ge);
-*/
-            res.sendRedirect(JspPagePath.MAIN_PAGE);
-        }
+        }*/
     }
 }

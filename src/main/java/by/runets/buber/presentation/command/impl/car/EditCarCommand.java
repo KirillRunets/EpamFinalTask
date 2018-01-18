@@ -4,17 +4,21 @@ import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class EditCarCommand extends CarCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(EditCarCommand.class);
@@ -25,18 +29,27 @@ public class EditCarCommand extends CarCommand implements Command{
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
 
+        User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
         try {
             Car car = init(req);
-            editCarService.edit(car);
-            page = switchUserRole(req);
+            if (editCarService.edit(car)){
+                updateCarListInSession(req, LabelParameter.ADMIN_CAR_LIST, car);
+                page = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN) ? JspPagePath.ADMIN_CAR_LIST_PAGE : JspPagePath.DRIVER_CAR_PROFILE_PAGE;
+            } else {
+                page = JspPagePath.CAR_FORM_PAGE;
+            }
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 
     public Car init(HttpServletRequest req) throws ParseException {

@@ -10,10 +10,12 @@ import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class DeleteUserCommand implements Command {
@@ -25,7 +27,8 @@ public class DeleteUserCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req)  {
+    public Router execute(HttpServletRequest req)  {
+        Router router = new Router();
         String page = null;
 
         String id = req.getParameter(RequestParameter.USER_ID);
@@ -33,12 +36,15 @@ public class DeleteUserCommand implements Command {
 
         try {
             deleteUserService.delete(id, role);
-            page = switchUserRole(req, role);
+            page = switchUserRole(req, role, new Integer(id));
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 
     private String setDataToPageByRole(HttpServletRequest req, String role, String listLabel) throws ServiceException {
@@ -49,16 +55,27 @@ public class DeleteUserCommand implements Command {
         return role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE;
     }
 
-    private String switchUserRole(HttpServletRequest req, String role) throws ServiceException {
+    private String switchUserRole(HttpServletRequest req, String role, int id) throws ServiceException {
         String page = null;
         switch (role.toUpperCase()){
             case UserRoleType.DRIVER:
+                updateUserInSession(req, id, LabelParameter.DRIVER_LIST_LABEL);
                 page = setDataToPageByRole(req, UserRoleType.DRIVER, LabelParameter.DRIVER_LIST_LABEL);
                 break;
             case UserRoleType.PASSENGER:
+                updateUserInSession(req, id, LabelParameter.PASSENGER_LIST_LABEL);
                 page = setDataToPageByRole(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER_LIST_LABEL);
                 break;
         }
         return page;
     }
+
+    private void updateUserInSession(HttpServletRequest req, int deletedUserId, String label){
+        HttpSession httpSession = req.getSession();
+        List<User> userList = (List<User>) httpSession.getAttribute(label);
+        userList.removeIf(driver -> driver.getId() == deletedUserId);
+        httpSession.removeAttribute(label);
+        httpSession.setAttribute(label, userList);
+    }
+
 }

@@ -9,6 +9,7 @@ import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +25,8 @@ public class DeleteBanCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
         List<User> userList = null;
         String userId = req.getParameter(RequestParameter.USER_ID);
@@ -40,6 +42,9 @@ public class DeleteBanCommand implements Command {
             }
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.FORWARD);
+
+        return router;
     }
 }

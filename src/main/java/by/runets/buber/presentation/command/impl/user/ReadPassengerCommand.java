@@ -8,6 +8,7 @@ import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,20 +24,24 @@ public class ReadPassengerCommand implements Command{
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
         List<User> passengerList = null;
 
         try {
             passengerList = readUserService.find(UserRoleType.PASSENGER);
             if (passengerList != null){
-                req.setAttribute(LabelParameter.PASSENGER_LIST_LABEL, passengerList);
+                req.getSession().setAttribute(LabelParameter.PASSENGER_LIST_LABEL, passengerList);
                 page = JspPagePath.PASSENGER_ALL_INFO_PAGE;
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 }

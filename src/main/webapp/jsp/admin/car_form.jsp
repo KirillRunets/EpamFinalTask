@@ -21,10 +21,10 @@
         </div>
         <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home" bundle="${rb}"/></a></li>
-            <c:if test="${not empty car.id}">
+            <c:if test="${not empty sessionScope.car.id}">
                 <li class="active"><a href="#"><fmt:message key="label.title" bundle="${rb}"/></a></li>
             </c:if>
-            <c:if test="${empty car.id}">
+            <c:if test="${empty sessionScope.car.id}">
                 <li class="active"><a href="#"><fmt:message key="label.addTitle" bundle="${rb}"/></a></li>
             </c:if>
         </ul>
@@ -36,28 +36,28 @@
 </nav>
 <div class="form">
     <div id="signUpDriver">
-        <c:if test="${not empty car.id}">
+        <c:if test="${not empty sessionScope.car.id}">
             <form id="editForm" name="editForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <h1><fmt:message key="label.title" bundle="${rb}"/></h1>
                 <input type="hidden" name="command" value="edit_car"/>
-                <input type="hidden" name="car_id" value="${car.id}"/>
+                <input type="hidden" name="car_id" value="${sessionScope.car.id}"/>
                 <div class="top-row">
                     <div class="field-wrap">
                         <label><fmt:message key="label.mark" bundle="${rb}"/></label>
-                        <input name="mark" value="${car.mark}" type="text" required placeholder=
+                        <input name="mark" value="${sessionScope.car.mark}" type="text" required placeholder=
                             <fmt:message key="label.firstNamePlaceholder" bundle="${rb}"/>>
                     </div>
                     <div class="field-wrap">
                         <label><fmt:message key="label.model" bundle="${rb}"/></label>
-                        <input name="model" value="${car.model}" type="text" required placeholder=<fmt:message key="label.secondNamePlaceholder" bundle="${rb}"/>>
+                        <input name="model" value="${sessionScope.car.model}" type="text" required placeholder=<fmt:message key="label.secondNamePlaceholder" bundle="${rb}"/>>
                     </div>
                 </div>
                 <label><fmt:message key="label.release_date" bundle="${rb}"/> </label>
-                <input type="date" name="release_date"  value="${car.releaseDate}">
+                <input type="date" name="release_date"  value="${sessionScope.car.releaseDate}">
                 <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
             </form>
         </c:if>
-        <c:if test="${empty car.id}">
+        <c:if test="${empty sessionScope.car.id}">
             <form id="addForm" name="addForm" action="${pageContext.request.contextPath}/controller" method="POST">
                 <h1><fmt:message key="label.addTitle" bundle="${rb}"/></h1>
                 <input type="hidden" name="command" value="add_car"/>

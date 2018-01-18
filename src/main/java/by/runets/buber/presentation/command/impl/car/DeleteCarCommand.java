@@ -11,6 +11,7 @@ import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,15 +28,25 @@ public class DeleteCarCommand extends CarCommand implements Command{
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
+
+        User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
+        List<Car> sessionCarList = (List<Car>) req.getSession().getAttribute(LabelParameter.ADMIN_CAR_LIST);
+
         try {
             Car car = init(req);
             deleteCarService.delete(car);
-            page = switchUserRole(req);
+            deleteCarInCarListSession(req, LabelParameter.ADMIN_CAR_LIST, car.getId());
+            page = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN) ? JspPagePath.ADMIN_CAR_LIST_PAGE : JspPagePath.DRIVER_CAR_PROFILE_PAGE;
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
         }
-        return page;
+
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 }

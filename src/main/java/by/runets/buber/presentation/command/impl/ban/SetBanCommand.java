@@ -9,6 +9,7 @@ import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +27,8 @@ public class SetBanCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
         try {
             User user = init(req);
@@ -35,7 +37,11 @@ public class SetBanCommand implements Command {
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
         }
-        return page;
+
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.FORWARD);
+
+        return router;
     }
 
     private User init(HttpServletRequest req) throws ParseException {

@@ -49,6 +49,20 @@ body{
 
 }
 
+.admin-button{
+    background-color: #fff;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.admin-button:hover{
+    background-color: #d3d3d3;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
 #mySelect{
     float: right;
     font-size: 14px;
@@ -349,6 +363,10 @@ p[id="email"]{
     cursor: pointer;
 }
 
+#click{
+    float: left;
+}
+
 .hover_color
 { background-color: #c1bdba !important; }
 .click_color
@@ -462,7 +480,7 @@ p[id="email"]{
 
 
 .driver-form button{
-    width: 50%;
+    width: 48%;
     float: right;
 }
 

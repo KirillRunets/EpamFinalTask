@@ -8,4 +8,5 @@ public class ValidationConstant {
     public final static String FLOAT_NUMBER_PATTERN = "([\\d]+[.]?[\\d]+)";
     public final static String PHONE_NUMBER_PATTERN = "([^-][^A-Za-z.]+)";
     public final static String USER_ROLE_PATTERN = "(DRIVER)|(PASSENGER)|(ADMIN)";
+    public final static String DELIMITER = " ";
 }

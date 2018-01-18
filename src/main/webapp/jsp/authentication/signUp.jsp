@@ -65,7 +65,7 @@
                        placeholder=<fmt:message key="label.password" bundle="${rb}"/>>
 
                 <label><fmt:message key="label.role" bundle="${rb}"/></label>
-                <select name="role" required id="userRole">
+                <select name="user_role" required id="userRole">
                     <option value="NONE"><fmt:message key="label.chooseRole" bundle="${rb}"/></option>
                     <option value="DRIVER"><fmt:message key="label.driver" bundle="${rb}"/></option>
                     <option value="PASSENGER"><fmt:message key="label.passenger" bundle="${rb}"/></option>

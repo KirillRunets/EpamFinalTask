@@ -6,7 +6,6 @@ public class RequestParameter {
     private RequestParameter(){
     }
     public final static String ENCODING = "encoding";
-
     public final static String COMMAND = "command";
     public final static String LOCALE = "locale";
     public final static String DEFAULT_LOCALE = "ru_RU";
@@ -14,6 +13,7 @@ public class RequestParameter {
     public final static String FIRST_NAME = "firstName";
     public final static String SECOND_NAME = "secondName";
     public final static String EMAIL = "email";
+    public final static String PASSWORD = "password";
     public final static String BIRTH_DATE = "birthDate";
     public final static String RATING = "rating";
     public final static String PHONE_NUMBER = "phoneNumber";
@@ -23,16 +23,14 @@ public class RequestParameter {
     public final static String USER_ROLE = "user_role";
     public final static String USER = "user";
     public final static String BAN_ID = "ban_id";
-    //
     public final static String CAR_ID = "car_id";
     public final static String CAR_OWNER = "car_owner";
     public final static String MARK = "mark";
     public final static String MODEL = "model";
+    public final static String MARK_MODEL = "mark_model";
     public final static String LICENSE_PLATE = "licensePlate";
     public final static String RELEASE_DATE = "release_date";
     public final static String OLD_PASSWORD = "old_password";
     public final static String NEW_PASSWORD = "new_password";
-
-
     public final static String URI = "uri";
 }

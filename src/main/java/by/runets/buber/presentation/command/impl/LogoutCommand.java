@@ -4,23 +4,26 @@ import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LogoutCommand implements Command {
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
 
         HttpSession httpSession = req.getSession(false);
 
         if (httpSession != null){
-            httpSession.removeAttribute(UserRoleType.USER);
+            httpSession.invalidate();
         }
 
-        page = JspPagePath.MAIN_PAGE;
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(JspPagePath.MAIN_PAGE);
 
-        return page;
+        return router;
     }
 }

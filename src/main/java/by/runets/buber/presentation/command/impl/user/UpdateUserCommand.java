@@ -10,16 +10,19 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpdateUserCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(UpdateUserCommand.class);
@@ -30,23 +33,44 @@ public class UpdateUserCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
         boolean isAdmin = false;
         try {
-            User user = init(req);
-            isAdmin = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
-            updateUserService.update(user);
+            User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
+            User user = init(req, sessionUser);
+            if (user != null){
+                isAdmin = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
+                updateUserService.update(user);
+            } else {
+                req.setAttribute("", "");
+            }
             page = isAdmin ? switchPageByAdmin(user, req) : switchPageByUser(user, req);
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
 
     private String switchPageByAdmin(User user, HttpServletRequest req) throws ServiceException {
-        return user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER) ? setDataToPage(req, UserRoleType.DRIVER, LabelParameter.DRIVER_LIST_LABEL) : setDataToPage(req, UserRoleType.PASSENGER, LabelParameter.PASSENGER_LIST_LABEL);
+        String page = null;
+        switch (user.getRole().getRoleName()){
+            case UserRoleType.DRIVER:
+                updateUserInSession(req, user, LabelParameter.DRIVER_LIST_LABEL);
+                page = JspPagePath.DRIVER_ALL_INFO_PAGE;
+                break;
+            case UserRoleType.PASSENGER:
+                updateUserInSession(req, user, LabelParameter.PASSENGER_LIST_LABEL);
+                page = JspPagePath.PASSENGER_ALL_INFO_PAGE;
+                break;
+        }
+
+        return page;
     }
 
     private String switchPageByUser(User user, HttpServletRequest req) throws ServiceException {
@@ -56,9 +80,8 @@ public class UpdateUserCommand implements Command {
         return page;
     }
 
-    private User init(HttpServletRequest req) throws ParseException {
+    private User init(HttpServletRequest req, User sessionUser) throws ParseException {
         User user = null;
-        User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
         String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
 
         String id = req.getParameter(RequestParameter.USER_ID);
@@ -94,11 +117,24 @@ public class UpdateUserCommand implements Command {
         return user;
     }
 
-    private String setDataToPage(HttpServletRequest req, String role, String listLabel) throws ServiceException {
-        List<User> userList = new ReadUserService().find(role);
-        if (userList != null && listLabel != null){
-            req.setAttribute(listLabel, userList);
-        }
-        return role.equalsIgnoreCase(UserRoleType.DRIVER) ? JspPagePath.DRIVER_ALL_INFO_PAGE : JspPagePath.PASSENGER_ALL_INFO_PAGE;
+    private void updateUserInSession(HttpServletRequest req, User user, String label){
+        HttpSession httpSession = req.getSession();
+        List<User> userList = (List<User>) httpSession.getAttribute(label);
+        userList = updateUserInSessionList(userList, user);
+        httpSession.removeAttribute(label);
+        httpSession.setAttribute(label, userList);
     }
+
+    private List<User> updateUserInSessionList(List<User> sessionUserList, User newUser){
+        return sessionUserList.stream()
+                .map(user1 -> {
+                    if (user1.getId() == newUser.getId()){
+                        return newUser;
+                    } else {
+                        return user1;
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
 }

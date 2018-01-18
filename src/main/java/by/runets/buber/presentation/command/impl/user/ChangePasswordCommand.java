@@ -8,6 +8,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.presentation.command.Command;
+import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,8 @@ public class ChangePasswordCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req) {
+        Router router = new Router();
         String page = null;
 
         String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
@@ -45,7 +47,11 @@ public class ChangePasswordCommand implements Command {
             req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CHANGE_PASSWORD_ERROR_LABEL));
             page = switchPageByUser(req);
         }
-        return page;
+
+        router.setPagePath(page);
+        router.setRouteType(Router.RouteType.FORWARD);
+
+        return router;
     }
 
     private String switchPageByUser(HttpServletRequest req){

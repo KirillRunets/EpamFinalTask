@@ -16,4 +16,6 @@ public class PropertyKey {
     public final static String EMAIL_EXIST_LABEL_MESSAGE = "label.emailExist";
     public final static String SIGN_UP_ERROR_LABEL_MESSAGE = "label.signUpError";
     public final static String CHANGE_PASSWORD_ERROR_LABEL = "label.changePassword";
+    public final static String CAR_LICENSE_EXIST_ERROR = "label.carLicenseExist";
+    public final static String ADD_CAR_ERROR = "label.addCarError";
 }

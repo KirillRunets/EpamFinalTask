@@ -22,4 +22,8 @@ public class Router {
         }
         this.routeType = routeType;
     }
+
+    public RouteType getRouteType() {
+        return routeType;
+    }
 }

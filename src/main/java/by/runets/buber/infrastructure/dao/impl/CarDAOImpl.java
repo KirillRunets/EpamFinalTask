@@ -110,7 +110,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         preparedStatement.setString(2, car.getModel());
         preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
         if (car.getLicensePlate() != null) {
-            preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
+            preparedStatement.setString(4, car.getLicensePlate());
         } else {
             preparedStatement.setNull(4, Types.INTEGER);
         }
@@ -122,32 +122,40 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         }
     }
 
+    private void setUpdatePrepareStatement(PreparedStatement preparedStatement, Car car) throws SQLException {
+        preparedStatement.setString(1, String.valueOf(car.getMark()));
+        preparedStatement.setString(2, String.valueOf(car.getModel()));
+        if (car.getReleaseDate() == null) {
+            preparedStatement.setNull(3, Types.INTEGER);
+        } else {
+            preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
+        }
+        if (car.getLicensePlate() != null) {
+            preparedStatement.setString(4, car.getLicensePlate());
+        } else {
+            preparedStatement.setNull(4, Types.INTEGER);
+        }
+        if (car.getCarOwner() == null) {
+            preparedStatement.setNull(5, Types.INTEGER);
+        } else {
+            preparedStatement.setInt(5, car.getCarOwner().getId());
+        }
+        preparedStatement.setInt(5, car.getCarOwner().getId());
+        if (car.getCurrentLocation() == null) {
+            preparedStatement.setString(6, new Point().toString());
+        } else {
+            preparedStatement.setString(6, car.getCurrentLocation().toString());
+        }
+        preparedStatement.setInt(7, car.getId());
+    }
+
     @Override
     public void update(Car car) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_CAR_BY_ID);
-            preparedStatement.setString(1, String.valueOf(car.getMark()));
-            preparedStatement.setString(2, String.valueOf(car.getModel()));
-            if (car.getReleaseDate() == null) {
-                preparedStatement.setNull(3, Types.INTEGER);
-            } else {
-                preparedStatement.setDate(3, new Date(car.getReleaseDate().getTime()));
-            }
-            preparedStatement.setString(4, String.valueOf(car.getLicensePlate()));
-            if (car.getCarOwner() == null) {
-                preparedStatement.setNull(5, Types.INTEGER);
-            } else {
-                preparedStatement.setInt(5, car.getCarOwner().getId());
-            }
-            preparedStatement.setInt(5, car.getCarOwner().getId());
-            if (car.getCurrentLocation() == null) {
-                preparedStatement.setString(6, new Point().toString());
-            } else {
-                preparedStatement.setString(6, car.getCurrentLocation().toString());
-            }
-            preparedStatement.setInt(7, car.getId());
+            setUpdatePrepareStatement(preparedStatement, car);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);

@@ -30,10 +30,10 @@ public enum CommandType {
     UNBAN_USER(new DeleteBanCommand(new RevokeBanService())),
     SHOW_BANNED_USERS(new ShowBannedUsersCommand(new ReadBanUserService())),
     FILL_BAN_FORM(new FillBanFormCommand(new ReadBanService())),
-    FIND_ALL_VALID_CARS(new ReadCarCommand()),
+    FIND_ALL_VALID_CARS(new ReadCarCommand(new ReadCarService())),
     DELETE_CAR(new DeleteCarCommand(new DeleteCarService())),
     EDIT_CAR(new EditCarCommand(new EditCarService())),
-    LOAD_VALID_CAR_TO_EDIT(new LoadValidCarToEditCommand(new ReadCarService())),
+    LOAD_VALID_CAR_TO_EDIT(new LoadEditCarPageCommand(new ReadCarService())),
     LOAD_VALID_CAR_TO_ADD(new LoadValidCarPage()),
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService()));
