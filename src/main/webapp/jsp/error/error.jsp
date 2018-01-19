@@ -55,8 +55,6 @@
                     </tr>
                 </table>
             </div>
-
-
         </div>
     </div>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>

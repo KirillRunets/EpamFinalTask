@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class ReadDriverCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
         String page = null;
         List<User> driverList = null;

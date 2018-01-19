@@ -7,12 +7,14 @@ import by.runets.buber.application.service.car.CreateCarService;
 import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
+import by.runets.buber.application.service.stats.StatisticsService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
 import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
 import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
 import by.runets.buber.presentation.command.impl.car.*;
+import by.runets.buber.presentation.command.impl.statItics.PassengerTripJsonDataCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
@@ -36,7 +38,8 @@ public enum CommandType {
     LOAD_VALID_CAR_TO_EDIT(new LoadEditCarPageCommand(new ReadCarService())),
     LOAD_VALID_CAR_TO_ADD(new LoadValidCarPage()),
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
-    CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService()));
+    CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
+    PASSENGER_TRIP_JSON_STAT(new PassengerTripJsonDataCommand(new StatisticsService()));
 
     private Command command;
 

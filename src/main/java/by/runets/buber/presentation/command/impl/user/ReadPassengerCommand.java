@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ReadPassengerCommand implements Command{
@@ -24,7 +25,7 @@ public class ReadPassengerCommand implements Command{
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
         String page = null;
         List<User> passengerList = null;

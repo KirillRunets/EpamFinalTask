@@ -20,10 +20,9 @@ class CarCommand {
 
     Car init(HttpServletRequest req) throws ParseException {
         Car car = null;
-        User user = (User) req.getSession(false).getAttribute(UserRoleType.USER);
         String carId = req.getParameter(RequestParameter.CAR_ID);
         if (RequestValidator.getInstance().isValidate(carId)){
-            car = new Car(new Integer(carId), user);
+            car = new Car(new Integer(carId));
         }
         return car;
     }
@@ -57,5 +56,21 @@ class CarCommand {
         carList.removeIf(car1 -> car1.getId() == deletedCarId);
         httpSession.removeAttribute(label);
         httpSession.setAttribute(label, carList);
+    }
+
+    void deleteCarInUserSession(HttpServletRequest req){
+        HttpSession httpSession = req.getSession();
+        User user = (User) httpSession.getAttribute(UserRoleType.USER);
+        user.setCar(null);
+        httpSession.removeAttribute(UserRoleType.USER);
+        httpSession.setAttribute(UserRoleType.USER, user);
+    }
+
+    void setCarToUserSession(HttpServletRequest req, Car car){
+        HttpSession httpSession = req.getSession();
+        User user = (User) httpSession.getAttribute(UserRoleType.USER);
+        user.setCar(car);
+        httpSession.removeAttribute(UserRoleType.USER);
+        httpSession.setAttribute(UserRoleType.USER, user);
     }
 }

@@ -5,11 +5,12 @@ import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ChangeLocaleCommand implements Command {
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
 
         String page = req.getParameter(RequestParameter.URI);

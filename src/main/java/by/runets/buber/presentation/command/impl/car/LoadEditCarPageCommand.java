@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 
 public class LoadEditCarPageCommand extends CarCommand implements Command {
@@ -22,7 +23,7 @@ public class LoadEditCarPageCommand extends CarCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
 
         try {

@@ -79,24 +79,31 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th><fmt:message key="label.mark" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.model" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.release_date" bundle="${rb}"/> </th>
-                                    <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="line">
-                                    <td>${sessionScope.USER.car.mark}</td>
-                                    <td>${sessionScope.USER.car.model}</td>
-                                    <td>${sessionScope.USER.car.releaseDate}</td>
-                                    <td>${sessionScope.USER.car.licensePlate}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" id="car_command_id" value="">
+                                <input type="hidden" name="car_id" value="${sessionScope.USER.car.id}">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th><fmt:message key="label.mark" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.model" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.release_date" bundle="${rb}"/> </th>
+                                        <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="line">
+                                        <td>${sessionScope.USER.car.mark}</td>
+                                        <td>${sessionScope.USER.car.model}</td>
+                                        <td>${sessionScope.USER.car.releaseDate}</td>
+                                        <td>${sessionScope.USER.car.licensePlate}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="button-container">
+                                    <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message key="label.delete" bundle="${rb}"/></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class LoadEditUserPageCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoadEditUserPageCommand.class);
@@ -21,7 +22,7 @@ public class LoadEditUserPageCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         User user = null;
         Router router = new Router();
 

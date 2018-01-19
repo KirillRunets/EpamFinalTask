@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class SignUpCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(SignUpCommand.class);
@@ -26,7 +27,7 @@ public class SignUpCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
         String page = null;
 

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -26,25 +27,25 @@ public class CreateCarCommand extends CarCommand implements Command {
     }
 
     @Override
-    public Router execute(HttpServletRequest req) {
+    public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
         String page = null;
-        String sessionUser = null;
+
+        User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
+        String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
+        boolean isAdmin = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
+        Car car = null;
         try {
-            String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
-            User user = (User) req.getSession(false).getAttribute(UserRoleType.USER);
-            sessionUser = user.getRole().getRoleName();
-            Car car = sessionUser.equalsIgnoreCase(UserRoleType.ADMIN) ? initByAdmin(req, user, locale) : initByDriver(req, user, locale);
-            if (car != null){
-                if (createCarService.create(car)) {
-                    setUpdateCarInUserSession(req, user, car);
-                } else {
-                    req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CAR_LICENSE_EXIST_ERROR));
-                }
+            if (isAdmin){
+                car = initByAdmin(req, sessionUser, locale);
+                updateCarListInSession(req, LabelParameter.ADMIN_CAR_LIST, car);
+                page = JspPagePath.ADMIN_HOME_PAGE;
             } else {
-                req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.ADD_CAR_ERROR));
+                car = initByDriver(req, sessionUser, locale);
+                setCarToUserSession(req, car);
+                page = JspPagePath.DRIVER_CAR_PROFILE_PAGE;
             }
-            page = sessionUser.equalsIgnoreCase(UserRoleType.ADMIN) ? JspPagePath.ADMIN_HOME_PAGE : JspPagePath.DRIVER_CAR_PROFILE_PAGE;
+            createCarService.create(car);
         } catch (ParseException | ServiceException e) {
             LOGGER.error(e);
         }
@@ -87,13 +88,5 @@ public class CreateCarCommand extends CarCommand implements Command {
         }
 
         return car;
-    }
-
-    private void setUpdateCarInUserSession(HttpServletRequest req, User user, Car car){
-        if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
-            user.setCar(car);
-            req.getSession(false).removeAttribute(UserRoleType.USER);
-            req.getSession().setAttribute(UserRoleType.USER, user);
-        }
     }
 }

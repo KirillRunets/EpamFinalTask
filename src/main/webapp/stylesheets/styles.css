@@ -524,3 +524,18 @@ p[id="email"]{
 #changeLocaleForm{
     margin-top: -20px;
 }
+
+
+.error{
+    width: 1000px;
+}
+
+.error h1{
+    font-size: 72px;
+    text-align: center;
+}
+
+.error p{
+    text-align: center;
+
+}
