@@ -40,7 +40,7 @@ public class DatabaseQueryConstant {
     public final static String INSERT_INTO_CAR = "INSERT INTO car(mark, model, release_date, license_plate, car_owner, current_location) VALUES(?,?,?,?,?,?)";
     public final static String UPDATE_CAR_BY_ID = "UPDATE car SET mark=?, model=?, release_date=?, license_plate=?, car_owner=?, current_location=? WHERE id=?";
     //order
-    public final static String FIND_ALL_ORDERS = "SELECT distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM order";
+    public final static String FIND_ALL_ORDERS = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id FROM `order`";
     public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.driver_id\n" +
@@ -49,9 +49,9 @@ public class DatabaseQueryConstant {
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.passenger_id\n" +
             "WHERE driver_id=?;";
-    public final static String DELETE_ORDER_BY_ID = "DELETE FROM order WHERE t_id=?";
-    public final static String INSERT_INTO_ORDER = "INSERT INTO order(distance, trip_cost, departure_point,destination_point, date, driver_id, passenger_id) VALUES(?,?,?,?,?,?,?)";
-    public final static String UPDATE_ORDER_BY_ID = "UPDATE order SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=? WHERE t_id=?";
+    public final static String DELETE_ORDER_BY_ID = "DELETE FROM `order` WHERE t_id=?";
+    public final static String INSERT_INTO_ORDER = "INSERT INTO `order`(distance, trip_cost, departure_point,destination_point, date, driver_id, passenger_id) VALUES(?,?,?,?,?,?,?)";
+    public final static String UPDATE_ORDER_BY_ID = "UPDATE `order` SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=? WHERE t_id=?";
 
     //ban
     public final static String FIND_ALL_BANS = "SELECT b_id, b_name, b_description FROM ban_reason";

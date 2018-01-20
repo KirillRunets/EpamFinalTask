@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
 </head>
-<body class="custom-body" onload='init(${fn:escapeXml(requestScope.JSON)})'>
+<body class="custom-body" onload="init(${sessionScope.JSON})">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -33,6 +33,7 @@
             </div>
         </div>
     </nav>
+    <div id="locale" data-prodnumber="${sessionScope.locale}" ></div>
     <c:import url="${pageContext.request.contextPath}/jsp/passenger/passenger_sidebar.jsp"/>
     <%--<section class="my-section">
         <div class="content-wrapper">
@@ -108,7 +109,6 @@
                     <div class="card-body">
                         <canvas id="myAreaChart" width="100%" height="30"></canvas>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
             </div>
         </div>
