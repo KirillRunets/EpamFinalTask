@@ -18,8 +18,14 @@ function init(request) {
         case 'en_US':
             month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             break;
+        default:
+            month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     }
     trips = request;
+}
+
+function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
 }
 
 
@@ -59,7 +65,7 @@ $(document).ready(function() {
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: 250,
+                        max: getMaxOfArray(trips),
                         maxTicksLimit: 5
                     },
                     gridLines: {

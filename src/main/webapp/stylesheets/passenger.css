@@ -1,0 +1,9 @@
+#stat-table{
+    width: 100%;
+}
+
+
+#stat-table td{
+    padding: 10px;
+    font-size: 20px;
+}

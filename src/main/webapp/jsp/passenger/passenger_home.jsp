@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/passenger.css">
 </head>
-<body class="custom-body" onload="init(${sessionScope.JSON})">
+<body class="custom-body" onload="init(${sessionScope.tripAmountStatistics})">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -28,84 +29,40 @@
             </ul>
             <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
             <div class="top-button">
-                <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
-                        key="label.logout" bundle="${rb}"/></button>
+                <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.logout" bundle="${rb}"/></button>
             </div>
         </div>
     </nav>
     <div id="locale" data-prodnumber="${sessionScope.locale}" ></div>
     <c:import url="${pageContext.request.contextPath}/jsp/passenger/passenger_sidebar.jsp"/>
-    <%--<section class="my-section">
-        <div class="content-wrapper">
-            <div class="container-fluid">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.rating" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.mark" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.model" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.rating" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.mark" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.model" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                <c:forEach items="${sessionScope.driverList}" var="driver">
-                                    <tr class="line" id="${driver.id}">
-                                        <td>${driver.firstName}</td>
-                                        <td>${driver.secondName}</td>
-                                        <td>${driver.rating}</td>
-                                        <td>${driver.birthDate}</td>
-                                        <td>${driver.phoneNumber}</td>
-                                        <td>${driver.tripAmount}</td>
-                                        <td>${driver.car.mark}</td>
-                                        <td>${driver.car.model}</td>
-                                        <td>${driver.car.releaseDate}</td>
-                                        <td>${driver.car.licesePlate}</td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>--%>
     <section class="my-section">
         <div class="content-wrapper">
             <div class="container-fluid">
-                <div class="trip-data">
-                    <form action="${pageContext.request.contextPath}/controller" method="POST">
-                        <input type="hidden" name="command" value="PASSENGER_TRIP_JSON_STAT">
-                        <input type="submit" value="submit"/>
-                    </form>
-                    <c:out value="${requestScope.JSON}"/>
+                <div class="statistics">
+                    <table id="stat-table">
+                        <tr>
+                            <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
+                            <th><fmt:message key="label.rating" bundle="${rb}"/></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fa fa-tachometer" aria-hidden="true"></i> ${sessionScope.USER.tripAmount}
+                            </td>
+                            <td>
+                                <p>${sessionScope.USER.rating}</p>
+                            </td>
+                            <td>
+                              <%--  <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                    <input type="hidden" name="command" value="make_order">
+                                </form>--%>
+                                <button class="button button-small" id="modal-button"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-area-chart"></i> Area Chart Example</div>
+                        <i class="fa fa-area-chart"></i> <fmt:message key="label.statistics" bundle="${rb}"/></div>
                     <div class="card-body">
                         <canvas id="myAreaChart" width="100%" height="30"></canvas>
                     </div>
@@ -113,6 +70,12 @@
             </div>
         </div>
     </section>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <c:import url="${pageContext.request.contextPath}/jsp/passenger/location_modal.jsp"/>
+        </div>
+    </div>
     <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
@@ -120,5 +83,6 @@
     <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/chart.js"></script>
     <script src="${pageContext.request.contextPath}/js/load.js"></script>
+    <script src="${pageContext.request.contextPath}/js/modal.js"></script>
 </body>
 </html>

@@ -14,4 +14,6 @@ public class LabelParameter {
     public final static String DRIVER = "driver";
     public final static String CAR = "car";
 
+    public final static String TRIP_AMOUNT_STATISTICS = "tripAmountStatistics";
+
 }

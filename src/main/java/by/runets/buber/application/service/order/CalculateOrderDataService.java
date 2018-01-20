@@ -1,0 +1,22 @@
+package by.runets.buber.application.service.order;
+
+import by.runets.buber.domain.entity.Point;
+import by.runets.buber.infrastructure.constant.OrderConstant;
+import by.runets.buber.infrastructure.util.RandomGenerator;
+
+public class CalculateOrderDataService {
+    public Double calculateDistance(Point destinationPoint){
+        Point departurePoint = RandomGenerator.generateDeparturePoint();
+        Double distance = Math.hypot((destinationPoint.getX() - departurePoint.getX()), (destinationPoint.getY() - departurePoint.getY()));
+        return Math.abs(distance);
+    }
+
+    public Double calculateTime(Double distance){
+        Double averageSpeed = RandomGenerator.generateAverageSpeed();
+        return  distance / averageSpeed;
+    }
+
+    public Double calculateCost(Double distance, Double time){
+        return OrderConstant.CYLOMETER_PRICE * distance + OrderConstant.MINUTE_PRICE * time;
+    }
+}

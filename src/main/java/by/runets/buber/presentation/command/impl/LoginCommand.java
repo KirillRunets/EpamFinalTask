@@ -1,5 +1,6 @@
 package by.runets.buber.presentation.command.impl;
 
+import by.runets.buber.application.service.statistics.StatisticsService;
 import by.runets.buber.application.service.user.LoginUserService;
 import by.runets.buber.application.service.user.ReadBanUserService;
 import by.runets.buber.application.validation.RequestValidator;
@@ -24,9 +25,11 @@ import java.util.Optional;
 public class LoginCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private LoginUserService userService;
+    private StatisticsService statisticsService;
 
-    public LoginCommand(LoginUserService userService) {
+    public LoginCommand(LoginUserService userService, StatisticsService statisticsService) {
         this.userService = userService;
+        this.statisticsService = statisticsService;
     }
 
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
@@ -61,7 +64,7 @@ public class LoginCommand implements Command {
     }
 
 
-    private String loadPageByRole(HttpServletRequest request, Optional<User> user) {
+    private String loadPageByRole(HttpServletRequest request, Optional<User> user) throws ServiceException {
         Router router = new Router();
         String page = null;
         HttpSession httpSession = request.getSession();
@@ -81,8 +84,9 @@ public class LoginCommand implements Command {
                     page = JspPagePath.PASSENGER_HOME_PAGE;
                     break;
             }
+            List<Integer> data = statisticsService.collectStats(user.get().getId(), user.get().getRole().getRoleName());
+            httpSession.setAttribute(LabelParameter.TRIP_AMOUNT_STATISTICS, data);
         }
-
 
         return page;
     }

@@ -1,4 +1,4 @@
-package by.runets.buber.application.service.stats;
+package by.runets.buber.application.service.statistics;
 
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.enumeration.MonthEnum;
@@ -7,27 +7,32 @@ import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class StatisticsService {
-    private final static Logger LOGGER = LogManager.getLogger(StatisticsService.class);
-    public List<Integer> collectStats(Integer id, String role) throws DAOException {
-        AbstractDAO orderDAO = DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
+    public List<Integer> collectStats(Integer id, String role) throws ServiceException {
         List<Integer> stats = new LinkedList<>();
 
-        List<Order> orders = orderDAO.findAll();
-        orders = role.equalsIgnoreCase(UserRoleType.DRIVER) ? collectOrdersByDriver(id, orders) : collectOrdersByPassenger(id, orders);
+        List<Order> orders = null;
+        try {
+            AbstractDAO orderDAO = DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
+            orders = orderDAO.findAll();
 
-        Map<MonthEnum, Integer> map = calculateTripAmountInMonth(orders);
-        map.keySet().forEach(key ->{
-            Arrays.stream(MonthEnum.values())
-                    .filter(key::equals)
-                    .forEach(monthEnum -> stats.add(map.get(monthEnum)));
-        });
+            orders = role.equalsIgnoreCase(UserRoleType.DRIVER) ? collectOrdersByDriver(id, orders) : collectOrdersByPassenger(id, orders);
+
+            Map<MonthEnum, Integer> map = calculateTripAmountInMonth(orders);
+            map.keySet().forEach(key ->{
+                Arrays.stream(MonthEnum.values())
+                        .filter(key::equals)
+                        .forEach(monthEnum -> stats.add(map.get(monthEnum)));
+            });
+
+        } catch (DAOException e) {
+            throw new ServiceException("Statistics exception " + e);
+        }
 
         return stats;
     }
@@ -63,5 +68,4 @@ public class StatisticsService {
         cal.setTime(tripDate);
         return cal.get(Calendar.MONTH);
     }
-
 }

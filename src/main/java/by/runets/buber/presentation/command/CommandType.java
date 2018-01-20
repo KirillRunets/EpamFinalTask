@@ -7,18 +7,21 @@ import by.runets.buber.application.service.car.CreateCarService;
 import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
-import by.runets.buber.application.service.stats.StatisticsService;
+import by.runets.buber.application.service.order.CalculateOrderDataService;
+import by.runets.buber.application.service.order.MakeOrderService;
+import by.runets.buber.application.service.statistics.StatisticsService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
 import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
 import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
 import by.runets.buber.presentation.command.impl.car.*;
-import by.runets.buber.presentation.command.impl.statItics.PassengerTripJsonDataCommand;
+import by.runets.buber.presentation.command.impl.order.CalculateOrderDataCommand;
+import by.runets.buber.presentation.command.impl.order.MakeOrderCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
-    LOGIN(new LoginCommand(new LoginUserService())),
+    LOGIN(new LoginCommand(new LoginUserService(), new StatisticsService())),
     SIGNUP(new SignUpCommand(new RegisterUserService())),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),
@@ -39,7 +42,8 @@ public enum CommandType {
     LOAD_VALID_CAR_TO_ADD(new LoadValidCarPage()),
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
-    PASSENGER_TRIP_JSON_STAT(new PassengerTripJsonDataCommand(new StatisticsService()));
+    MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
+    DESTINATION_LOCATION(new CalculateOrderDataCommand(new CalculateOrderDataService()));
 
     private Command command;
 

@@ -33,4 +33,7 @@ public class RequestParameter {
     public final static String OLD_PASSWORD = "old_password";
     public final static String NEW_PASSWORD = "new_password";
     public final static String URI = "uri";
+
+    public final static String LATITUDE = "latitude";
+    public final static String LONGITUDE = "longitude";
 }
