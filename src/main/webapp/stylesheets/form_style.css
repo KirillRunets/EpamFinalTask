@@ -87,6 +87,20 @@ label.highlight {
   transition: border-color .25s ease, box-shadow .25s ease;
 }
 
+.form .traffic{
+  margin: 10px 0;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  padding: 10px 10px;
+  background: none;
+  border: 1px solid #a0b3b0;
+  color: #a0b3b0;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
 .form input:valid{
   border: 1px solid #1ab188;
 }

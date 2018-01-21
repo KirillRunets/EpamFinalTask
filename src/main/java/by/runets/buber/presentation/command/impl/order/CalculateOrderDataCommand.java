@@ -2,8 +2,17 @@ package by.runets.buber.presentation.command.impl.order;
 
 
 import by.runets.buber.application.service.order.CalculateOrderDataService;
+import by.runets.buber.application.service.order.CollectDriversToOrderService;
+import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.Point;
+import by.runets.buber.domain.entity.User;
+import by.runets.buber.domain.enumeration.TrafficEnum;
+import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.RequestParameter;
+import by.runets.buber.infrastructure.constant.UserRoleType;
+import by.runets.buber.infrastructure.exception.ServiceException;
+import by.runets.buber.infrastructure.util.RandomGenerator;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -11,15 +20,18 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
+import java.util.Queue;
 
 public class CalculateOrderDataCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(CalculateOrderDataCommand.class);
     private CalculateOrderDataService calculateOrderDistanceService;
+    private CollectDriversToOrderService collectDriversToOrderService;
 
-    public CalculateOrderDataCommand(CalculateOrderDataService calculateOrderDistanceService) {
+    public CalculateOrderDataCommand(CalculateOrderDataService calculateOrderDistanceService, CollectDriversToOrderService collectDriversToOrderService) {
         this.calculateOrderDistanceService = calculateOrderDistanceService;
+        this.collectDriversToOrderService = collectDriversToOrderService;
     }
-
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
@@ -27,13 +39,41 @@ public class CalculateOrderDataCommand implements Command{
 
         Double latitude = Double.valueOf(req.getParameter(RequestParameter.LATITUDE));
         Double longitude = Double.valueOf(req.getParameter(RequestParameter.LONGITUDE));
+        TrafficEnum trafficEnum = TrafficEnum.valueOf(req.getParameter(RequestParameter.TRAFFIC).toUpperCase());
 
-        Double distance = calculateOrderDistanceService.calculateDistance(new Point(latitude, longitude));
-        Double time = calculateOrderDistanceService.calculateTime(distance);
+        User sessionPassenger = (User) req.getSession().getAttribute(UserRoleType.USER);
+
+        Point departurePoint = RandomGenerator.generatePoint();
+        Point destinationPoint = new Point(latitude, longitude);
+
+
+        Double distance = calculateOrderDistanceService.calculateDistance(departurePoint, destinationPoint);
+        Double time = calculateOrderDistanceService.calculateTime(distance, trafficEnum);
         Double cost = calculateOrderDistanceService.calculateCost(distance, time);
 
+        int d =(int)Math.round(distance);
+        int t = (int)Math.round(time);
+        int c = (int)Math.round(cost);
 
+        sessionPassenger.setCurrentLocation(departurePoint);
 
-        return null;
+        try {
+            Queue<User> priorityQueue = collectDriversToOrderService.collect(sessionPassenger);
+            if (priorityQueue != null){
+                req.getSession().setAttribute(LabelParameter.PRIORITY_DRIVERS_QUEUE_LABEL, priorityQueue);
+                req.getSession().setAttribute(LabelParameter.TRIP_COST_LABEL, c);
+                req.getSession().setAttribute(LabelParameter.TRIP_TIME_LABEL, t);
+                req.getSession().setAttribute(LabelParameter.TRIP_DISTANCE_LABEL, d);
+            }
+        } catch (ServiceException e) {
+            LOGGER.error(e);
+        }
+
+        router.setPagePath(JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
     }
+
+
 }

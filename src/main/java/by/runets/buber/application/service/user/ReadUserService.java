@@ -71,7 +71,7 @@ public class ReadUserService {
         Set<Order> orders = null;
 
         for (User user : userList){
-            orders = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER) ? orderDAO.findAllOrdersByDriverId(user.getId()) : orderDAO.findAllOrdersByDriverId(user.getId());
+            orders = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER) ? orderDAO.findAllOrdersByDriverId(user.getId()) : orderDAO.findAllOrdersByPassengerId(user.getId());
             user.setOrderSet(orders);
         }
     }

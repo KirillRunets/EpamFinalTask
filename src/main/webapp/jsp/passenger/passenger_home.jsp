@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/passenger.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">
 </head>
 <body class="custom-body" onload="init(${sessionScope.tripAmountStatistics})">
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -52,9 +53,6 @@
                                 <p>${sessionScope.USER.rating}</p>
                             </td>
                             <td>
-                              <%--  <form action="${pageContext.request.contextPath}/controller" method="POST">
-                                    <input type="hidden" name="command" value="make_order">
-                                </form>--%>
                                 <button class="button button-small" id="modal-button"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
                             </td>
                         </tr>

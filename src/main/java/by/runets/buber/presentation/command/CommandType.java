@@ -8,6 +8,7 @@ import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.application.service.order.CalculateOrderDataService;
+import by.runets.buber.application.service.order.CollectDriversToOrderService;
 import by.runets.buber.application.service.order.MakeOrderService;
 import by.runets.buber.application.service.statistics.StatisticsService;
 import by.runets.buber.application.service.user.*;
@@ -43,7 +44,7 @@ public enum CommandType {
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
-    DESTINATION_LOCATION(new CalculateOrderDataCommand(new CalculateOrderDataService()));
+    CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService()));
 
     private Command command;
 

@@ -34,7 +34,6 @@ public class UtilTest {
 
     @Test
     public void testGenerateLocationMethod(){
-        RandomGenerator randomLocationGenerator = new RandomGenerator();
-        Assert.assertNotNull(randomLocationGenerator.generate());
+        Assert.assertNotNull(RandomGenerator.generatePoint());
     }
 }

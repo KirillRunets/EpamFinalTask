@@ -14,7 +14,7 @@
         <div class="menu-list">
             <ul id="menu-content" class="menu-content collapse out">
                 <li onClick="window.location='${pageContext.request.contextPath}/jsp/passenger/passenger_home.jsp'">
-                    <a href="#"><i class="fa fa-car fa-lg"></i> <fmt:message key="label.drivers" bundle="${rb}"/></a>
+                    <a href="#"><i class="fa fa-car fa-lg"></i> <fmt:message key="label.home" bundle="${rb}"/></a>
                 </li>
                 <li onClick="window.location='${pageContext.request.contextPath}/jsp/passenger/passenger_profile.jsp'">
                     <a href="#">

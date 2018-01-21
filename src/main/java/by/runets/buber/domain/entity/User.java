@@ -18,6 +18,7 @@ public class User extends Entity {
     private Role role;
     private Car car;
     private Set<Order> orders;
+    private Point currentLocation;
 
     public User() {
     }
@@ -180,6 +181,18 @@ public class User extends Entity {
     public void setOrderSet(Set<Order> orderSet) {
         this.orders = orderSet;
     }
+    public Set<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
+    }
+    public Point getCurrentLocation() {
+        return currentLocation;
+    }
+    public void setCurrentLocation(Point currentLocation) {
+        this.currentLocation = currentLocation;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -202,7 +215,8 @@ public class User extends Entity {
         if (bonus != null ? !bonus.equals(user.bonus) : user.bonus != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (car != null ? !car.equals(user.car) : user.car != null) return false;
-        return orders != null ? orders.equals(user.orders) : user.orders == null;
+        if (orders != null ? !orders.equals(user.orders) : user.orders != null) return false;
+        return currentLocation != null ? currentLocation.equals(user.currentLocation) : user.currentLocation == null;
     }
 
     @Override
@@ -224,6 +238,7 @@ public class User extends Entity {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (car != null ? car.hashCode() : 0);
         result = 31 * result + (orders != null ? orders.hashCode() : 0);
+        result = 31 * result + (currentLocation != null ? currentLocation.hashCode() : 0);
         return result;
     }
 
@@ -243,7 +258,8 @@ public class User extends Entity {
                 ", rating=" + rating +
                 ", role=" + role +
                 ", car=" + car +
-                ", orderSet=" + orders +
+                ", orders=" + orders +
+                ", currentLocation=" + currentLocation +
                 '}';
     }
 }

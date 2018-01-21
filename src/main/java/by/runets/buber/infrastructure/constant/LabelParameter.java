@@ -15,5 +15,8 @@ public class LabelParameter {
     public final static String CAR = "car";
 
     public final static String TRIP_AMOUNT_STATISTICS = "tripAmountStatistics";
-
+    public final static String PRIORITY_DRIVERS_QUEUE_LABEL = "priorityDriversQueue";
+    public final static String TRIP_COST_LABEL = "tripCost";
+    public final static String TRIP_TIME_LABEL = "tripTime";
+    public final static String TRIP_DISTANCE_LABEL = "tripDistance";
 }

@@ -23,5 +23,5 @@ public class JspPagePath {
 
     public final static String ERROR_USER_NOTIFICATION = "jsp/error_user_notification.jsp";
     public final static String CHANGE_PASSWORD_PAGE = "/jsp/change_password.jsp";
-
+    public final static String FREE_DRIVERS_FOR_PASSENGER_PAGE = "/jsp/passenger/free_drivers_for_passenger.jsp";
 }
