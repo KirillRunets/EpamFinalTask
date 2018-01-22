@@ -20,6 +20,8 @@ public class LabelParameter {
     public final static String TRIP_TIME_LABEL = "tripTime";
     public final static String TRIP_DISTANCE_LABEL = "tripDistance";
     public final static String DESTINATION_POINT = "destinationPoint";
+    public final static String AVERAGE_SPEED = "averageSpeed";
+    public final static String WAIT_LABEL = "waitLabel";
     public final static String ORDER = "order";
     public final static String ERROR = "error";
 }

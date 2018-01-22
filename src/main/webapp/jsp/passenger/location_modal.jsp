@@ -24,7 +24,7 @@
             </div>
         </div>
         <select class="traffic" name="traffic" required>
-            <option value="city"><fmt:message key="label.tripType" bundle="${rb}"/></option>
+            <option disabled value="city"><fmt:message key="label.tripType" bundle="${rb}"/></option>
             <option value="city"><fmt:message key="label.city" bundle="${rb}"/></option>
             <option value="highway"><fmt:message key="label.highway" bundle="${rb}"/></option>
         </select>

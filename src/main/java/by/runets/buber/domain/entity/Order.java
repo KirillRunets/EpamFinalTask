@@ -7,8 +7,8 @@ public class Order extends Entity{
     private Double distance;
     private Double tripCost;
     private Double tripTime;
-    private Optional<Point> startPoint;
-    private Optional<Point> destinationPoint;
+    private Point startPoint;
+    private Point destinationPoint;
     private Date orderDate;
     private Integer driverId;
     private Integer passengerId;
@@ -28,18 +28,23 @@ public class Order extends Entity{
     public void setTripCost(Double tripCost) {
         this.tripCost = tripCost;
     }
-    public Optional<Point> getStartPoint() {
+
+    public Point getStartPoint() {
         return startPoint;
     }
-    public void setStartPoint(Optional<Point> startPoint) {
+
+    public void setStartPoint(Point startPoint) {
         this.startPoint = startPoint;
     }
-    public Optional<Point> getDestinationPoint() {
+
+    public Point getDestinationPoint() {
         return destinationPoint;
     }
-    public void setDestinationPoint(Optional<Point> destinationPoint) {
+
+    public void setDestinationPoint(Point destinationPoint) {
         this.destinationPoint = destinationPoint;
     }
+
     public Date getOrderDate() {
         return orderDate;
     }

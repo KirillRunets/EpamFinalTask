@@ -9,6 +9,7 @@ import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.application.service.order.CalculateOrderDataService;
 import by.runets.buber.application.service.order.CollectDriversToOrderService;
+import by.runets.buber.application.service.order.ConfirmOrderService;
 import by.runets.buber.application.service.order.MakeOrderService;
 import by.runets.buber.application.service.statistics.StatisticsService;
 import by.runets.buber.application.service.user.*;
@@ -18,6 +19,7 @@ import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
 import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
 import by.runets.buber.presentation.command.impl.car.*;
 import by.runets.buber.presentation.command.impl.order.CalculateOrderDataCommand;
+import by.runets.buber.presentation.command.impl.order.ConfirmOrderCommand;
 import by.runets.buber.presentation.command.impl.order.MakeOrderCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
@@ -44,7 +46,8 @@ public enum CommandType {
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
-    CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService()));
+    CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
+    DRIVER_CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService()));
 
     private Command command;
 

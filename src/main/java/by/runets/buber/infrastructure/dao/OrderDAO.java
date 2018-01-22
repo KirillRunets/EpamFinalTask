@@ -9,6 +9,6 @@ import java.util.Set;
 public interface OrderDAO extends AbstractDAO<Integer, Order> {
     Set<Order> findAllOrdersByDriverId(Integer id) throws DAOException;
     Set<Order> findAllOrdersByPassengerId(Integer id) throws DAOException;
-    void confirmOrderByDriver(User driver, Order order) throws DAOException;
-    void makeOrderByPassenger(Order order) throws DAOException;
+    boolean confirmOrderByDriver(User driver, Order order) throws DAOException;
+    boolean makeOrderByPassenger(Order order) throws DAOException;
 }

@@ -19,7 +19,7 @@ public class RandomGenerator {
     public static Double generateAverageSpeed(TrafficEnum trafficEnum){
         Random randomGenerator = new Random();
         return (double) (trafficEnum == TrafficEnum.CITY
-                ? randomGenerator.nextInt(OrderConstant.CITY_AVERAGE_SPEED)
-                : randomGenerator.nextInt(OrderConstant.HIGHWAY_AVERAGE_SPEED - OrderConstant.CITY_AVERAGE_SPEED) + OrderConstant.CITY_AVERAGE_SPEED);
+                ? OrderConstant.CITY_AVERAGE_SPEED
+                : OrderConstant.HIGHWAY_AVERAGE_SPEED);
     }
 }

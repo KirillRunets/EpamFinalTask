@@ -11,8 +11,7 @@ public class CalculateOrderDataService {
         return Math.abs(distance);
     }
 
-    public Double calculateTime(Double distance, TrafficEnum trafficEnum){
-        Double averageSpeed = RandomGenerator.generateAverageSpeed(trafficEnum);
+    public Double calculateTime(Double distance, TrafficEnum trafficEnum, Double averageSpeed){
         return  distance / averageSpeed * 60;
     }
 

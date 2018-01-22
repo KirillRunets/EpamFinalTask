@@ -45,8 +45,9 @@ public class CalculateOrderDataCommand implements Command{
         Point departurePoint = RandomGenerator.generatePoint();
         Point destinationPoint = new Point(latitude, longitude);
 
+        Double averageSpeed = RandomGenerator.generateAverageSpeed(trafficEnum);
         Double distance = calculateOrderDistanceService.calculateDistance(departurePoint, destinationPoint);
-        Double time = calculateOrderDistanceService.calculateTime(distance, trafficEnum);
+        Double time = calculateOrderDistanceService.calculateTime(distance, trafficEnum, averageSpeed);
         Double cost = calculateOrderDistanceService.calculateCost(distance, time);
 
         sessionPassenger.setCurrentLocation(departurePoint);
@@ -59,6 +60,7 @@ public class CalculateOrderDataCommand implements Command{
                 req.getSession().setAttribute(LabelParameter.TRIP_TIME_LABEL, time);
                 req.getSession().setAttribute(LabelParameter.TRIP_DISTANCE_LABEL, cost);
                 req.getSession().setAttribute(LabelParameter.DESTINATION_POINT, destinationPoint);
+                req.getSession().setAttribute(LabelParameter.AVERAGE_SPEED, averageSpeed);
             }
         } catch (ServiceException e) {
             LOGGER.error(e);

@@ -11,14 +11,13 @@
     <link href="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css"/>
-    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"
-          type="text/css">
+    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/passenger.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/loader.css">
 </head>
 <body class="custom-body">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,13 +30,12 @@
         </ul>
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
-            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
-                    key="label.logout" bundle="${rb}"/></button>
+            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.logout" bundle="${rb}"/></button>
         </div>
     </div>
 </nav>
+<c:out value="${param.command}"/>
 <c:import url="${pageContext.request.contextPath}/jsp/passenger/passenger_sidebar.jsp"/>
-
 <section class="my-section">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -47,17 +45,25 @@
                         <th><fmt:message key="label.distance" bundle="${rb}"/></th>
                         <th><fmt:message key="label.time" bundle="${rb}"/></th>
                         <th><fmt:message key="label.tripCost" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.averageSpeed" bundle="${rb}"/></th>
                         <th><fmt:message key="label.currentLocation" bundle="${rb}"/></th>
                     </tr>
+                    <fmt:formatNumber var="distance" value="${sessionScope.tripDistance}" maxFractionDigits="0"/>
+                    <fmt:formatNumber var="time" value="${sessionScope.tripTime}" maxFractionDigits="0"/>
+                    <fmt:formatNumber var="cost" value="${sessionScope.tripCost}" maxFractionDigits="0"/>
+                    <fmt:formatNumber var="averageSpeed" value="${sessionScope.averageSpeed}" maxFractionDigits="0"/>
                     <tr>
                         <td>
-                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripDistance}" maxFractionDigits="0" /> <fmt:message key="label.systemDistance" bundle="${rb}"/></p>
+                            <p>${distance} <fmt:message key="label.systemDistance" bundle="${rb}"/></p>
                         </td>
                         <td>
-                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripTime}" maxFractionDigits="0" /> <fmt:message key="label.systemTime" bundle="${rb}"/></p>
+                            <p>${time} <fmt:message key="label.systemTime" bundle="${rb}"/></p>
                         </td>
                         <td>
-                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripCost}" maxFractionDigits="0" /> <fmt:message key="label.systemСost" bundle="${rb}"/></p>
+                            <p>${cost} <fmt:message key="label.systemСost" bundle="${rb}"/></p>
+                        </td>
+                        <td>
+                            <p>${averageSpeed} <fmt:message key="label.systemSpeed" bundle="${rb}"/></p>
                         </td>
                         <td>
                             <p>${sessionScope.USER.currentLocation}</p>
@@ -71,7 +77,7 @@
                         <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
                             <input type="hidden" name="command" value="make_order">
                             <input type="hidden" name="driver_id" id="driver_id" value="">
-                            <table class="table table-bordered"  width="100%" cellspacing="0">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
@@ -123,6 +129,25 @@
         </div>
     </div>
 </section>
+<c:if test="${not empty param.errorLabel}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>${param.errorLabel}</p>
+        </div>
+    </div>
+</c:if>
+<c:if test="${param.command == 'driver_confirm_order'}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <div class="loader"></div>
+            <p><fmt:message key="label.wait" bundle="${rb}" /></p>
+        </div>
+    </div>
+    <form action="${pageContext.request.contextPath}/controller" method="POST" id="driver_confirm">
+        <input type="hidden" name="command" value="${param.command}">
+    </form>
+</c:if>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -132,5 +157,8 @@
 <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
+<script>
+    submitForm('driver_confirm');
+</script>
 </body>
 </html>

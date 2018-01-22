@@ -14,10 +14,8 @@ import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 public class OrderDAOImpl implements OrderDAO {
@@ -96,7 +94,7 @@ public class OrderDAOImpl implements OrderDAO {
         PreparedStatement preparedStatement = null;
         boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER, Statement.RETURN_GENERATED_KEYS);
             setOrderInsertPrepareStatement(order, preparedStatement);
             preparedStatement.executeUpdate();
             setGeneratedId(order, preparedStatement);
@@ -157,9 +155,9 @@ public class OrderDAOImpl implements OrderDAO {
         order.setDistance(resultSet.getDouble("distance"));
         order.setTripCost(resultSet.getDouble("trip_cost"));
         coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
-        order.setStartPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
+        order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
-        order.setDestinationPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
+        order.setDestinationPoint(new Point(coordinates.get(0), coordinates.get(1)));
         order.setOrderDate(resultSet.getDate("date"));
         order.setDriverId(resultSet.getInt("driver_id"));
         order.setPassengerId(resultSet.getInt("passenger_id"));
@@ -220,37 +218,43 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void confirmOrderByDriver(User driver, Order order) throws DAOException {
+    public boolean confirmOrderByDriver(User driver, Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean isUpdated = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CONFIRM_ORDER_BY_DRIVER);
             preparedStatement.setInt(1, driver.getId());
             preparedStatement.setInt(2, order.getId());
             preparedStatement.executeUpdate();
+            isUpdated = true;
         } catch (SQLException e) {
             throw new DAOException("Confirm order exception exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return isUpdated;
     }
 
     @Override
-    public void makeOrderByPassenger(Order order) throws DAOException {
+    public boolean makeOrderByPassenger(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean isCreated = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CREATE_ORDER_BY_PASSENGER);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CREATE_ORDER_BY_PASSENGER, Statement.RETURN_GENERATED_KEYS);
             setOrderCreatePrepareStatement(order, preparedStatement);
             preparedStatement.executeUpdate();
             setGeneratedId(order, preparedStatement);
+            isCreated = true;
         } catch (SQLException e) {
-            throw new DAOException("Confirm order exception exception" + e);
+            throw new DAOException("Make order exception exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return isCreated;
     }
 
     private void setOrderCreatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {

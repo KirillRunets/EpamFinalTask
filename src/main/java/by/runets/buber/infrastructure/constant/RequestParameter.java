@@ -38,4 +38,5 @@ public class RequestParameter {
     public final static String LONGITUDE = "longitude";
     public final static String TRAFFIC = "traffic";
     public final static String DRIVER_ID = "driver_id";
+    public final static String DRIVER_CONFIRM_ORDER_COMMAND = "driver_confirm_order";
 }
