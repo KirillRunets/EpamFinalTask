@@ -47,7 +47,9 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
     CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
+    NEW_ORDER_NOTIFICATION(),
     DRIVER_CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService()));
+
 
     private Command command;
 

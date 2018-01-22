@@ -95,9 +95,10 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_USER, Statement.RETURN_GENERATED_KEYS);
             setUserToInsertPS(user, preparedStatement);
-            preparedStatement.executeUpdate();
-            setGeneratedId(user, preparedStatement);
-            state = true;
+            state = preparedStatement.executeUpdate() != 0;
+            if (state){
+                setGeneratedId(user, preparedStatement);
+            }
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {

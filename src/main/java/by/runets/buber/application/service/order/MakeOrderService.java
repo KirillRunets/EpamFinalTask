@@ -12,7 +12,7 @@ public class MakeOrderService {
         boolean isCreated = false;
         try {
             OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
-            isCreated = order != null && orderDAO.makeOrderByPassenger(order);
+            isCreated = order != null && orderDAO.create(order);
         } catch (DAOException e) {
             throw new ServiceException("Make order exception " + e);
         }

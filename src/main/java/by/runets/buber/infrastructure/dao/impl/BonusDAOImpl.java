@@ -96,8 +96,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BONUS);
             preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
-            preparedStatement.executeUpdate();
-            state = false;
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {

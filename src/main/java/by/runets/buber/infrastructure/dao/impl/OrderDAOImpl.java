@@ -96,9 +96,10 @@ public class OrderDAOImpl implements OrderDAO {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER, Statement.RETURN_GENERATED_KEYS);
             setOrderInsertPrepareStatement(order, preparedStatement);
-            preparedStatement.executeUpdate();
-            setGeneratedId(order, preparedStatement);
-            state = true;
+            state = preparedStatement.executeUpdate() != 0;
+            if (state){
+                setGeneratedId(order, preparedStatement);
+            }
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
@@ -218,16 +219,15 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean confirmOrderByDriver(User driver, Order order) throws DAOException {
+    public boolean confirmOrderByDriver(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         boolean isUpdated = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CONFIRM_ORDER_BY_DRIVER);
-            preparedStatement.setInt(1, driver.getId());
+            preparedStatement.setBoolean(1, order.isConfirmed());
             preparedStatement.setInt(2, order.getId());
-            preparedStatement.executeUpdate();
-            isUpdated = true;
+            isUpdated = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Confirm order exception exception" + e);
         } finally {
@@ -236,35 +236,4 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return isUpdated;
     }
-
-    @Override
-    public boolean makeOrderByPassenger(Order order) throws DAOException {
-        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = null;
-        boolean isCreated = false;
-        try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CREATE_ORDER_BY_PASSENGER, Statement.RETURN_GENERATED_KEYS);
-            setOrderCreatePrepareStatement(order, preparedStatement);
-            preparedStatement.executeUpdate();
-            setGeneratedId(order, preparedStatement);
-            isCreated = true;
-        } catch (SQLException e) {
-            throw new DAOException("Make order exception exception" + e);
-        } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
-        }
-        return isCreated;
-    }
-
-    private void setOrderCreatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setDouble(1, order.getDistance());
-        preparedStatement.setDouble(2, order.getTripCost());
-        preparedStatement.setString(3, order.getStartPoint().toString());
-        preparedStatement.setString(4, order.getDestinationPoint().toString());
-        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
-        preparedStatement.setInt(6, order.getPassengerId());
-        preparedStatement.setDouble(7, order.getTripTime());
-    }
-
 }

@@ -1,6 +1,7 @@
 package by.runets.buber.presentation.command.impl.order;
 
 import by.runets.buber.application.service.order.ConfirmOrderService;
+import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,12 @@ public class ConfirmOrderCommand implements Command{
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
+        Router router = new Router();
+
+        boolean isConfirmed = Boolean.parseBoolean(req.getParameter(RequestParameter.IS_CONFIRMED));
+
+
+
         return null;
     }
 }

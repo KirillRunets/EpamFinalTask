@@ -94,8 +94,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_CAR);
             setInsertPrepareStatement(preparedStatement, car);
-            preparedStatement.executeUpdate();
-            state = true;
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {

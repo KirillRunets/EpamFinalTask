@@ -94,8 +94,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BAN);
             preparedStatement.setString(1, String.valueOf(ban.getBanType()));
             preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
-            preparedStatement.executeUpdate();
-            state = true;
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {

@@ -12,6 +12,10 @@ public class Order extends Entity{
     private Date orderDate;
     private Integer driverId;
     private Integer passengerId;
+    private boolean isConfirmed;
+    private boolean isCompleted;
+    private boolean isPaid;
+
 
     public Order() {
     }
@@ -28,23 +32,18 @@ public class Order extends Entity{
     public void setTripCost(Double tripCost) {
         this.tripCost = tripCost;
     }
-
     public Point getStartPoint() {
         return startPoint;
     }
-
     public void setStartPoint(Point startPoint) {
         this.startPoint = startPoint;
     }
-
     public Point getDestinationPoint() {
         return destinationPoint;
     }
-
     public void setDestinationPoint(Point destinationPoint) {
         this.destinationPoint = destinationPoint;
     }
-
     public Date getOrderDate() {
         return orderDate;
     }
@@ -69,6 +68,26 @@ public class Order extends Entity{
     public void setPassengerId(Integer passengerId) {
         this.passengerId = passengerId;
     }
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -78,6 +97,9 @@ public class Order extends Entity{
 
         Order order = (Order) o;
 
+        if (isConfirmed != order.isConfirmed) return false;
+        if (isCompleted != order.isCompleted) return false;
+        if (isPaid != order.isPaid) return false;
         if (distance != null ? !distance.equals(order.distance) : order.distance != null) return false;
         if (tripCost != null ? !tripCost.equals(order.tripCost) : order.tripCost != null) return false;
         if (tripTime != null ? !tripTime.equals(order.tripTime) : order.tripTime != null) return false;
@@ -100,6 +122,9 @@ public class Order extends Entity{
         result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
         result = 31 * result + (driverId != null ? driverId.hashCode() : 0);
         result = 31 * result + (passengerId != null ? passengerId.hashCode() : 0);
+        result = 31 * result + (isConfirmed ? 1 : 0);
+        result = 31 * result + (isCompleted ? 1 : 0);
+        result = 31 * result + (isPaid ? 1 : 0);
         return result;
     }
 
@@ -114,6 +139,9 @@ public class Order extends Entity{
                 ", orderDate=" + orderDate +
                 ", driverId=" + driverId +
                 ", passengerId=" + passengerId +
+                ", isConfirmed=" + isConfirmed +
+                ", isCompleted=" + isCompleted +
+                ", isPaid=" + isPaid +
                 '}';
     }
 }

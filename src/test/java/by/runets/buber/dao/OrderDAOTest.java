@@ -26,6 +26,15 @@ public class OrderDAOTest {
         order.setOrderDate(new Date());
         order.setPassengerId(3);
         OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
-        Assert.assertTrue(orderDAO.makeOrderByPassenger(order));
+        Assert.assertTrue(orderDAO.create(order));
+    }
+
+    @Test
+    public void confirmOrderByDriver() throws DAOException {
+        Order order = new Order();
+        order.setId(23);
+        order.setConfirmed(true);
+        OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
+        Assert.assertTrue(orderDAO.confirmOrderByDriver(order));
     }
 }
