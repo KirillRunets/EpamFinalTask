@@ -54,6 +54,9 @@ function banCommand() {
 
 function loadCommand(type) {
     switch (type){
+        case 'order':
+            document.getElementById('driver_id').value = selectedRowId;
+            break;
         case "car":
             document.getElementById('car_command_id').value = 'load_valid_car_to_edit';
             document.getElementById('car_id').value = selectedRowId;

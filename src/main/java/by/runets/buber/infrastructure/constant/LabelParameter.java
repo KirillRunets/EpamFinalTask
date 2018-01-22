@@ -19,4 +19,7 @@ public class LabelParameter {
     public final static String TRIP_COST_LABEL = "tripCost";
     public final static String TRIP_TIME_LABEL = "tripTime";
     public final static String TRIP_DISTANCE_LABEL = "tripDistance";
+    public final static String DESTINATION_POINT = "destinationPoint";
+    public final static String ORDER = "order";
+    public final static String ERROR = "error";
 }

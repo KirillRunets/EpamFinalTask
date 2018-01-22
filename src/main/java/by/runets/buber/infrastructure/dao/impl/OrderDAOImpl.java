@@ -97,14 +97,9 @@ public class OrderDAOImpl implements OrderDAO {
         boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER);
-            preparedStatement.setDouble(1, order.getDistance());
-            preparedStatement.setDouble(2, order.getTripCost());
-            preparedStatement.setString(3, order.getStartPoint().toString());
-            preparedStatement.setString(4, order.getDestinationPoint().toString());
-            preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
-            preparedStatement.setInt(6, order.getDriver().get().getId());
-            preparedStatement.setInt(7, order.getPassenger().get().getId());
+            setOrderInsertPrepareStatement(order, preparedStatement);
             preparedStatement.executeUpdate();
+            setGeneratedId(order, preparedStatement);
             state = true;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
@@ -115,20 +110,24 @@ public class OrderDAOImpl implements OrderDAO {
         return state;
     }
 
+    private void setOrderInsertPrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setDouble(1, order.getDistance());
+        preparedStatement.setDouble(2, order.getTripCost());
+        preparedStatement.setString(3, order.getStartPoint().toString());
+        preparedStatement.setString(4, order.getDestinationPoint().toString());
+        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
+        preparedStatement.setInt(6, order.getDriverId());
+        preparedStatement.setInt(7, order.getPassengerId());
+        preparedStatement.setDouble(8, order.getTripTime());
+    }
+
     @Override
     public void update(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_ORDER_BY_ID);
-            preparedStatement.setDouble(1, order.getDistance());
-            preparedStatement.setDouble(2, order.getTripCost());
-            preparedStatement.setString(3, order.getStartPoint().toString());
-            preparedStatement.setString(4, order.getDestinationPoint().toString());
-            preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
-            preparedStatement.setInt(6, order.getDriver().get().getId());
-            preparedStatement.setInt(7, order.getPassenger().get().getId());
-            preparedStatement.setInt(8, order.getId());
+            setOrderUpdatePrepareStatement(order, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
@@ -136,6 +135,18 @@ public class OrderDAOImpl implements OrderDAO {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+    }
+
+    private void setOrderUpdatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setDouble(1, order.getDistance());
+        preparedStatement.setDouble(2, order.getTripCost());
+        preparedStatement.setString(3, order.getStartPoint().toString());
+        preparedStatement.setString(4, order.getDestinationPoint().toString());
+        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
+        preparedStatement.setInt(6, order.getDriverId());
+        preparedStatement.setInt(7, order.getPassengerId());
+        preparedStatement.setDouble(8, order.getTripTime());
+        preparedStatement.setInt(9, order.getId());
     }
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
@@ -150,48 +161,8 @@ public class OrderDAOImpl implements OrderDAO {
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
         order.setDestinationPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
         order.setOrderDate(resultSet.getDate("date"));
-        order.setDriver(Optional.of(new User(resultSet.getInt("driver_id"))));
-        order.setPassenger(Optional.of(new User(resultSet.getInt("passenger_id"))));
-
-        return order;
-    }
-
-    private Order getOrderFromResultSet(ResultSet resultSet, String role) throws SQLException {
-        Order order = new Order();
-        List<Double> coordinates = null;
-
-        order.setId(resultSet.getInt("t_id"));
-        order.setDistance(resultSet.getDouble("distance"));
-        order.setTripCost(resultSet.getDouble("trip_cost"));
-        coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
-        order.setStartPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
-        coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
-        order.setDestinationPoint(Optional.of(new Point(coordinates.get(0), coordinates.get(1))));
-        order.setOrderDate(resultSet.getDate("date"));
-        switch (role) {
-            case UserRoleType.DRIVER:
-                int id = resultSet.getInt("passenger_id");
-                String email = resultSet.getString("email");
-                String firstName = resultSet.getString("first_name");
-                String secondName = resultSet.getString("second_name");
-                Date birthDate = resultSet.getDate("birth_date");
-                int tripAmount = resultSet.getInt("trip_amount");
-                String phoneNumber = resultSet.getString("phone_number");
-                int rating = resultSet.getInt("rating");
-                order.setPassenger(Optional.of(new User(id, email, firstName, secondName, birthDate, rating, tripAmount, phoneNumber)));
-                break;
-            case UserRoleType.PASSENGER:
-                id = resultSet.getInt("driver_id");
-                email = resultSet.getString("email");
-                firstName = resultSet.getString("first_name");
-                secondName = resultSet.getString("second_name");
-                birthDate = resultSet.getDate("birth_date");
-                tripAmount = resultSet.getInt("trip_amount");
-                phoneNumber = resultSet.getString("phone_number");
-                rating = resultSet.getInt("rating");
-                order.setDriver(Optional.of(new User(id, email, firstName, secondName, birthDate, rating, tripAmount, phoneNumber)));
-                break;
-        }
+        order.setDriverId(resultSet.getInt("driver_id"));
+        order.setPassengerId(resultSet.getInt("passenger_id"));
 
         return order;
     }
@@ -206,7 +177,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                orders.add(getOrderFromResultSet(resultSet, UserRoleType.DRIVER));
+                orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Find order list by id exception: " + e);
@@ -227,7 +198,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                orders.add(getOrderFromResultSet(resultSet, UserRoleType.PASSENGER));
+                orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException("Find order list by id exception: " + e);
@@ -237,4 +208,59 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return orders;
     }
+
+    private void setGeneratedId(Order order, PreparedStatement preparedStatement) throws SQLException, DAOException {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                order.setId(generatedKeys.getInt(1));
+            } else {
+                throw new DAOException("Creating order failed, no ID obtained.");
+            }
+        }
+    }
+
+    @Override
+    public void confirmOrderByDriver(User driver, Order order) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CONFIRM_ORDER_BY_DRIVER);
+            preparedStatement.setInt(1, driver.getId());
+            preparedStatement.setInt(2, order.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Confirm order exception exception" + e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement);
+        }
+    }
+
+    @Override
+    public void makeOrderByPassenger(Order order) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CREATE_ORDER_BY_PASSENGER);
+            setOrderCreatePrepareStatement(order, preparedStatement);
+            preparedStatement.executeUpdate();
+            setGeneratedId(order, preparedStatement);
+        } catch (SQLException e) {
+            throw new DAOException("Confirm order exception exception" + e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement);
+        }
+    }
+
+    private void setOrderCreatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setDouble(1, order.getDistance());
+        preparedStatement.setDouble(2, order.getTripCost());
+        preparedStatement.setString(3, order.getStartPoint().toString());
+        preparedStatement.setString(4, order.getDestinationPoint().toString());
+        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
+        preparedStatement.setInt(6, order.getPassengerId());
+        preparedStatement.setDouble(7, order.getTripTime());
+    }
+
 }

@@ -19,12 +19,10 @@ import java.util.List;
 
 public class UserServiceTest {
     private User createUser;
-    private User deleteUser;
     private User updateUser;
     @BeforeClass
     public void init(){
         createUser = new User("testEmail@gmial.com", PasswordEncrypt.encryptPassword("Pass123"), "Test", "Test", new Role("driver"));
-        deleteUser = new User(20, new Role("driver"));
         updateUser = new User(20, "newEmail@gmail.com", "Passs123", "Test", "Test", new Role("driver"));
     }
 

@@ -1,6 +1,6 @@
 package by.runets.buber.application.service.user;
 
-import by.runets.buber.domain.entity.Ban;
+import by.runets.buber.application.service.join.JoinService;
 import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
@@ -22,51 +22,11 @@ import java.util.stream.Collectors;
 public class LoginUserService {
     public User authenticateUser(String login, String password) throws DAOException {
         UserDAO dao = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-        AbstractDAO banDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
-        List<Ban> banList =  banDAO.findAll();
+        JoinService joinService = new JoinService();
         User user = dao.checkEmailPassword(login, PasswordEncrypt.encryptPassword(password));
         if (user != null){
-            switchUserRole(user);
-            joinBanToUser(banList, user);
+            joinService.join(user);
         }
         return user;
-    }
-
-    private void joinBanToUser(List<Ban> banList, User user){
-        Ban ban = banList.stream()
-                .filter(b -> b.getId() == user.getBan().getId())
-                .findFirst().orElse(null);
-        user.setBan(ban);
-    }
-
-    private void joinOrderToDriver(User user) throws DAOException {
-        OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
-        Set<Order> orders = orderDAO.findAllOrdersByDriverId(user.getId());
-        user.setOrderSet(orders);
-    }
-
-    private void joinOrderToPassenger(User user) throws DAOException {
-        OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
-        Set<Order> orders = orderDAO.findAllOrdersByPassengerId(user.getId());
-        user.setOrderSet(orders);
-    }
-
-    private void joinCarToUser(User user) throws DAOException {
-        AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
-        if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
-            user.setCar((Car) carDAO.find(user.getId()));
-        }
-    }
-
-    private void switchUserRole(User user) throws DAOException {
-        switch (user.getRole().getRoleName().toUpperCase()){
-            case UserRoleType.DRIVER:
-                joinOrderToDriver(user);
-                joinCarToUser(user);
-                break;
-            case UserRoleType.PASSENGER:
-                joinOrderToPassenger(user);
-                break;
-        }
     }
 }

@@ -69,4 +69,11 @@ public class RequestValidator {
                 && isStringEqualsPattern(id, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
 
+    public boolean isValidateOrderData(String driverId, String distance, String time, String cost){
+        return isStringEqualsPattern(driverId, ValidationConstant.INTEGER_NUMBER_PATTERN)
+                && isStringEqualsPattern(distance, ValidationConstant.INTEGER_NUMBER_PATTERN)
+                && isStringEqualsPattern(time, ValidationConstant.INTEGER_NUMBER_PATTERN)
+                && isStringEqualsPattern(cost, ValidationConstant.INTEGER_NUMBER_PATTERN);
+    }
+
 }

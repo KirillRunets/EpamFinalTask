@@ -37,4 +37,5 @@ public class RequestParameter {
     public final static String LATITUDE = "latitude";
     public final static String LONGITUDE = "longitude";
     public final static String TRAFFIC = "traffic";
+    public final static String DRIVER_ID = "driver_id";
 }

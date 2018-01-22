@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/passenger.css">
+
 </head>
 <body class="custom-body">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -49,13 +51,13 @@
                     </tr>
                     <tr>
                         <td>
-                            ${sessionScope.tripDistance}
+                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripDistance}" maxFractionDigits="0" /> <fmt:message key="label.systemDistance" bundle="${rb}"/></p>
                         </td>
                         <td>
-                            <p>${sessionScope.tripTime}</p>
+                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripTime}" maxFractionDigits="0" /> <fmt:message key="label.systemTime" bundle="${rb}"/></p>
                         </td>
                         <td>
-                            <p>${sessionScope.tripCost}</p>
+                            <p><fmt:formatNumber var="expiry" value="${sessionScope.tripCost}" maxFractionDigits="0" /> <fmt:message key="label.systemСost" bundle="${rb}"/></p>
                         </td>
                         <td>
                             <p>${sessionScope.USER.currentLocation}</p>
@@ -67,12 +69,13 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <input type="hidden" name="command" value="make_order">
+                            <input type="hidden" name="driver_id" id="driver_id" value="">
+                            <table class="table table-bordered"  width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
                                     <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.email" bundle="${rb}"/></th>
                                     <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
                                     <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
                                     <th><fmt:message key="label.rating" bundle="${rb}"/></th>
@@ -84,28 +87,11 @@
                                     <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th><fmt:message key="label.firstName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.secondName" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.email" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.birthDate" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.rating" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.currentLocation" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.mark" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.model" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.release_date" bundle="${rb}"/></th>
-                                    <th><fmt:message key="label.licensePlate" bundle="${rb}"/></th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 <c:forEach items="${sessionScope.priorityDriversQueue}" var="driver">
                                     <tr class="line" id="${driver.id}">
                                         <td>${driver.firstName}</td>
                                         <td>${driver.secondName}</td>
-                                        <td>${driver.email}</td>
                                         <td>${driver.birthDate}</td>
                                         <td>${driver.phoneNumber}</td>
                                         <td>${driver.rating}</td>
@@ -128,10 +114,7 @@
                                 </tbody>
                             </table>
                             <div class="button-container">
-                                <button id="btn-load1" class="button-small" onclick="deleteCommand('car');"><fmt:message
-                                        key="label.delete" bundle="${rb}"/></button>
-                                <button id="btn-load2" class="button-small" onclick="loadCommand('car');"><fmt:message
-                                        key="label.edit" bundle="${rb}"/></button>
+                                <button id="btn-load1" class="button-small" onclick="loadCommand('order')"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
                             </div>
                         </form>
                     </div>
