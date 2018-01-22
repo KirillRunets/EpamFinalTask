@@ -81,6 +81,10 @@ function loadCommand(type) {
 
 }
 
+function getSelectedRowId() {
+    return selectedRowId;
+}
+
 function submitForm(id) {
     document.getElementById(id).submit();
 }

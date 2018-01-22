@@ -34,7 +34,7 @@ public class MakeOrderCommand implements Command {
         String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
 
         Order order = init(req);
-        try {
+        /*try {
             if (order != null && makeOrderService.makeOrder(order)){
                 page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE + "?" + RequestParameter.COMMAND + "=" + RequestParameter.DRIVER_CONFIRM_ORDER_COMMAND;
             } else {
@@ -42,9 +42,11 @@ public class MakeOrderCommand implements Command {
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-        }
+        }*/
 
-        router.setRouteType(Router.RouteType.REDIRECT);
+        page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE;/* + "?" + RequestParameter.COMMAND + "=" + RequestParameter.DRIVER_CONFIRM_ORDER_COMMAND;*/
+        req.setAttribute("command", "driver_confirm_order");
+        router.setRouteType(Router.RouteType.FORWARD);
         router.setPagePath(page);
 
         return router;

@@ -75,7 +75,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
-                            <input type="hidden" name="command" value="make_order">
+                            <input type="hidden" name="command" id="command" value="make_order">
                             <input type="hidden" name="driver_id" id="driver_id" value="">
                             <table class="table table-bordered" width="100%" cellspacing="0">
                                 <thead>
@@ -120,7 +120,7 @@
                                 </tbody>
                             </table>
                             <div class="button-container">
-                                <button id="btn-load1" class="button-small" onclick="loadCommand('order')"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                                <button id="btn-load1" class="button-small" onclick="doCommand()"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
                             </div>
                         </form>
                     </div>
@@ -129,7 +129,7 @@
         </div>
     </div>
 </section>
-<c:if test="${not empty param.errorLabel}">
+<%--<c:if test="${not empty param.errorLabel}">
     <div class="static-modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -137,7 +137,7 @@
         </div>
     </div>
 </c:if>
-<c:if test="${param.command == 'driver_confirm_order'}">
+<c:if test="${requestScope.command == 'driver_confirm_order'}">
     <div class="static-modal">
         <div class="modal-content">
             <div class="loader"></div>
@@ -147,7 +147,7 @@
     <form action="${pageContext.request.contextPath}/controller" method="POST" id="driver_confirm">
         <input type="hidden" name="command" value="${param.command}">
     </form>
-</c:if>
+</c:if>--%>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -157,8 +157,6 @@
 <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
-<script>
-    submitForm('driver_confirm');
-</script>
+<script src="${pageContext.request.contextPath}/js/websocket.js"></script>
 </body>
 </html>
