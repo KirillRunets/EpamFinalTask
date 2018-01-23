@@ -41,7 +41,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
                 cars.add(getCarFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection cars exception " + e);
+            throw new DAOException("Selection cars exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -62,7 +62,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
                 car = getCarFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find car exception: " + e);
+            throw new DAOException("Find car exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -80,7 +80,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             preparedStatement.setInt(1, car.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Delete car exception " + e);
+            throw new DAOException("Delete car exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -98,7 +98,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             setInsertPrepareStatement(preparedStatement, car);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -160,7 +160,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
             setUpdatePrepareStatement(preparedStatement, car);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);

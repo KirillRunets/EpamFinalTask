@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
                 users.add(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection users exception " + e);
+            throw new DAOException("Selection users exception ", e);
         } finally {
             close(preparedStatement);
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
@@ -63,7 +63,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find user exception: " + e);
+            throw new DAOException("Find user exception: ", e);
         } finally {
             close(preparedStatement);
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
@@ -98,11 +98,11 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_USER, Statement.RETURN_GENERATED_KEYS);
             setUserToInsertPS(user, preparedStatement);
             state = preparedStatement.executeUpdate() != 0;
-            if (state){
+            if (state) {
                 setGeneratedId(user, preparedStatement);
             }
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -181,7 +181,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             setUserToUpdatePS(user, preparedStatement);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Update exception" + e);
+            throw new DAOException("Update exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -217,7 +217,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setInt(2, user.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("INSERT user role communication exception " + e);
+            throw new DAOException("INSERT user role communication exception ", e);
         } finally {
             close(preparedStatement);
         }
@@ -235,7 +235,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setInt(2, user.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("UPDATE user role communication exception " + e);
+            throw new DAOException("UPDATE user role communication exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -253,7 +253,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setInt(1, user.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("DELETE user role communication exception " + e);
+            throw new DAOException("DELETE user role communication exception ", e);
         } finally {
             close(preparedStatement);
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
@@ -273,7 +273,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             state = resultSet.next();
         } catch (SQLException e) {
-            throw new DAOException("Check email exception: " + e);
+            throw new DAOException("Check email exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -295,7 +295,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find user exception: " + e);
+            throw new DAOException("Find user exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -313,7 +313,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             setBanToPreparedStatement(user, preparedStatement);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("SET ban to user exception " + e);
+            throw new DAOException("SET ban to user exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -344,7 +344,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
                 userList.add(getUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Read banned users dao exception" + e);
+            throw new DAOException("Read banned users dao exception", e);
         }
         return userList;
     }
@@ -360,7 +360,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement.setInt(2, id);
             countUpdateRow = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Update password dao exception" + e);
+            throw new DAOException("Update password dao exception", e);
         }
         return countUpdateRow;
     }
@@ -374,11 +374,11 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SELECT_USER_PASSWORD);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 password = resultSet.getString("password");
             }
         } catch (SQLException e) {
-            throw new DAOException("Select password dao exception" + e);
+            throw new DAOException("Select password dao exception", e);
         }
         return password;
     }

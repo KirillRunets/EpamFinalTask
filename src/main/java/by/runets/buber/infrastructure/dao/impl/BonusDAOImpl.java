@@ -40,7 +40,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
                 bonuses.add(getBonusFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection bonuses exception " + e);
+            throw new DAOException("Selection bonuses exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -62,7 +62,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
                 bonus = getBonusFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find bonus exception: " + e);
+            throw new DAOException("Find bonus exception: ", e);
         } finally {
             close(preparedStatement);
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
@@ -81,7 +81,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             preparedStatement.setInt(1, bonus.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Delete bonus exception " + e);
+            throw new DAOException("Delete bonus exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -100,7 +100,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -120,7 +120,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
             preparedStatement.setInt(7, bonus.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Update exception" + e);
+            throw new DAOException("Update exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);

@@ -43,7 +43,7 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection orders exception " + e);
+            throw new DAOException("Selection orders exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -64,7 +64,7 @@ public class OrderDAOImpl implements OrderDAO {
                 order = getOrderFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find order exception: " + e);
+            throw new DAOException("Find order exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -82,7 +82,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setInt(1, order.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Delete order exception " + e);
+            throw new DAOException("Delete order exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -99,11 +99,11 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_ORDER, Statement.RETURN_GENERATED_KEYS);
             setOrderInsertPrepareStatement(order, preparedStatement);
             state = preparedStatement.executeUpdate() != 0;
-            if (state){
+            if (state) {
                 setGeneratedId(order, preparedStatement);
             }
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -132,7 +132,7 @@ public class OrderDAOImpl implements OrderDAO {
             setOrderUpdatePrepareStatement(order, preparedStatement);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -183,7 +183,7 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Find order list by id exception: " + e);
+            throw new DAOException("Find order list by id exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -204,7 +204,7 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Find order list by id exception: " + e);
+            throw new DAOException("Find order list by id exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -233,7 +233,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setInt(2, order.getId());
             isUpdated = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Confirm order exception exception" + e);
+            throw new DAOException("Confirm order exception exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);

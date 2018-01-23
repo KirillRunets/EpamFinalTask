@@ -40,7 +40,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
                 bans.add(getBanFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection bans exception " + e);
+            throw new DAOException("Selection bans exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -61,7 +61,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
                 ban = getBanFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Find ban exception: " + e);
+            throw new DAOException("Find ban exception: ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -79,7 +79,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             preparedStatement.setInt(1, ban.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Delete ban exception " + e);
+            throw new DAOException("Delete ban exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -98,7 +98,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
@@ -118,7 +118,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
             preparedStatement.setInt(7, ban.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception" + e);
+            throw new DAOException("Insertion exception", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
