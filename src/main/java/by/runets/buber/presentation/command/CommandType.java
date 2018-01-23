@@ -11,7 +11,7 @@ import by.runets.buber.application.service.order.CalculateOrderDataService;
 import by.runets.buber.application.service.order.CollectDriversToOrderService;
 import by.runets.buber.application.service.order.ConfirmOrderService;
 import by.runets.buber.application.service.order.MakeOrderService;
-import by.runets.buber.application.service.statistics.StatisticsService;
+import by.runets.buber.application.service.statistic.StatisticService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
@@ -24,7 +24,7 @@ import by.runets.buber.presentation.command.impl.order.MakeOrderCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
-    LOGIN(new LoginCommand(new LoginUserService(), new StatisticsService())),
+    LOGIN(new LoginCommand(new LoginUserService(), new StatisticService())),
     SIGNUP(new SignUpCommand(new RegisterUserService())),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),

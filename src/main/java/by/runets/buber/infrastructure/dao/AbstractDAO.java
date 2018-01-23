@@ -14,9 +14,9 @@ public interface AbstractDAO<K, T extends Entity> {
 
     List<T> findAll() throws DAOException;
     T find(K id) throws DAOException;
-    void delete(T entity) throws DAOException;
+    boolean delete(T entity) throws DAOException;
     boolean create(T entity) throws DAOException;
-    void update(T entity) throws DAOException;
+    boolean update(T entity) throws DAOException;
 
     default void close(Statement st){
         if (st != null){

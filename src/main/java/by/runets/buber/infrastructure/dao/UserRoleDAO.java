@@ -5,6 +5,6 @@ import by.runets.buber.infrastructure.exception.DAOException;
 
 public interface UserRoleDAO extends AbstractDAO<Integer, User> {
     boolean createUserRoleCommunication(User user) throws DAOException;
-    void updateUserRoleCommunication(User user) throws DAOException;
-    void deleteUserRoleCommunication(User user) throws DAOException;
+    boolean updateUserRoleCommunication(User user) throws DAOException;
+    boolean deleteUserRoleCommunication(User user) throws DAOException;
 }

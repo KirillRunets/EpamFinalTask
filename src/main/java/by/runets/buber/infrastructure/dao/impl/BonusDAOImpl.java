@@ -72,19 +72,21 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     }
 
     @Override
-    public void delete(Bonus bonus) throws DAOException {
+    public boolean delete(Bonus bonus) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_BONUS_BY_ID);
             preparedStatement.setInt(1, bonus.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Delete bonus exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     @Override
@@ -107,21 +109,23 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     }
 
     @Override
-    public void update(Bonus bonus) throws DAOException {
+    public boolean update(Bonus bonus) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_BONUS_BY_ID);
             preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
             preparedStatement.setInt(7, bonus.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Update exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     private Bonus getBonusFromResultSet(ResultSet resultSet) throws SQLException {

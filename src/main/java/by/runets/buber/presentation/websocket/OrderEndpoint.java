@@ -3,6 +3,7 @@ package by.runets.buber.presentation.websocket;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
+import by.runets.buber.presentation.command.impl.EmptyCommand;
 import by.runets.buber.presentation.websocket.configurator.GetHttpSessionConfigurator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-@ServerEndpoint(value = "/buber/order/{command}", decoders = MessageDecoder.class, encoders = MessageEncoder.class, configurator = GetHttpSessionConfigurator.class)
+@ServerEndpoint(value = "/buber/order", decoders = MessageDecoder.class, encoders = MessageEncoder.class, configurator = GetHttpSessionConfigurator.class)
 public class OrderEndpoint {
     private final static Logger LOGGER = LogManager.getLogger(OrderEndpoint.class);
     private Session session;
@@ -28,7 +29,7 @@ public class OrderEndpoint {
     private static Lock lock = new ReentrantLock();
 
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config, @PathParam("command") String command) throws IOException, EncodeException {
+    public void onOpen(Session session, EndpointConfig config) throws IOException, EncodeException {
         users = new HashMap<>();
         chatEndpoints.add(this);
         this.session = session;
@@ -36,15 +37,15 @@ public class OrderEndpoint {
 
         User user = (User) httpSession.getAttribute(UserRoleType.USER);
         users.put(session.getId(), user);
-      /*  Message message = new Message();
-        message.setFrom(username);
-        message.setContent("Connected!");
-        broadcast(message);*/
+        Message message = new Message();
+        message.setFrom(user);
+        /*message.setCommand();*/
+        broadcast(message);
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException {
-        /*message.setFrom(users.get(session.getId()));*/
+        message.setFrom(users.get(session.getId()));
         broadcast(message);
     }
 
@@ -52,8 +53,8 @@ public class OrderEndpoint {
     public void onClose(Session session) throws IOException, EncodeException {
         chatEndpoints.remove(this);
         Message message = new Message();
-        /*message.setFrom(users.get(session.getId()));*/
-        message.setContent("Disconnected!");
+        message.setFrom(users.get(session.getId()));
+        message.setCommand(new EmptyCommand());
         broadcast(message);
     }
 
@@ -73,5 +74,9 @@ public class OrderEndpoint {
             }
             lock.unlock();
         });
+    }
+
+    private boolean isOnlineUser(int checkUserId){
+        return true;
     }
 }

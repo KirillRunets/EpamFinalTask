@@ -120,7 +120,7 @@
                                 </tbody>
                             </table>
                             <div class="button-container">
-                                <button id="btn-load1" class="button-small" onclick="doCommand()"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                                <button id="btn-load1" class="button-small" onclick="doCommand(getSelectedRowId(), 'make_order')"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
                             </div>
                         </form>
                     </div>

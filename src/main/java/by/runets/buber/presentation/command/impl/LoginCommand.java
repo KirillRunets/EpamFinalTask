@@ -1,12 +1,11 @@
 package by.runets.buber.presentation.command.impl;
 
-import by.runets.buber.application.service.statistics.StatisticsService;
+import by.runets.buber.application.service.statistic.StatisticService;
 import by.runets.buber.application.service.user.LoginUserService;
 import by.runets.buber.application.service.user.ReadBanUserService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
-import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.presentation.command.Command;
@@ -21,15 +20,14 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
-
 public class LoginCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private LoginUserService userService;
-    private StatisticsService statisticsService;
+    private StatisticService statisticService;
 
-    public LoginCommand(LoginUserService userService, StatisticsService statisticsService) {
+    public LoginCommand(LoginUserService userService, StatisticService statisticService) {
         this.userService = userService;
-        this.statisticsService = statisticsService;
+        this.statisticService = statisticService;
     }
 
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
@@ -45,7 +43,7 @@ public class LoginCommand implements Command {
                 user = Optional.ofNullable(userService.authenticateUser(emailValue, passwordValue));
                 page = user.isPresent() ? isBanUser(user) ? loadPageByBanUser(req, user) : loadPageByRole(req, user) : loadPageByWrongData(req, emailValue, passwordValue);
             }
-        }  catch (DAOException | ServiceException e) {
+        }  catch (ServiceException e) {
             LOGGER.error(e);
         }
 
@@ -84,7 +82,7 @@ public class LoginCommand implements Command {
                     page = JspPagePath.PASSENGER_HOME_PAGE;
                     break;
             }
-            List<Integer> data = statisticsService.collectStats(user.get().getId(), user.get().getRole().getRoleName());
+            List<Integer> data = statisticService.collectStats(user.get().getId(), user.get().getRole().getRoleName());
             httpSession.setAttribute(LabelParameter.TRIP_AMOUNT_STATISTICS, data);
         }
 

@@ -72,19 +72,21 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
     }
 
     @Override
-    public void delete(User user) throws DAOException {
+    public boolean delete(User user) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_USER_BY_ID);
             preparedStatement.setInt(1, user.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Delete user exception " + e);
+            throw new DAOException("Delete user exception ", e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     @Override
@@ -170,19 +172,21 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
     }
 
     @Override
-    public void update(User user) throws DAOException {
+    public boolean update(User user) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_USER_BY_ID);
             setUserToUpdatePS(user, preparedStatement);
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Update exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
@@ -211,8 +215,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_USER_M2M_ROLE);
             preparedStatement.setInt(1, user.getRole().getId());
             preparedStatement.setInt(2, user.getId());
-            preparedStatement.executeUpdate();
-            state = true;
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("INSERT user role communication exception " + e);
         } finally {
@@ -222,30 +225,33 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
     }
 
     @Override
-    public void updateUserRoleCommunication(User user) throws DAOException {
+    public boolean updateUserRoleCommunication(User user) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_USER_M2M_ROLE);
             preparedStatement.setInt(1, user.getRole().getId());
             preparedStatement.setInt(2, user.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("UPDATE user role communication exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     @Override
-    public void deleteUserRoleCommunication(User user) throws DAOException {
+    public boolean deleteUserRoleCommunication(User user) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_USER_M2M_ROLE);
             preparedStatement.setInt(1, user.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("DELETE user role communication exception " + e);
         } finally {
@@ -253,6 +259,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
 
         }
+        return state;
     }
 
     @Override
@@ -297,28 +304,33 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
     }
 
     @Override
-    public void setBanToUser(User user) throws DAOException {
+    public boolean setBanToUser(User user) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SET_BAN_TO_USER);
-            if (user.getBan() != null) {
-                preparedStatement.setInt(1, user.getBan().getId());
-                preparedStatement.setDate(2, new java.sql.Date(user.getUnBaneDate().getTime()));
-            } else {
-                preparedStatement.setNull(1, Types.INTEGER);
-                preparedStatement.setNull(2, Types.INTEGER);
-            }
-            preparedStatement.setInt(3, user.getId());
-            preparedStatement.executeUpdate();
+            setBanToPreparedStatement(user, preparedStatement);
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("SET ban to user exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
+    private void setBanToPreparedStatement(User user, PreparedStatement preparedStatement) throws SQLException {
+        if (user.getBan() != null) {
+            preparedStatement.setInt(1, user.getBan().getId());
+            preparedStatement.setDate(2, new java.sql.Date(user.getUnBaneDate().getTime()));
+        } else {
+            preparedStatement.setNull(1, Types.INTEGER);
+            preparedStatement.setNull(2, Types.INTEGER);
+        }
+        preparedStatement.setInt(3, user.getId());
+    }
 
     @Override
     public List<User> readBannedUsers() throws DAOException {

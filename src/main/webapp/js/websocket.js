@@ -11,12 +11,14 @@ function connect() {
     };*/
 }
 
-function doCommand() {
-    var command = document.getElementById("command").value;
-    var id = getSelectedRowId();
+function doCommand(to, command) {
+    /*var command = document.getElementById("command").value;
+    var id = getSelectedRowId();*/
+    console.log(to);
+    console.log(command);
     var json = JSON.stringify({
         "command":command,
-        "to":id
+        "to": to
     });
     ws.send(json);
 }

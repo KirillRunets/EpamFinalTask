@@ -70,19 +70,21 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
     }
 
     @Override
-    public void delete(Ban ban) throws DAOException {
+    public boolean delete(Ban ban) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_BAN_BY_ID);
             preparedStatement.setInt(1, ban.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Delete ban exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     @Override
@@ -105,21 +107,23 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
     }
 
     @Override
-    public void update(Ban ban) throws DAOException {
+    public boolean update(Ban ban) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_BAN_BY_ID);
             preparedStatement.setString(1, String.valueOf(ban.getBanType()));
             preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
             preparedStatement.setInt(7, ban.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     private Ban getBanFromResultSet(ResultSet resultSet) throws SQLException {

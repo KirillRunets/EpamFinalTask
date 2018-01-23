@@ -73,19 +73,21 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void delete(Order order) throws DAOException {
+    public boolean delete(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_ORDER_BY_ID);
             preparedStatement.setInt(1, order.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Delete order exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     @Override
@@ -121,19 +123,21 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void update(Order order) throws DAOException {
+    public boolean update(Order order) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_ORDER_BY_ID);
             setOrderUpdatePrepareStatement(order, preparedStatement);
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     private void setOrderUpdatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {

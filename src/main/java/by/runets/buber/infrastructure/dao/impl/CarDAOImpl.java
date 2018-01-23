@@ -71,19 +71,21 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
     }
 
     @Override
-    public void delete(Car car) throws DAOException {
+    public boolean delete(Car car) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.DELETE_CAR_BY_ID);
             preparedStatement.setInt(1, car.getId());
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Delete car exception " + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return false;
     }
 
     @Override
@@ -149,19 +151,21 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
     }
 
     @Override
-    public void update(Car car) throws DAOException {
+    public boolean update(Car car) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
+        boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_CAR_BY_ID);
             setUpdatePrepareStatement(preparedStatement, car);
-            preparedStatement.executeUpdate();
+            state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Insertion exception" + e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(proxyConnection);
             close(preparedStatement);
         }
+        return state;
     }
 
     private Car getCarFromResultSet(ResultSet resultSet) throws SQLException {

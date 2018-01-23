@@ -24,7 +24,7 @@ public class PropertyFileManager {
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            throw new IOFileException("File not found " + e);
+            throw new IOFileException("File not found ", e);
         }
     }
 

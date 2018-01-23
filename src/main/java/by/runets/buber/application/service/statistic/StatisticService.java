@@ -1,4 +1,4 @@
-package by.runets.buber.application.service.statistics;
+package by.runets.buber.application.service.statistic;
 
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.enumeration.MonthEnum;
@@ -12,7 +12,7 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StatisticsService {
+public class StatisticService {
     public List<Integer> collectStats(Integer id, String role) throws ServiceException {
         List<Integer> stats = new LinkedList<>();
 
