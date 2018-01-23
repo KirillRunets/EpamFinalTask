@@ -42,8 +42,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         } catch (SQLException e) {
             throw new DAOException("Selection bans exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return bans;
     }
@@ -63,8 +62,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         } catch (SQLException e) {
             throw new DAOException("Find ban exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return ban;
     }
@@ -81,8 +79,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         } catch (SQLException e) {
             throw new DAOException("Delete ban exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -100,8 +97,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -120,8 +116,7 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }

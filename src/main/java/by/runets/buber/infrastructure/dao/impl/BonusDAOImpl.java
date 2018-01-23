@@ -42,8 +42,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Selection bonuses exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return bonuses;
     }
@@ -64,9 +63,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Find bonus exception: ", e);
         } finally {
-            close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-
+            close(preparedStatement, proxyConnection);
         }
         return bonus;
     }
@@ -83,8 +80,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Delete bonus exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -102,8 +98,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -122,8 +117,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         } catch (SQLException e) {
             throw new DAOException("Update exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }

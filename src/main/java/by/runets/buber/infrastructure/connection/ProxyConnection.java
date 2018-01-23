@@ -1,6 +1,5 @@
 package by.runets.buber.infrastructure.connection;
 
-import by.runets.buber.infrastructure.exception.ConnectionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

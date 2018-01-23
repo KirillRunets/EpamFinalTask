@@ -44,8 +44,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Selection users exception ", e);
         } finally {
-            close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return users;
     }
@@ -65,8 +64,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Find user exception: ", e);
         } finally {
-            close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return user;
     }
@@ -83,8 +81,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Delete user exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -104,8 +101,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -183,8 +179,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Update exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -219,7 +214,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("INSERT user role communication exception ", e);
         } finally {
-            close(preparedStatement);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -237,8 +232,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("UPDATE user role communication exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -255,8 +249,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("DELETE user role communication exception ", e);
         } finally {
-            close(preparedStatement);
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
+            close(preparedStatement, proxyConnection);
 
         }
         return state;
@@ -275,8 +268,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Check email exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -297,8 +289,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Find user exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return user;
     }
@@ -315,8 +306,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("SET ban to user exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }

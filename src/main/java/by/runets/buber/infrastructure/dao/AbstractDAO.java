@@ -1,6 +1,8 @@
 package by.runets.buber.infrastructure.dao;
 
 import by.runets.buber.domain.entity.Entity;
+import by.runets.buber.infrastructure.connection.ConnectionPool;
+import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.exception.ConnectionException;
 import by.runets.buber.infrastructure.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +20,13 @@ public interface AbstractDAO<K, T extends Entity> {
     boolean create(T entity) throws DAOException;
     boolean update(T entity) throws DAOException;
 
-    default void close(Statement st){
+    default void close(Statement st, ProxyConnection proxyConnection){
         if (st != null){
             try {
                 st.close();
+                if (proxyConnection != null){
+                    ConnectionPool.getInstance().releaseConnection(proxyConnection);
+                }
             } catch (SQLException e) {
                 LOGGER.error(e);
             }

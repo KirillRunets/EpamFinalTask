@@ -43,8 +43,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Selection cars exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return cars;
     }
@@ -64,8 +63,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Find car exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return car;
     }
@@ -82,8 +80,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Delete car exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return false;
     }
@@ -100,8 +97,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -162,8 +158,7 @@ public class CarDAOImpl implements AbstractDAO<Integer, Car> {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }

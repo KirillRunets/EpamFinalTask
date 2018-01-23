@@ -45,8 +45,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Selection orders exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return orders;
     }
@@ -66,8 +65,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Find order exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return order;
     }
@@ -84,8 +82,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Delete order exception ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -105,8 +102,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -134,8 +130,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -185,8 +180,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Find order list by id exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return orders;
     }
@@ -206,8 +200,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Find order list by id exception: ", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return orders;
     }
@@ -235,8 +228,7 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException e) {
             throw new DAOException("Confirm order exception exception", e);
         } finally {
-            ConnectionPool.getInstance().releaseConnection(proxyConnection);
-            close(preparedStatement);
+           close(preparedStatement, proxyConnection);
         }
         return isUpdated;
     }
