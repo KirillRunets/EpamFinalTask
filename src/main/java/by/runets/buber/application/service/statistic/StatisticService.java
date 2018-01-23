@@ -24,32 +24,32 @@ public class StatisticService {
             orders = role.equalsIgnoreCase(UserRoleType.DRIVER) ? collectOrdersByDriver(id, orders) : collectOrdersByPassenger(id, orders);
 
             Map<MonthEnum, Integer> map = calculateTripAmountInMonth(orders);
-            map.keySet().forEach(key ->{
+            map.keySet().forEach(key -> {
                 Arrays.stream(MonthEnum.values())
                         .filter(key::equals)
                         .forEach(monthEnum -> stats.add(map.get(monthEnum)));
             });
 
         } catch (DAOException e) {
-            throw new ServiceException("Statistics exception " + e);
+            throw new ServiceException("Statistic service exception ", e);
         }
 
         return stats;
     }
 
-    private List<Order> collectOrdersByPassenger(Integer id, List<Order> orders){
+    private List<Order> collectOrdersByPassenger(Integer id, List<Order> orders) {
         return orders.stream()
                 .filter(order -> order.getPassengerId() == id)
                 .collect(Collectors.toList());
     }
 
-    private List<Order> collectOrdersByDriver(Integer id, List<Order> orders){
+    private List<Order> collectOrdersByDriver(Integer id, List<Order> orders) {
         return orders.stream()
                 .filter(order -> order.getDriverId() == id)
                 .collect(Collectors.toList());
     }
 
-    private Map<MonthEnum, Integer> calculateTripAmountInMonth(List<Order> orders){
+    private Map<MonthEnum, Integer> calculateTripAmountInMonth(List<Order> orders) {
         Map<MonthEnum, Integer> map = new LinkedHashMap<>();
         Arrays.stream(MonthEnum.values())
                 .forEach(monthEnum -> {
@@ -61,7 +61,7 @@ public class StatisticService {
         return map;
     }
 
-    private int getMonth(Date tripDate){
+    private int getMonth(Date tripDate) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(tripDate);
         return cal.get(Calendar.MONTH);

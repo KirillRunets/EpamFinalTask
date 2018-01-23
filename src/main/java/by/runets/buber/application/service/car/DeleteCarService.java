@@ -11,11 +11,11 @@ public class DeleteCarService {
     public void delete(Car car) throws ServiceException {
         try {
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
-            if (car != null){
+            if (car != null) {
                 carDAO.delete(car);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Delete service exception " + e);
+            throw new ServiceException("Delete service exception ", e);
         }
     }
 }

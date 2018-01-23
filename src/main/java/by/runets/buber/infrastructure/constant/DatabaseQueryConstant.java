@@ -53,6 +53,7 @@ public class DatabaseQueryConstant {
     public final static String INSERT_INTO_ORDER = "INSERT INTO `order`(distance, trip_cost, departure_point,destination_point, date, driver_id, passenger_id, trip_time) VALUES(?,?,?,?,?,?,?,?)";
     public final static String UPDATE_ORDER_BY_ID = "UPDATE `order` SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=?, trip_time=? WHERE t_id=?";
     public final static String CONFIRM_ORDER_BY_DRIVER = "UPDATE `order` SET isConfirmed=? WHERE t_id=?";
+    public final static String IS_EXIST_ORDER_FOR_DRIVER = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, isConfirmed, isCompleted rating FROM `order` WHERE driver_id=? AND isConfirmed=0";
     //ban
     public final static String FIND_ALL_BANS = "SELECT b_id, b_name, b_description FROM ban_reason";
     public final static String FIND_BAN_BY_ID = "SELECT b_id, b_name, b_description FROM ban_reason WHERE b_id=?";

@@ -15,7 +15,7 @@ public class EditCarService {
             abstractDAO.update(car);
             state = true;
         } catch (DAOException e) {
-            throw new ServiceException("Update car exception " + e);
+            throw new ServiceException("Update car exception ", e);
         }
         return state;
     }

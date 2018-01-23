@@ -81,7 +81,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Delete user exception ", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -101,7 +101,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -179,7 +179,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Update exception", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -232,7 +232,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("UPDATE user role communication exception ", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -250,7 +250,6 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             throw new DAOException("DELETE user role communication exception ", e);
         } finally {
             close(preparedStatement, proxyConnection);
-
         }
         return state;
     }
@@ -268,7 +267,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Check email exception: ", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return state;
     }
@@ -289,7 +288,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } catch (SQLException e) {
             throw new DAOException("Find user exception: ", e);
         } finally {
-           close(preparedStatement, proxyConnection);
+            close(preparedStatement, proxyConnection);
         }
         return user;
     }
@@ -335,6 +334,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Read banned users dao exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
         }
         return userList;
     }
@@ -351,6 +352,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             countUpdateRow = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Update password dao exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
         }
         return countUpdateRow;
     }
@@ -369,6 +372,8 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Select password dao exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
         }
         return password;
     }

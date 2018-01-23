@@ -1,9 +1,9 @@
 package by.runets.buber.application.filter;
 
+
 import by.runets.buber.application.service.order.OrderExistService;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
-import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/jsp/main.jsp"}, servletNames = {"controller"})
-public class HomePageFilter implements Filter {
-    private final static Logger LOGGER = LogManager.getLogger(HomePageFilter.class);
+@WebFilter(urlPatterns = { "/jsp/driver/*" }, servletNames = {"controller"})
+public class CheckNewOrderFilter implements Filter {
+    private final static Logger LOGGER = LogManager.getLogger(CheckNewOrderFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -30,23 +29,22 @@ public class HomePageFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         HttpSession session = req.getSession(false);
-        LOGGER.debug("call");
+
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
             if (user != null){
-                switch (user.getRole().getRoleName().toUpperCase()){
-                    case UserRoleType.ADMIN:
-                        req.getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);
-                        break;
-                    case UserRoleType.DRIVER:
-                        req.getRequestDispatcher(JspPagePath.DRIVER_HOME_PAGE).forward(req, res);
-                        break;
-                    case UserRoleType.PASSENGER:
-                        req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
-                        break;
+                if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
+                    OrderExistService orderExistService = new OrderExistService();
+                    try {
+                        Order order = orderExistService.isExistOrderForDriver(user);
+                        if (order != null){
+                            req.getSession().setAttribute("newOrder", order);
+                        }
+                        LOGGER.debug(order);
+                    } catch (ServiceException e) {
+                        LOGGER.error(e);
+                    }
                 }
-            } else {
-                req.getRequestDispatcher(JspPagePath.MAIN_PAGE).forward(req, res);
             }
         }
 
@@ -58,3 +56,15 @@ public class HomePageFilter implements Filter {
 
     }
 }
+
+/* switch (user.getRole().getRoleName().toUpperCase()){
+                    case UserRoleType.ADMIN:
+                        break;
+                    case UserRoleType.DRIVER:
+
+
+                        break;
+                    case UserRoleType.PASSENGER:
+                        req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
+                        break;
+                }*/

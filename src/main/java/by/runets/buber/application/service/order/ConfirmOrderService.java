@@ -10,14 +10,14 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 public class ConfirmOrderService {
     public boolean confirm(Order order) throws ServiceException {
         boolean isConfirmed = false;
-        if (!order.isConfirmed()){
+        if (!order.isConfirmed()) {
             return false;
         }
         try {
             OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
             isConfirmed = orderDAO.confirmOrderByDriver(order);
         } catch (DAOException e) {
-            throw new ServiceException("Confirm order exception " + e);
+            throw new ServiceException("Confirm order exception ", e);
         }
         return isConfirmed;
     }

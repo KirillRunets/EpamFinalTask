@@ -17,7 +17,7 @@ public class ReadBanService {
             abstractDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
             banList = (List<Ban>) abstractDAO.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Find all ban exception");
+            throw new ServiceException("Find all ban exception", e);
         }
         return banList;
     }

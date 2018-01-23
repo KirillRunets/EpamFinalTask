@@ -9,12 +9,12 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class SetBanService {
     public void setBan(User user) throws ServiceException {
-        if (user != null){
+        if (user != null) {
             try {
                 UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
                 userDAO.setBanToUser(user);
             } catch (DAOException e) {
-                throw new ServiceException("Set ban service exception " + e);
+                throw new ServiceException("Set ban service exception ", e);
             }
         }
     }

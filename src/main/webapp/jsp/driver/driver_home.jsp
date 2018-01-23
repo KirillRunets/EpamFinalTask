@@ -34,6 +34,9 @@
     </div>
 </nav>
 <c:import url="${pageContext.request.contextPath}/jsp/driver/driver_sidebar.jsp"/>
+<c:if test="${not empty sessionScope.newOrder}">
+    <p>You have new order</p>
+</c:if>
 <section class="my-section">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -73,12 +76,12 @@
                                     <td>${order.orderDate}</td>
                                     <td>${order.tripCost}</td>
                                     <td>${order.distance}</td>
-                                    <td>${order.startPoint.get()}</td>
-                                    <td>${order.destinationPoint.get()}</td>
-                                    <td>${order.passenger.get().firstName}</td>
+                                    <td>${order.startPoint}</td>
+                                    <td>${order.destinationPoint}</td>
+                                    <%--<td>${order.passenger.get().firstName}</td>
                                     <td>${order.passenger.get().secondName}</td>
                                     <td>${order.passenger.get().phoneNumber}</td>
-                                    <td>${order.passenger.get().rating}</td>
+                                    <td>${order.passenger.get().rating}</td>--%>
                                 </tr>
                             </c:forEach>
                             </tbody>

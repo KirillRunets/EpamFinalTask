@@ -16,8 +16,7 @@ public class CarService {
     @Test
     public void testFindValidCarsService() throws ServiceException {
         ReadCarService readCarService = new ReadCarService();
-        System.out.println(readCarService.findValidCars());
-        Assert.assertNotNull(readCarService.findValidCars());
+        Assert.assertNotNull(readCarService.findCars());
     }
 
     @Test

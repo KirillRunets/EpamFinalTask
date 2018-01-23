@@ -17,11 +17,11 @@ public class ChangePasswordService {
         try {
             userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             password = userDAO.findPassword(userId);
-            if (password != null && password.equals(PasswordEncrypt.encryptPassword(oldPassword))){
+            if (password != null && password.equals(PasswordEncrypt.encryptPassword(oldPassword))) {
                 updateRow = userDAO.changePassword(newPassword, userId);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Change password service exception " + e);
+            throw new ServiceException("Change password service exception ", e);
         }
 
         return updateRow != 0;

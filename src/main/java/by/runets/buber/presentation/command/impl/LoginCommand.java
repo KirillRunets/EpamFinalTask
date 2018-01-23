@@ -47,7 +47,7 @@ public class LoginCommand implements Command {
             LOGGER.error(e);
         }
 
-        router.setRouteType(Router.RouteType.FORWARD);
+        router.setRouteType(Router.RouteType.REDIRECT);
         router.setPagePath(page);
 
 
@@ -93,8 +93,8 @@ public class LoginCommand implements Command {
         String page = null;
 
         if (user.isPresent()){
-            req.setAttribute(RequestParameter.UNBAN_DATE, user.get().getUnBaneDate());
-            req.setAttribute(RequestParameter.BAN_DESCRIPTION, user.get().getBan().getBanDescription());
+            req.getSession().setAttribute(RequestParameter.UNBAN_DATE, user.get().getUnBaneDate());
+            req.getSession().setAttribute(RequestParameter.BAN_DESCRIPTION, user.get().getBan().getBanDescription());
             page = JspPagePath.ERROR_USER_NOTIFICATION;;
         }
 
@@ -103,9 +103,9 @@ public class LoginCommand implements Command {
 
     private String loadPageByWrongData(HttpServletRequest req, String emailValue, String passwordValue){
         String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
-        req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.LOGIN_ERROR_LABEL_MESSAGE));
-        req.setAttribute(LabelParameter.EMAIL, emailValue);
-        req.setAttribute(LabelParameter.PASSWORD, passwordValue);
+        req.getSession().setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.LOGIN_ERROR_LABEL_MESSAGE));
+        req.getSession().setAttribute(LabelParameter.EMAIL, emailValue);
+        req.getSession().setAttribute(LabelParameter.PASSWORD, passwordValue);
         return JspPagePath.LOGIN_PAGE;
     }
 }

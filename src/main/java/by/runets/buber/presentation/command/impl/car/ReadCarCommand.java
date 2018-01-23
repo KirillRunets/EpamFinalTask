@@ -30,7 +30,7 @@ public class ReadCarCommand extends CarCommand implements Command{
         User sessionUser = (User) req.getSession(false).getAttribute(UserRoleType.USER);
 
         try {
-            List<Car> carList = readCarService.findValidCars();
+            List<Car> carList = readCarService.findCars();
             if (carList != null){
                 setCarListToSession(req, LabelParameter.ADMIN_CAR_LIST, carList);
                 page = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN) ? JspPagePath.ADMIN_CAR_LIST_PAGE : JspPagePath.DRIVER_CAR_PROFILE_PAGE;

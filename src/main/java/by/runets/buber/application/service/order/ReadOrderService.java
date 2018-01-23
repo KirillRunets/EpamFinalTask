@@ -16,7 +16,7 @@ public class ReadOrderService {
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
             orders = abstractDAO.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Read order service exception " + e);
+            throw new ServiceException("Read order service exception ", e);
         }
         return orders;
     }

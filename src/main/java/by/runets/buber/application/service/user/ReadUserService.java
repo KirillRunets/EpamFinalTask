@@ -36,7 +36,7 @@ public class ReadUserService {
                 joinService.join(user);
             }
         } catch (DAOException e) {
-            throw new ServiceException("Find user throw exception " + e);
+            throw new ServiceException("Find user throw exception " , e);
         }
 
         return userListByRole;
@@ -48,7 +48,7 @@ public class ReadUserService {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             user = userDAO.find(id);
         } catch (DAOException e) {
-            throw new ServiceException("Find user service " + e);
+            throw new ServiceException("Find user service " , e);
         }
         return user;
     }

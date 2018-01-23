@@ -20,7 +20,7 @@ public class ReadCarService {
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             car = (Car) abstractDAO.find(id);
         } catch (DAOException e) {
-            throw new ServiceException("Find car exception " + e);
+            throw new ServiceException("Find car exception ", e);
         }
         return car;
     }
@@ -31,27 +31,27 @@ public class ReadCarService {
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             cars = abstractDAO.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Find all cars exception " + e);
+            throw new ServiceException("Find all cars exception ", e);
         }
         return cars;
     }
 
-    public List<Car> findValidCars() throws ServiceException {
+    public List<Car> findCars() throws ServiceException {
         List<Car> carList = null;
         List<User> userList = null;
         try {
-        UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+            UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             userList = userDAO.findAll();
             carList = carDAO.findAll();
             joinUserToCar(userList, carList);
         } catch (DAOException e) {
-            throw new ServiceException("Find valid cars exception " + e);
+            throw new ServiceException("Find valid cars exception ", e);
         }
         return filterValidCar(carList);
     }
 
-    private void joinUserToCar(List<User> userList, List<Car> carList){
+    private void joinUserToCar(List<User> userList, List<Car> carList) {
         userList.forEach(user -> {
             carList.stream()
                     .filter(car -> car.getCarOwner().getId() == user.getId())
@@ -59,13 +59,13 @@ public class ReadCarService {
         });
     }
 
-    private List<Car> filterValidCar(List<Car> carList){
+    private List<Car> filterValidCar(List<Car> carList) {
         return carList.stream()
                 .filter(car -> car.getCarOwner().getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN))
                 .collect(Collectors.toList());
     }
 
-    private Car getCarFromList(List<Car> cars, int id){
+    private Car getCarFromList(List<Car> cars, int id) {
         return cars.stream()
                 .filter(car -> car.getId() == id)
                 .findFirst()
@@ -78,7 +78,7 @@ public class ReadCarService {
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             cars = carDAO.findAll();
         } catch (DAOException e) {
-            throw new ServiceException("Find all cars exception " + e);
+            throw new ServiceException("Find all cars exception ", e);
         }
         return getCarFromList(cars, id);
     }

@@ -24,11 +24,10 @@ public class UpdateUserService {
                     updatePassengerBusinessTool(user);
                     break;
             }
-
             userDAO.update(user);
 
         } catch (DAOException e) {
-            throw new ServiceException("Update user exception " + e);
+            throw new ServiceException("Update user exception " , e);
         }
     }
 

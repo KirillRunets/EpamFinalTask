@@ -1,5 +1,6 @@
 package by.runets.buber.application.service.user;
 
+import by.runets.buber.application.service.join.JoinService;
 import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.DAOType;
@@ -19,8 +20,12 @@ public class ReadBanUserService {
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
+            JoinService joinService = new JoinService();
             banList = abstractDAO.findAll();
             userList = userDAO.readBannedUsers();
+            for (User user : userList){
+                joinService.join(user);
+            }
             for (Ban ban : banList){
                 for (User user : userList){
                     if (user.getBan().getId() == ban.getId()){

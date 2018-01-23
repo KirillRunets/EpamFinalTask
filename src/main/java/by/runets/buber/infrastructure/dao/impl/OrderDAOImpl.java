@@ -232,4 +232,24 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return isUpdated;
     }
+
+    @Override
+    public Order isExistOrderForDriver(User driver) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        Order order = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.IS_EXIST_ORDER_FOR_DRIVER);
+            preparedStatement.setInt(1, driver.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                order = getOrderFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Is exist order for driver exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return order;
+    }
 }

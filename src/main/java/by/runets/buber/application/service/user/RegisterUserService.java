@@ -26,7 +26,7 @@ public class RegisterUserService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Register user exception " + e);
+            throw new ServiceException("Register user exception " , e);
         }
         return state;
     }

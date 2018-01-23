@@ -16,7 +16,7 @@ public class CreateCarService {
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
             isCreated = car != null && !isCarExist(carDAO, car) && carDAO.create(car);
         } catch (DAOException e) {
-            throw new ServiceException("Create service exception " + e);
+            throw new ServiceException("Create service exception ", e);
         }
         return isCreated;
     }

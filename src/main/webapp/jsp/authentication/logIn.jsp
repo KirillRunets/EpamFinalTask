@@ -31,17 +31,16 @@
         <h1><fmt:message key="label.labelForm" bundle="${rb}" /></h1>
         <input type="hidden" name="command" value="login" />
         <div id="hiddenError">
-            <br/>
-            ${errorLabel}
-            <br/>
+            <br/>${sessionScope.errorLabel}<br/>
         </div>
-        <input name="email" id="email" type="email" value="${email}" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
-        <input name="password" id="password" type="password" value="${password}" title=<fmt:message key="label.inputPassword" bundle="${rb}" />" required placeholder="<fmt:message key="label.password" bundle="${rb}" />">
+        <input name="email" id="email" type="email" value="${sessionScope.email}" title="<fmt:message key="label.inputLogin" bundle="${rb}" />" required placeholder="<fmt:message key="label.login" bundle="${rb}" />">
+        <input name="password" id="password" type="password" value="${sessionScope.password}" title=<fmt:message key="label.inputPassword" bundle="${rb}" />" required placeholder="<fmt:message key="label.password" bundle="${rb}" />">
         <a href="${pageContext.request.contextPath}/jsp/authentication/signUp.jsp"><fmt:message key="label.signUp" bundle="${rb}" /></a>
-        <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
+        <button type="submit" onclick="connect()" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
     </form>
 </div>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/websocket.js"></script>
 </body>
 </html>

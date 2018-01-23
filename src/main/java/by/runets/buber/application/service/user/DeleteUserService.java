@@ -10,18 +10,18 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class DeleteUserService {
-    public void delete(String id, String role) throws ServiceException {
+    public boolean delete(String id, String role) throws ServiceException {
+        boolean state = false;
         try {
             User user = new User(Integer.parseInt(id), new Role(role));
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
 
             userRoleDAO.deleteUserRoleCommunication(user);
-            userDAO.delete(user);
-
+            state = userDAO.delete(user);
         } catch (DAOException e) {
-            throw new ServiceException("Delete user exception " + e);
+            throw new ServiceException("Delete user exception " , e);
         }
-
+        return state;
     }
 }
