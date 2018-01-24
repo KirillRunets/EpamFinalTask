@@ -31,12 +31,14 @@
             <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
                     key="label.LogOut" bundle="${rb}"/></button>
         </div>
+
     </div>
 </nav>
 <c:import url="${pageContext.request.contextPath}/jsp/driver/driver_sidebar.jsp"/>
 <c:if test="${not empty sessionScope.newOrder}">
     <p>You have new order</p>
 </c:if>
+
 <section class="my-section">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -78,10 +80,10 @@
                                     <td>${order.distance}</td>
                                     <td>${order.startPoint}</td>
                                     <td>${order.destinationPoint}</td>
-                                    <%--<td>${order.passenger.get().firstName}</td>
-                                    <td>${order.passenger.get().secondName}</td>
-                                    <td>${order.passenger.get().phoneNumber}</td>
-                                    <td>${order.passenger.get().rating}</td>--%>
+                                    <td>${order.passenger.firstName}</td>
+                                    <td>${order.passenger.secondName}</td>
+                                    <td>${order.passenger.phoneNumber}</td>
+                                    <td>${order.passenger.rating}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -92,6 +94,53 @@
         </div>
     </div>
 </section>
+<c:if test="${not empty sessionScope.newOrder}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                <input type="hidden" name="command" id="driver_order_id" value="">
+                <table class="table table-bordered" id="modal-table" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th><fmt:message key="label.date" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.tripCost" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.distance" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.departurePoint" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.destinationPoint" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.passengerFirstName" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.passengerSecondName" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.passengerPhoneNumber" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.passengerRating" bundle="${rb}"/></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="line" id="${sessionScope.newOrder.id}">
+                        <td>${sessionScope.newOrder.orderDate}</td>
+                        <td>${sessionScope.newOrder.tripCost}</td>
+                        <td>${sessionScope.newOrder.distance}</td>
+                        <td>${sessionScope.newOrder.startPoint}</td>
+                        <td>${sessionScope.newOrder.destinationPoint}</td>
+                        <td>${sessionScope.newOrder.passenger.firstName}</td>
+                        <td>${sessionScope.newOrder.passenger.secondName}</td>
+                        <td>${sessionScope.newOrder.passenger.phoneNumber}</td>
+                        <td>${sessionScope.newOrder.passenger.rating}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <c:if test="${sessionScope.newOrder.confirmed == 'false'}">
+                    <div class="button-container">
+                        <button id="btn-load1" class="button-small" onclick="loadCommand('orderByDriver')"><fmt:message key="label.confirm" bundle="${rb}"/></button>
+                        <button id="btn-load2" class="button-small" onclick="deleteCommand('orderByDriver')"><fmt:message key="label.revoke" bundle="${rb}"/></button>
+                    </div>
+                </c:if>
+
+            </form>
+        </div>
+    </div>
+    <form action="${pageContext.request.contextPath}/controller" method="POST" id="driver_confirm">
+        <input type="hidden" name="command" value="${param.command}">
+    </form>
+</c:if>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>

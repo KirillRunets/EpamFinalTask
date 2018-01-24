@@ -4,6 +4,7 @@ package by.runets.buber.application.filter;
 import by.runets.buber.application.service.order.OrderExistService;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -38,9 +39,8 @@ public class CheckNewOrderFilter implements Filter {
                     try {
                         Order order = orderExistService.isExistOrderForDriver(user);
                         if (order != null){
-                            req.getSession().setAttribute("newOrder", order);
+                            req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
                         }
-                        LOGGER.debug(order);
                     } catch (ServiceException e) {
                         LOGGER.error(e);
                     }

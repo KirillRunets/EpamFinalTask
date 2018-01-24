@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.Comparator;
 
 public class DistanceComparator implements Comparator<User> {
-    private final static Logger LOGGER = LogManager.getLogger(DistanceComparator.class);
     private User passenger;
 
     public DistanceComparator(User passenger) {

@@ -22,10 +22,6 @@ public class ConfirmOrderCommand implements Command{
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
 
-        boolean isConfirmed = Boolean.parseBoolean(req.getParameter(RequestParameter.IS_CONFIRMED));
-
-
-
         return null;
     }
 }

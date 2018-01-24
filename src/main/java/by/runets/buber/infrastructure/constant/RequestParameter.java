@@ -39,5 +39,5 @@ public class RequestParameter {
     public final static String TRAFFIC = "traffic";
     public final static String DRIVER_ID = "driver_id";
     public final static String DRIVER_CONFIRM_ORDER_COMMAND = "driver_confirm_order";
-    public final static String IS_CONFIRMED = "isConfirmed";
+    public final static String NEW_ORDER = "newOrder";
 }

@@ -7,10 +7,7 @@ import by.runets.buber.application.service.car.CreateCarService;
 import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
-import by.runets.buber.application.service.order.CalculateOrderDataService;
-import by.runets.buber.application.service.order.CollectDriversToOrderService;
-import by.runets.buber.application.service.order.ConfirmOrderService;
-import by.runets.buber.application.service.order.MakeOrderService;
+import by.runets.buber.application.service.order.*;
 import by.runets.buber.application.service.statistic.StatisticService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
@@ -21,6 +18,7 @@ import by.runets.buber.presentation.command.impl.car.*;
 import by.runets.buber.presentation.command.impl.order.CalculateOrderDataCommand;
 import by.runets.buber.presentation.command.impl.order.ConfirmOrderCommand;
 import by.runets.buber.presentation.command.impl.order.MakeOrderCommand;
+import by.runets.buber.presentation.command.impl.order.RevokeOrderCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
@@ -47,8 +45,8 @@ public enum CommandType {
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
     CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
-    NEW_ORDER_NOTIFICATION(),
-    DRIVER_CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService()));
+    CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService())),
+    REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService()));
 
 
     private Command command;

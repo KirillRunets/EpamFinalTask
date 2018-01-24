@@ -65,8 +65,8 @@ public class MakeOrderCommand implements Command {
 
         if (RequestValidator.getInstance().isValidateOrderData(driverId)){
             order = new Order();
-            order.setPassengerId(sessionUser.getId());
-            order.setDriverId(Integer.parseInt(driverId));
+            order.getPassenger().setId(sessionUser.getId());
+            order.getDriver().setId(Integer.parseInt(driverId));
             order.setDistance(distance);
             order.setTripTime(time);
             order.setTripCost(cost);

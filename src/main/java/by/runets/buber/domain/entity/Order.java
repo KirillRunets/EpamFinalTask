@@ -10,12 +10,11 @@ public class Order extends Entity{
     private Point startPoint;
     private Point destinationPoint;
     private Date orderDate;
-    private Integer driverId;
-    private Integer passengerId;
+    private User driver;
+    private User passenger;
     private boolean isConfirmed;
     private boolean isCompleted;
     private boolean isPaid;
-
 
     public Order() {
     }
@@ -56,18 +55,6 @@ public class Order extends Entity{
     public void setTripTime(Double tripTime) {
         this.tripTime = tripTime;
     }
-    public Integer getDriverId() {
-        return driverId;
-    }
-    public void setDriverId(Integer driverId) {
-        this.driverId = driverId;
-    }
-    public Integer getPassengerId() {
-        return passengerId;
-    }
-    public void setPassengerId(Integer passengerId) {
-        this.passengerId = passengerId;
-    }
     public boolean isConfirmed() {
         return isConfirmed;
     }
@@ -80,13 +67,26 @@ public class Order extends Entity{
     public void setCompleted(boolean completed) {
         isCompleted = completed;
     }
-
+    public boolean getCompleted(){
+        return isCompleted;
+    }
     public boolean isPaid() {
         return isPaid;
     }
-
     public void setPaid(boolean paid) {
         isPaid = paid;
+    }
+    public User getDriver() {
+        return driver;
+    }
+    public void setDriver(User driver) {
+        this.driver = driver;
+    }
+    public User getPassenger() {
+        return passenger;
+    }
+    public void setPassenger(User passenger) {
+        this.passenger = passenger;
     }
 
     @Override
@@ -107,8 +107,8 @@ public class Order extends Entity{
         if (destinationPoint != null ? !destinationPoint.equals(order.destinationPoint) : order.destinationPoint != null)
             return false;
         if (orderDate != null ? !orderDate.equals(order.orderDate) : order.orderDate != null) return false;
-        if (driverId != null ? !driverId.equals(order.driverId) : order.driverId != null) return false;
-        return passengerId != null ? passengerId.equals(order.passengerId) : order.passengerId == null;
+        if (driver != null ? !driver.equals(order.driver) : order.driver != null) return false;
+        return passenger != null ? passenger.equals(order.passenger) : order.passenger == null;
     }
 
     @Override
@@ -120,8 +120,8 @@ public class Order extends Entity{
         result = 31 * result + (startPoint != null ? startPoint.hashCode() : 0);
         result = 31 * result + (destinationPoint != null ? destinationPoint.hashCode() : 0);
         result = 31 * result + (orderDate != null ? orderDate.hashCode() : 0);
-        result = 31 * result + (driverId != null ? driverId.hashCode() : 0);
-        result = 31 * result + (passengerId != null ? passengerId.hashCode() : 0);
+        result = 31 * result + (driver != null ? driver.hashCode() : 0);
+        result = 31 * result + (passenger != null ? passenger.hashCode() : 0);
         result = 31 * result + (isConfirmed ? 1 : 0);
         result = 31 * result + (isCompleted ? 1 : 0);
         result = 31 * result + (isPaid ? 1 : 0);
@@ -137,8 +137,8 @@ public class Order extends Entity{
                 ", startPoint=" + startPoint +
                 ", destinationPoint=" + destinationPoint +
                 ", orderDate=" + orderDate +
-                ", driverId=" + driverId +
-                ", passengerId=" + passengerId +
+                ", driver=" + driver +
+                ", passenger=" + passenger +
                 ", isConfirmed=" + isConfirmed +
                 ", isCompleted=" + isCompleted +
                 ", isPaid=" + isPaid +

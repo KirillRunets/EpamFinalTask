@@ -24,7 +24,7 @@ public class OrderDAOTest {
         order.setStartPoint(new Point(1.0, 1.0));
         order.setDestinationPoint(new Point(2.0, 2.0));
         order.setOrderDate(new Date());
-        order.setPassengerId(3);
+        order.getPassenger().setId(3);
         OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
         Assert.assertTrue(orderDAO.create(order));
     }

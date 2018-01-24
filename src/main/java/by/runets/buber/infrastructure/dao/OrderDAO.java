@@ -11,4 +11,6 @@ public interface OrderDAO extends AbstractDAO<Integer, Order> {
     Set<Order> findAllOrdersByPassengerId(Integer id) throws DAOException;
     boolean confirmOrderByDriver(Order order) throws DAOException;
     Order isExistOrderForDriver(User user) throws DAOException;
+    boolean revokeOrderByDriver(Integer driverId, Integer orderId) throws DAOException;
+    boolean revokeOrderByPassenger(Integer passengerId, Integer orderId) throws DAOException;
 }

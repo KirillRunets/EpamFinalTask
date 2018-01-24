@@ -39,13 +39,13 @@ public class StatisticService {
 
     private List<Order> collectOrdersByPassenger(Integer id, List<Order> orders) {
         return orders.stream()
-                .filter(order -> order.getPassengerId() == id)
+                .filter(order -> order.getPassenger().getId() == id)
                 .collect(Collectors.toList());
     }
 
     private List<Order> collectOrdersByDriver(Integer id, List<Order> orders) {
         return orders.stream()
-                .filter(order -> order.getDriverId() == id)
+                .filter(order -> order.getDriver().getId() == id)
                 .collect(Collectors.toList());
     }
 

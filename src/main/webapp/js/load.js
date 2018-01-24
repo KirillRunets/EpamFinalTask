@@ -45,6 +45,9 @@ function deleteCommand(type) {
             document.getElementById('ban_command_id').value = 'unban_user';
             document.getElementById('user_id').value = selectedRowId;
             break;
+        case 'orderByDriver':
+            document.getElementById('driver_order_id').value = 'revoke_order_by_driver';
+            break;
     }
 }
 
@@ -76,6 +79,9 @@ function loadCommand(type) {
         case 'find_all_valid_cars':
         case 'load_valid_car_to_add':
             document.getElementById('admin_command_id').value = type;
+            break;
+        case 'orderByDriver':
+            document.getElementById('driver_order_id').value = 'confirm_order';
             break;
     }
 
