@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/jsp/driver/*" }, servletNames = {"controller"})
-public class CheckNewOrderFilter implements Filter {
-    private final static Logger LOGGER = LogManager.getLogger(CheckNewOrderFilter.class);
+@WebFilter(urlPatterns = { "/jsp/*" }, servletNames = {"controller"})
+public class OrderFilter implements Filter {
+    private final static Logger LOGGER = LogManager.getLogger(OrderFilter.class);
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -30,19 +30,19 @@ public class CheckNewOrderFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         HttpSession session = req.getSession(false);
-
+        Order order = null;
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
             if (user != null){
                 if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
-                    OrderExistService orderExistService = new OrderExistService();
-                    try {
-                        Order order = orderExistService.isExistOrderForDriver(user);
-                        if (order != null){
-                            req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
+                    if ((order = checkIsExistNewOrder(user)) != null){
+                        LOGGER.debug("NEW SESSION");
+                        req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
+                    } else {
+                        if (req.getSession().getAttribute(RequestParameter.NEW_ORDER) != null){
+                            LOGGER.debug("DELETE SESSION");
+                            req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
                         }
-                    } catch (ServiceException e) {
-                        LOGGER.error(e);
                     }
                 }
             }
@@ -55,16 +55,15 @@ public class CheckNewOrderFilter implements Filter {
     public void destroy() {
 
     }
+
+    private Order checkIsExistNewOrder(User user){
+        OrderExistService orderExistService = new OrderExistService();
+        Order order = null;
+        try {
+            order = orderExistService.isExistOrderForDriver(user);
+        } catch (ServiceException e) {
+            LOGGER.error(e);
+        }
+        return order;
+    }
 }
-
-/* switch (user.getRole().getRoleName().toUpperCase()){
-                    case UserRoleType.ADMIN:
-                        break;
-                    case UserRoleType.DRIVER:
-
-
-                        break;
-                    case UserRoleType.PASSENGER:
-                        req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
-                        break;
-                }*/

@@ -33,6 +33,7 @@ public class HomePageFilter implements Filter {
         LOGGER.debug("call");
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
+            LOGGER.debug(user);
             if (user != null){
                 switch (user.getRole().getRoleName().toUpperCase()){
                     case UserRoleType.ADMIN:

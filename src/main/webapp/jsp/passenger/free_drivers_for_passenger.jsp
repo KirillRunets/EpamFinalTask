@@ -32,6 +32,11 @@
         <div class="top-button">
             <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.logout" bundle="${rb}"/></button>
         </div>
+        <div class="name">
+            <ul class="nav navbar-nav">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.USER.firstName} ${sessionScope.USER.secondName}</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 <c:out value="${param.command}"/>
@@ -120,7 +125,7 @@
                                 </tbody>
                             </table>
                             <div class="button-container">
-                                <button id="btn-load1" class="button-small" onclick="doCommand(getSelectedRowId(), 'make_order')"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                                <button id="btn-load1" class="button-small" type="submit" onclick="loadCommand('order')"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
                             </div>
                         </form>
                     </div>
@@ -129,6 +134,21 @@
         </div>
     </div>
 </section>
+<c:if test="${sessionScope.newOrder.confirmed == 'false'}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <div class="loader"></div>
+            <p><fmt:message key="label.wait" bundle="${rb}" /></p>
+        </div>
+    </div>
+</c:if>
+<c:if test="${sessionScope.newOrder.confirmed == 'true'}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <p><fmt:message key="label.confirmed" bundle="${rb}" /></p>
+        </div>
+    </div>
+</c:if>
 <%--<c:if test="${not empty param.errorLabel}">
     <div class="static-modal">
         <div class="modal-content">

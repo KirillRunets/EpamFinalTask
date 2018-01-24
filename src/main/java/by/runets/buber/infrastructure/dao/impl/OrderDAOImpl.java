@@ -101,7 +101,7 @@ public class OrderDAOImpl implements OrderDAO {
                 setGeneratedId(order, preparedStatement);
             }
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception", e);
+            throw new DAOException("Create order by passenger exception", e);
         } finally {
             close(preparedStatement, proxyConnection);
         }
@@ -162,8 +162,9 @@ public class OrderDAOImpl implements OrderDAO {
         order.setOrderDate(resultSet.getDate("date"));
         order.setDriver(new User(resultSet.getInt("driver_id")));
         order.setPassenger(new User(resultSet.getInt("passenger_id")));
-
-
+        order.setConfirmed(resultSet.getBoolean("isConfirmed"));
+        order.setCompleted(resultSet.getBoolean("isCompleted"));
+        order.setPaid(true);
         return order;
     }
 
@@ -189,6 +190,9 @@ public class OrderDAOImpl implements OrderDAO {
                 resultSet.getInt("trip_amount"),
                 resultSet.getString("phone_number"),
                 new Role(UserRoleType.DRIVER)));
+        order.setConfirmed(resultSet.getBoolean("isConfirmed"));
+        order.setCompleted(resultSet.getBoolean("isCompleted"));
+        order.setPaid(true);
         return order;
     }
 
@@ -214,7 +218,9 @@ public class OrderDAOImpl implements OrderDAO {
                 resultSet.getString("phone_number"),
                 new Role(UserRoleType.DRIVER)));
         order.setPassenger(new User(resultSet.getInt("passenger_id")));
-        ;
+        order.setConfirmed(resultSet.getBoolean("isConfirmed"));
+        order.setCompleted(resultSet.getBoolean("isCompleted"));
+        order.setPaid(true);
         return order;
     }
 
@@ -251,7 +257,7 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(getOrderFromPassengerResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Find order list by id exception: ", e);
+            throw new DAOException("Find order list by passenger exception: ", e);
         } finally {
             close(preparedStatement, proxyConnection);
         }
@@ -275,8 +281,7 @@ public class OrderDAOImpl implements OrderDAO {
         boolean isUpdated = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.CONFIRM_ORDER_BY_DRIVER);
-            preparedStatement.setBoolean(1, order.isConfirmed());
-            preparedStatement.setInt(2, order.getId());
+            preparedStatement.setInt(1, order.getId());
             isUpdated = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Confirm order exception exception", e);
@@ -315,7 +320,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.REVOKE_ORDER_BY_DRIVER);
             preparedStatement.setNull(1, Types.INTEGER);
             preparedStatement.setInt(2, driverId);
-            preparedStatement.setNull(3, orderId);
+            preparedStatement.setInt(3, orderId);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new DAOException("Revoke order by driver exception", e);
@@ -332,7 +337,7 @@ public class OrderDAOImpl implements OrderDAO {
         boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.REVOKE_ORDER_BY_PASSENGER);
-            preparedStatement.setNull(1, passengerId);
+            preparedStatement.setInt(1, passengerId);
             preparedStatement.setInt(2, orderId);
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
@@ -341,5 +346,10 @@ public class OrderDAOImpl implements OrderDAO {
             close(preparedStatement, proxyConnection);
         }
         return state;
+    }
+
+    @Override
+    public boolean completeOrder(Integer id) {
+        return false;
     }
 }

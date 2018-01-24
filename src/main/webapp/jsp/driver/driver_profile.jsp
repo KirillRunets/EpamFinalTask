@@ -29,6 +29,11 @@
             <div class="top-button">
                 <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.logOut" bundle="${rb}"/></button>
             </div>
+            <div class="name">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.USER.firstName} ${sessionScope.USER.secondName}</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <c:import url="${pageContext.request.contextPath}/jsp/driver/driver_sidebar.jsp"/>

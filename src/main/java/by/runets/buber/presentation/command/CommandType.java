@@ -15,10 +15,7 @@ import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
 import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
 import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
 import by.runets.buber.presentation.command.impl.car.*;
-import by.runets.buber.presentation.command.impl.order.CalculateOrderDataCommand;
-import by.runets.buber.presentation.command.impl.order.ConfirmOrderCommand;
-import by.runets.buber.presentation.command.impl.order.MakeOrderCommand;
-import by.runets.buber.presentation.command.impl.order.RevokeOrderCommand;
+import by.runets.buber.presentation.command.impl.order.*;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
@@ -46,7 +43,8 @@ public enum CommandType {
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
     CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
     CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService())),
-    REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService()));
+    REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
+    COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService()));
 
 
     private Command command;

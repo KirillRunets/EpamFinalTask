@@ -1,6 +1,12 @@
 package by.runets.buber.presentation.command.impl.order;
 
 import by.runets.buber.application.service.order.RevokeOrderService;
+import by.runets.buber.domain.entity.Order;
+import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.RequestParameter;
+import by.runets.buber.infrastructure.constant.UserRoleType;
+import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +25,35 @@ public class RevokeOrderCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
+        Router router = new Router();
+        String page = null;
+        User user = (User) req.getSession().getAttribute(UserRoleType.USER);
+        Order order = (Order) req.getSession().getAttribute(RequestParameter.NEW_ORDER);
+        boolean state = false;
 
+        try {
+            state = revokeOrderService.revoke(user.getRole().getRoleName(), user.getId(), order.getId());
+            if (state){
+                /*page = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)
+                        ? JspPagePath.PASSENGER_HOME_PAGE
+                        : JspPagePath.DRIVER_HOME_PAGE;*/
+                if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)){
+                    req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
+                    page = JspPagePath.PASSENGER_HOME_PAGE;
+                } else {
+                    req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
+                    order.setDriver(new User());
+                    req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
+                    page = JspPagePath.DRIVER_HOME_PAGE;
+                }
+            }
+        } catch (ServiceException e) {
+            LOGGER.error(e);
+        }
 
+        router.setRouteType(Router.RouteType.REDIRECT);
+        router.setPagePath(page);
 
-        return null;
+        return router;
     }
 }

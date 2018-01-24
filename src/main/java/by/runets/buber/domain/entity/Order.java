@@ -58,6 +58,9 @@ public class Order extends Entity{
     public boolean isConfirmed() {
         return isConfirmed;
     }
+    public boolean getConfirmed() {
+        return isConfirmed;
+    }
     public void setConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }

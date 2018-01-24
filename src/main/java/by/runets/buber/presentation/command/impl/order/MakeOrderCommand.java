@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.sql.Driver;
 import java.util.Date;
 import java.util.Optional;
 
@@ -34,19 +35,17 @@ public class MakeOrderCommand implements Command {
         String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
 
         Order order = init(req);
-        /*try {
+        try {
             if (order != null && makeOrderService.makeOrder(order)){
-                page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE + "?" + RequestParameter.COMMAND + "=" + RequestParameter.DRIVER_CONFIRM_ORDER_COMMAND;
+                page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE;
             } else {
                 page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE + "?" + LabelParameter.ERROR_LABEL + "=" + LocaleFileManager.getLocale(locale).getProperty(PropertyKey.ORDER_ERROR);
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-        }*/
+        }
 
-        page = JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE;/* + "?" + RequestParameter.COMMAND + "=" + RequestParameter.DRIVER_CONFIRM_ORDER_COMMAND;*/
-        req.setAttribute("command", "driver_confirm_order");
-        router.setRouteType(Router.RouteType.FORWARD);
+        router.setRouteType(Router.RouteType.REDIRECT);
         router.setPagePath(page);
 
         return router;
@@ -65,8 +64,8 @@ public class MakeOrderCommand implements Command {
 
         if (RequestValidator.getInstance().isValidateOrderData(driverId)){
             order = new Order();
-            order.getPassenger().setId(sessionUser.getId());
-            order.getDriver().setId(Integer.parseInt(driverId));
+            order.setPassenger(new User(sessionUser.getId()));
+            order.setDriver(new User(Integer.parseInt(driverId)));
             order.setDistance(distance);
             order.setTripTime(time);
             order.setTripCost(cost);

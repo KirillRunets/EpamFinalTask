@@ -31,14 +31,14 @@
             <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
                     key="label.LogOut" bundle="${rb}"/></button>
         </div>
-
+        <div class="name">
+            <ul class="nav navbar-nav">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.USER.firstName} ${sessionScope.USER.secondName}</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 <c:import url="${pageContext.request.contextPath}/jsp/driver/driver_sidebar.jsp"/>
-<c:if test="${not empty sessionScope.newOrder}">
-    <p>You have new order</p>
-</c:if>
-
 <section class="my-section">
     <div class="content-wrapper">
         <div class="container-fluid">
@@ -97,7 +97,8 @@
 <c:if test="${not empty sessionScope.newOrder}">
     <div class="static-modal">
         <div class="modal-content">
-            <form action="${pageContext.request.contextPath}/controller" method="POST">
+            <form id="orderForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                <h1 class="white"><fmt:message key="label.newOrder" bundle="${rb}"/></h1>
                 <input type="hidden" name="command" id="driver_order_id" value="">
                 <table class="table table-bordered" id="modal-table" width="100%" cellspacing="0">
                     <thead>
@@ -124,16 +125,22 @@
                         <td>${sessionScope.newOrder.passenger.secondName}</td>
                         <td>${sessionScope.newOrder.passenger.phoneNumber}</td>
                         <td>${sessionScope.newOrder.passenger.rating}</td>
+
                     </tr>
                     </tbody>
                 </table>
                 <c:if test="${sessionScope.newOrder.confirmed == 'false'}">
                     <div class="button-container">
-                        <button id="btn-load1" class="button-small" onclick="loadCommand('orderByDriver')"><fmt:message key="label.confirm" bundle="${rb}"/></button>
+                        <button id="btn-load1" class="button-small" onclick="loadCommand('confirm')"><fmt:message key="label.confirm" bundle="${rb}"/></button>
                         <button id="btn-load2" class="button-small" onclick="deleteCommand('orderByDriver')"><fmt:message key="label.revoke" bundle="${rb}"/></button>
                     </div>
                 </c:if>
-
+                <c:if test="${sessionScope.newOrder.confirmed == 'true'}">
+                    <label class="white"><fmt:message key="label.confirmed" bundle="${rb}"/></label>
+                    <td ><input type="checkbox" disabled checked/></td>
+                    <label class="white"><fmt:message key="label.completed" bundle="${rb}"/></label>
+                    <td><input type="checkbox" id="completed" onclick="loadCommand('complete')" name="completed"  value="true"/></td>
+                </c:if>
             </form>
         </div>
     </div>
@@ -149,5 +156,7 @@
 <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
+<script>
+</script>
 </body>
 </html>
