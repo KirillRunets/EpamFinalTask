@@ -1,5 +1,6 @@
 package by.runets.buber.infrastructure.dao;
 
+import by.runets.buber.domain.entity.Account;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.exception.DAOException;

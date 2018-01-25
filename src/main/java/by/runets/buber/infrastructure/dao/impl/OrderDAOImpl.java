@@ -1,9 +1,6 @@
 package by.runets.buber.infrastructure.dao.impl;
 
-import by.runets.buber.domain.entity.Order;
-import by.runets.buber.domain.entity.Point;
-import by.runets.buber.domain.entity.Role;
-import by.runets.buber.domain.entity.User;
+import by.runets.buber.domain.entity.*;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.constant.UserRoleType;
@@ -364,4 +361,5 @@ public class OrderDAOImpl implements OrderDAO {
         }
         return state;
     }
+
 }

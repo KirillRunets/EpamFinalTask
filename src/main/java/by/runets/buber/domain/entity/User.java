@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 public class User extends Entity {
+    private Account account;
     private String email;
     private String password;
     private String firstName;
@@ -193,6 +194,12 @@ public class User extends Entity {
     public void setCurrentLocation(Point currentLocation) {
         this.currentLocation = currentLocation;
     }
+    public Account getAccount() {
+        return account;
+    }
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -204,6 +211,7 @@ public class User extends Entity {
 
         if (tripAmount != user.tripAmount) return false;
         if (Double.compare(user.rating, rating) != 0) return false;
+        if (account != null ? !account.equals(user.account) : user.account != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
@@ -223,6 +231,7 @@ public class User extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         long temp;
+        result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
@@ -245,7 +254,8 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "account=" + account +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
