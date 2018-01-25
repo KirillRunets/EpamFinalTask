@@ -115,7 +115,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         } else {
             preparedStatement.setNull(4, Types.INTEGER);
         }
-        if (user.getBan() != null) {
+        if (user.getBan() != null && user.getBan().getId() != 0) {
             preparedStatement.setInt(5, user.getBan().getId());
         } else {
             preparedStatement.setNull(5, Types.INTEGER);

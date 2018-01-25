@@ -30,11 +30,10 @@ public class HomePageFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         HttpSession session = req.getSession();
-        LOGGER.debug("call");
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
-            LOGGER.debug(user);
             if (user != null){
+                LOGGER.debug("Filter work");
                 switch (user.getRole().getRoleName().toUpperCase()){
                     case UserRoleType.ADMIN:
                         req.getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);

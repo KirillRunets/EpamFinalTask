@@ -1,5 +1,7 @@
 package by.runets.buber.presentation.controller;
 
+import by.runets.buber.infrastructure.constant.JspPagePath;
+
 public class Router {
     public enum RouteType {
         FORWARD, REDIRECT;
@@ -13,6 +15,9 @@ public class Router {
     }
 
     public void setPagePath(String pagePath) {
+        if (pagePath == null){
+            this.pagePath = JspPagePath.MAIN_PAGE;
+        }
         this.pagePath = pagePath;
     }
 

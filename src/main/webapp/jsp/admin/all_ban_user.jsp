@@ -89,7 +89,7 @@
                                                 <td>${user.firstName}</td>
                                                 <td>${user.secondName}</td>
                                                 <td>${user.email}</td>
-                                                <td>${user.birthDate}</td>
+                                                <td><fmt:formatDate value="${user.birthDate}" /></td>
                                                 <td>${user.phoneNumber}</td>
                                                 <td>${user.rating}</td>
                                                 <td>${user.tripAmount}</td>
@@ -99,7 +99,7 @@
                                                 </c:if>
                                                 <td>${user.ban.banType}</td>
                                                 <td>${user.ban.banDescription}</td>
-                                                <td>${user.unBaneDate}</td>
+                                                <td><fmt:formatDate value="${user.unBaneDate}" /></td>
                                             </tr>
                                         </c:if>
                                     </c:forEach>

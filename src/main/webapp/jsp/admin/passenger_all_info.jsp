@@ -70,7 +70,7 @@
                                         <td>${passenger.firstName}</td>
                                         <td>${passenger.secondName}</td>
                                         <td>${passenger.email}</td>
-                                        <td>${passenger.birthDate}</td>
+                                        <td><fmt:formatDate value="${passenger.birthDate}" /></td>
                                         <td>${passenger.phoneNumber}</td>
                                         <td>${passenger.rating}</td>
                                         <td>${passenger.tripAmount}</td>

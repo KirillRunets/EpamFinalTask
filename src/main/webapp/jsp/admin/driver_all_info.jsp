@@ -70,7 +70,7 @@
                                         <td>${driver.firstName}</td>
                                         <td>${driver.secondName}</td>
                                         <td>${driver.email}</td>
-                                        <td>${driver.birthDate}</td>
+                                        <td><fmt:formatDate value="${driver.birthDate}" /></td>
                                         <td>${driver.phoneNumber}</td>
                                         <td>${driver.rating}</td>
                                         <td>${driver.tripAmount}</td>

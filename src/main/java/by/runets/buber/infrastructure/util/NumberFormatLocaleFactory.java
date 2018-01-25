@@ -5,7 +5,7 @@ public class NumberFormatLocaleFactory {
         String pattern = null;
         switch (locale){
             case "en_US":
-                pattern = "MM/dd/yyyy";
+                pattern = "yyyy-MM-dd";
                 break;
             case "be_BY":
             case "ru_RU":

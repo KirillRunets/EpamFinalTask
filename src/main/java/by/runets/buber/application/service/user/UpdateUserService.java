@@ -12,7 +12,8 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class UpdateUserService {
-    public void update(User user) throws ServiceException {
+    public boolean update(User user) throws ServiceException {
+        boolean isUpdated = false;
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
 
@@ -24,11 +25,12 @@ public class UpdateUserService {
                     updatePassengerBusinessTool(user);
                     break;
             }
-            userDAO.update(user);
+            isUpdated = userDAO.update(user);
 
         } catch (DAOException e) {
             throw new ServiceException("Update user exception " , e);
         }
+        return isUpdated;
     }
 
 

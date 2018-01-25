@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -64,7 +65,7 @@
                                             <tr class="line" id="${car.id}">
                                                 <td>${car.mark}</td>
                                                 <td>${car.model}</td>
-                                                <td>${car.releaseDate}</td>
+                                                <td><fmt:formatDate value="${car.releaseDate}" /></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

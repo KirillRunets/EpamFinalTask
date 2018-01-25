@@ -41,6 +41,6 @@
 </div>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/websocket.js"></script>
+    <script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

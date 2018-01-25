@@ -99,6 +99,21 @@ body{
     display: block;
     width: 100%;
     margin: 5px auto;
+    float: right;
+    line-height: 50px;
+    text-decoration: none;
+    border: 0;
+    outline: none;
+    padding: 0 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #1ab188;
+    color: #ffffff;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-appearance: none;
 }
 
 

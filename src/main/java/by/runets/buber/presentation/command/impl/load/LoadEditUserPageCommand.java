@@ -1,4 +1,4 @@
-package by.runets.buber.presentation.command.impl;
+package by.runets.buber.presentation.command.impl.load;
 
 import by.runets.buber.application.service.user.ReadUserService;
 import by.runets.buber.domain.entity.User;

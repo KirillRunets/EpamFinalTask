@@ -66,7 +66,6 @@
 
                 <label><fmt:message key="label.role" bundle="${rb}"/></label>
                 <select name="user_role" required id="userRole">
-                    <option value="NONE"><fmt:message key="label.chooseRole" bundle="${rb}"/></option>
                     <option value="DRIVER"><fmt:message key="label.driver" bundle="${rb}"/></option>
                     <option value="PASSENGER"><fmt:message key="label.passenger" bundle="${rb}"/></option>
                 </select>
@@ -113,5 +112,6 @@
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

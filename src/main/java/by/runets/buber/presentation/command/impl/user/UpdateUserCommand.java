@@ -43,9 +43,9 @@ public class UpdateUserCommand implements Command {
             User user = init(req, sessionUser);
             if (user != null){
                 isAdmin = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
-                updateUserService.update(user);
-            } else {
-                req.setAttribute("", "");
+                if (!updateUserService.update(user)){
+                    req.getSession().setAttribute("errorUpdate", "Something went wrong, please try again.");
+                }
             }
             page = isAdmin ? switchPageByAdmin(user, req) : switchPageByUser(user, req);
         } catch (ServiceException | ParseException e) {

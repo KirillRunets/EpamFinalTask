@@ -15,12 +15,17 @@ import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
 import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
 import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
 import by.runets.buber.presentation.command.impl.car.*;
+import by.runets.buber.presentation.command.impl.load.LoadHomePageCommand;
+import by.runets.buber.presentation.command.impl.load.LoadEditUserPageCommand;
+import by.runets.buber.presentation.command.impl.load.LoadSignUpPageCommand;
+import by.runets.buber.presentation.command.impl.load.LoadValidCarPage;
 import by.runets.buber.presentation.command.impl.order.*;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
     LOGIN(new LoginCommand(new LoginUserService(), new StatisticService())),
     SIGNUP(new SignUpCommand(new RegisterUserService())),
+    LOAD_SIGN_UP_PAGE(new LoadSignUpPageCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
     LOGOUT(new LogoutCommand()),
     FIND_ALL_DRIVER(new ReadDriverCommand(new ReadUserService())),
@@ -28,7 +33,7 @@ public enum CommandType {
     DELETE_USER(new DeleteUserCommand(new DeleteUserService())),
     LOAD_EDIT_USER(new LoadEditUserPageCommand(new ReadUserService())),
     EDIT_USER(new UpdateUserCommand(new UpdateUserService())),
-    HOME_PAGE(new HomePageCommand()),
+    HOME_PAGE(new LoadHomePageCommand()),
     BAN_USER(new SetBanCommand(new SetBanService())),
     UNBAN_USER(new DeleteBanCommand(new RevokeBanService())),
     SHOW_BANNED_USERS(new ShowBannedUsersCommand(new ReadBanUserService())),

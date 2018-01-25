@@ -24,7 +24,7 @@
         </ul>
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
-            <button class="button-small" id="aut-btn" onClick="window.location='jsp/authentication/logIn.jsp'" ><fmt:message key="label.signIn" bundle="${rb}" /></button>
+            <button class="button-small" id="aut-btn" onClick="window.location='/jsp/authentication/logIn.jsp'" ><fmt:message key="label.signIn" bundle="${rb}" /></button>
         </div>
     </div>
 </nav>
@@ -60,5 +60,6 @@
  <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

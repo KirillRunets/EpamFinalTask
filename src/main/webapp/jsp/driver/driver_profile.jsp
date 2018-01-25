@@ -77,7 +77,8 @@
                                     </div>
                                 </div>
                                 <label><fmt:message key="label.birthDate"  bundle="${rb}"/></label>
-                                <input name="birthDate" type="date" value="${sessionScope.USER.birthDate}"  required/>
+                                <fmt:formatDate pattern = "yyyy-MM-dd" value = "${sessionScope.USER.birthDate}" var="formated" />
+                                <input name="birthDate" type="date" value="${formated}"  required/>
                                 <label><fmt:message key="label.phoneNumber"  bundle="${rb}"/></label>
                                 <input  name="phoneNumber" id="phoneNumber" type="text" value="${sessionScope.USER.phoneNumber}" required placeholder=<fmt:message key="label.phoneNumber"  bundle="${rb}"/>>
                                 <button type="submit" class="button button-block"><fmt:message key="label.submit"   bundle="${rb}"/></button>
