@@ -46,7 +46,6 @@ public enum CommandType {
     REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
     COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService()));
 
-
     private Command command;
 
     CommandType(Command command) {

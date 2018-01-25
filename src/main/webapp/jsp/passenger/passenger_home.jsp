@@ -80,6 +80,13 @@
         <c:import url="${pageContext.request.contextPath}/jsp/passenger/location_modal.jsp"/>
     </div>
 </div>
+<c:if test="${sessionScope.newOrder.confirmed == 'true'}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <p><fmt:message key="label.confirmed" bundle="${rb}" /></p>
+        </div>
+    </div>
+</c:if>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>

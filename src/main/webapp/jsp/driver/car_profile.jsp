@@ -95,7 +95,7 @@
                                     <tr class="line">
                                         <td>${sessionScope.USER.car.mark}</td>
                                         <td>${sessionScope.USER.car.model}</td>
-                                        <td>${sessionScope.USER.car.releaseDate}</td>
+                                        <td><fmt:formatDate value="${sessionScope.USER.car.releaseDate}" /></td>
                                         <td>${sessionScope.USER.car.licensePlate}</td>
                                     </tr>
                                     </tbody>

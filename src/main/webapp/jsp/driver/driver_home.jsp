@@ -75,7 +75,7 @@
                             <tbody>
                             <c:forEach items="${sessionScope.USER.orderSet}" var="order">
                                 <tr class="line" id="${order.id}">
-                                    <td>${order.orderDate}</td>
+                                    <td><fmt:formatDate value="${order.orderDate}" /></td>
                                     <td>${order.tripCost}</td>
                                     <td>${order.distance}</td>
                                     <td>${order.startPoint}</td>
@@ -116,7 +116,7 @@
                     </thead>
                     <tbody>
                     <tr class="line" id="${sessionScope.newOrder.id}">
-                        <td>${sessionScope.newOrder.orderDate}</td>
+                        <td><fmt:formatDate value="${sessionScope.newOrder.orderDate}" /></td>
                         <td>${sessionScope.newOrder.tripCost}</td>
                         <td>${sessionScope.newOrder.distance}</td>
                         <td>${sessionScope.newOrder.startPoint}</td>

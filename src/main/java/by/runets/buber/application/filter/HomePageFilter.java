@@ -29,7 +29,7 @@ public class HomePageFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
-        HttpSession session = req.getSession(false);
+        HttpSession session = req.getSession();
         LOGGER.debug("call");
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);

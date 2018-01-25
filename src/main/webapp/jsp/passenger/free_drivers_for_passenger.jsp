@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="number" uri="customtag" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="property/passenger/passenger_home" var="rb"/>
 <%@ page isELIgnored="false" %>
@@ -59,13 +60,14 @@
                     <fmt:formatNumber var="averageSpeed" value="${sessionScope.averageSpeed}" maxFractionDigits="0"/>
                     <tr>
                         <td>
-                            <p>${distance} <fmt:message key="label.systemDistance" bundle="${rb}"/></p>
+                            <p><number:numberFormatterTag format="##.00" number="${distance}"/> <fmt:message key="label.systemDistance" bundle="${rb}"/> </p>
                         </td>
                         <td>
                             <p>${time} <fmt:message key="label.systemTime" bundle="${rb}"/></p>
                         </td>
                         <td>
-                            <p>${cost} <fmt:message key="label.systemСost" bundle="${rb}"/></p>
+
+                            <p><number:numberFormatterTag format="###.00" number="${cost}"/> <fmt:message key="label.systemСost" bundle="${rb}"/></p>
                         </td>
                         <td>
                             <p>${averageSpeed} <fmt:message key="label.systemSpeed" bundle="${rb}"/></p>
@@ -103,7 +105,7 @@
                                     <tr class="line" id="${driver.id}">
                                         <td>${driver.firstName}</td>
                                         <td>${driver.secondName}</td>
-                                        <td>${driver.birthDate}</td>
+                                        <td><fmt:formatDate value="${driver.birthDate}" /></td>
                                         <td>${driver.phoneNumber}</td>
                                         <td>${driver.rating}</td>
                                         <td>${driver.tripAmount}</td>
@@ -111,7 +113,7 @@
                                         <c:if test="${not empty driver.car.mark}">
                                             <td>${driver.car.mark}</td>
                                             <td>${driver.car.model}</td>
-                                            <td>${driver.car.releaseDate}</td>
+                                            <td><fmt:formatDate value="${driver.car.releaseDate}" /></td>
                                             <td>${driver.car.licensePlate}</td>
                                         </c:if>
                                         <c:if test="${empty driver.car.mark}">

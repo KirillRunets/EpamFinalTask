@@ -349,7 +349,19 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean completeOrder(Integer id) {
-        return false;
+    public boolean completeOrder(Integer orderId) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        boolean state = false;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.COMPLETE_ORDER);
+            preparedStatement.setInt(1, orderId);
+            state = preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new DAOException("Complete order exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return state;
     }
 }

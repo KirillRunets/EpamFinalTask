@@ -19,4 +19,5 @@ public class PropertyKey {
     public final static String CAR_LICENSE_EXIST_ERROR = "label.carLicenseExist";
     public final static String ADD_CAR_ERROR = "label.addCarError";
     public final static String ORDER_ERROR = "label.orderError";
+    public final static String FOOTER_CONTENT = "label.footerContent";
 }

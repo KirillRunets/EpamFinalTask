@@ -49,6 +49,7 @@ public class JoinService {
         try {
             orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
             Set<Order> orders = orderDAO.findAllOrdersByDriverId(user.getId());
+            user.setTripAmount(orders.size());
             user.setOrderSet(orders);
         } catch (DAOException e) {
             throw new ServiceException("Join order to driver exception", e);
@@ -59,6 +60,7 @@ public class JoinService {
         try {
             OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
             Set<Order> orders = orderDAO.findAllOrdersByPassengerId(user.getId());
+            user.setTripAmount(orders.size());
             user.setOrderSet(orders);
         } catch (DAOException e) {
             throw new ServiceException("Join order to passenger exception", e);

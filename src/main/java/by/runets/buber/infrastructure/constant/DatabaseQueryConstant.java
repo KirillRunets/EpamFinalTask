@@ -56,10 +56,10 @@ public class DatabaseQueryConstant {
     public final static String IS_EXIST_ORDER_FOR_DRIVER = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, isConfirmed, isCompleted,first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.passenger_id\n" +
-            "WHERE driver_id=? AND isConfirmed=0 OR isCompleted=0";
+            "WHERE driver_id=? AND isCompleted=0";
     public final static String REVOKE_ORDER_BY_DRIVER = "UPDATE `order` SET driver_id=? WHERE driver_id=? AND t_id=?";
     public final static String REVOKE_ORDER_BY_PASSENGER = "DELETE FROM `order` WHERE passenger_id=? AND t_id=? AND isConfirmed=0 AND isCompleted=0";
-
+    public final static String COMPLETE_ORDER = "UPDATE `order` SET isCompleted=1 WHERE t_id=?";
     //ban
     public final static String FIND_ALL_BANS = "SELECT b_id, b_name, b_description FROM ban_reason";
     public final static String FIND_BAN_BY_ID = "SELECT b_id, b_name, b_description FROM ban_reason WHERE b_id=?";

@@ -28,26 +28,24 @@ public class OrderFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
+        LOGGER.debug("work");
 
         HttpSession session = req.getSession(false);
         Order order = null;
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
             if (user != null){
-                if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
-                    if ((order = checkIsExistNewOrder(user)) != null){
-                        LOGGER.debug("NEW SESSION");
-                        req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
-                    } else {
-                        if (req.getSession().getAttribute(RequestParameter.NEW_ORDER) != null){
-                            LOGGER.debug("DELETE SESSION");
-                            req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
-                        }
+                if ((order = checkIsExistNewOrder(user)) != null){
+                    LOGGER.debug("NEW SESSION");
+                    req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
+                } else {
+                    if (req.getSession().getAttribute(RequestParameter.NEW_ORDER) != null){
+                        LOGGER.debug("DELETE SESSION");
+                        req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
                     }
                 }
             }
         }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

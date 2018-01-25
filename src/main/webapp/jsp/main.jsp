@@ -57,8 +57,7 @@
         </a>
     </div>
 </div>
-
-<c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+ <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
 </body>
