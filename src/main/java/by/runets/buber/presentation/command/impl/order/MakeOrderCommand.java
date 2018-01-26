@@ -61,7 +61,6 @@ public class MakeOrderCommand implements Command {
         Point destinationPoint = (Point) req.getSession().getAttribute(LabelParameter.DESTINATION_POINT);
         String driverId = req.getParameter(RequestParameter.DRIVER_ID);
 
-
         if (RequestValidator.getInstance().isValidateOrderData(driverId)){
             order = new Order();
             order.setPassenger(new User(sessionUser.getId()));

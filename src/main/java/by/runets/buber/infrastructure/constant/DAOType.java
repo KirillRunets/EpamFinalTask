@@ -8,4 +8,5 @@ public class DAOType {
     public final static String BONUS_DAO_TYPE = "bonus_dao_type";
     public final static String CAR_DAO_TYPE = "car_dao_type";
     public final static String ORDER_DAO_TYPE = "order_dao_type";
+    public final static String ACCOUNT_DAO_TYPE = "account_dao_type";
 }

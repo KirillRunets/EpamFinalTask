@@ -33,8 +33,8 @@
                 <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
                 <th><fmt:message key="label.banInfo" bundle="${rb}"/></th>
                 <tr>
-                    <td><p>${requestScope.unbanDate}</p></td>
-                    <td><p>${requestScope.banDescription}</p></td>
+                    <td><p>${sessionScope.unbanDate}</p></td>
+                    <td><p>${sessionScope.banDescription}</p></td>
                 </tr>
             </table>
     </div>

@@ -3,7 +3,8 @@ package by.runets.buber.infrastructure.constant;
 public class DatabaseQueryConstant {
     private DatabaseQueryConstant(){}
     //Account
-    public final static String SELECT_PAY_AMOUNT_FROM_ACCOUNT = "SELECT amount_account FROM account WHERE account_id=?";
+    public final static String SELECT_PAY_AMOUNT_FROM_ACCOUNT = "SELECT account_amount FROM account WHERE account_id=?";
+    public final static String UPDATE_ACCOUNT = "UPDATE account SET account_amount=? WHERE account_id=?";
     //user
     public final static String SET_BAN_TO_USER = "UPDATE user SET ban=?, unban_date=?  WHERE id=?";
     public final static String FIND_ALL_USERS = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +

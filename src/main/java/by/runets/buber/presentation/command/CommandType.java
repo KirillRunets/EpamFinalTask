@@ -49,7 +49,8 @@ public enum CommandType {
     CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
     CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService())),
     REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
-    COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService()));
+    COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService())),
+    PAY_ORDER_COMMAND(new PayOrderCommand(new PayOrderService()));
 
     private Command command;
 

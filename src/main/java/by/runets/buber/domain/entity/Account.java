@@ -1,18 +1,12 @@
 package by.runets.buber.domain.entity;
 
 public class Account extends Entity {
-    private int accountId;
     private double accountAmount;
 
-    public Account() {
+    public Account(int id) {
+        super(id);
     }
 
-    public int getAccountId() {
-        return accountId;
-    }
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
     public double getAccountAmount() {
         return accountAmount;
     }
@@ -28,7 +22,6 @@ public class Account extends Entity {
 
         Account account = (Account) o;
 
-        if (accountId != account.accountId) return false;
         return Double.compare(account.accountAmount, accountAmount) == 0;
     }
 
@@ -36,7 +29,6 @@ public class Account extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         long temp;
-        result = 31 * result + accountId;
         temp = Double.doubleToLongBits(accountAmount);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
@@ -45,8 +37,7 @@ public class Account extends Entity {
     @Override
     public String toString() {
         return "Account{" +
-                "accountId=" + accountId +
-                ", accountAmount=" + accountAmount +
+                "accountAmount=" + accountAmount +
                 '}';
     }
 }

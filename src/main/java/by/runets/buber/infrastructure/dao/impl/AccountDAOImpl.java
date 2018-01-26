@@ -71,17 +71,17 @@ public class AccountDAOImpl implements AccountTransactionDAO {
 
         try {
             fromAccountStatement = proxyConnectionFrom.prepareStatement(DatabaseQueryConstant.SELECT_PAY_AMOUNT_FROM_ACCOUNT);
-            fromAccountStatement.setInt(1, fromAccount.getAccountId());
+            fromAccountStatement.setInt(1, fromAccount.getId());
             toAccountStatement = proxyConnectionTo.prepareStatement(DatabaseQueryConstant.SELECT_PAY_AMOUNT_FROM_ACCOUNT);
-            fromAccountStatement.setInt(1, toAccount.getAccountId());
+            toAccountStatement.setInt(1, toAccount.getId());
 
             ResultSet resultSetFrom = fromAccountStatement.executeQuery();
-            ResultSet resultSetTo = fromAccountStatement.executeQuery();
+            ResultSet resultSetTo = toAccountStatement.executeQuery();
 
             if (resultSetFrom.next()){
-                accountFrom = resultSetFrom.getInt("account_amount");
+                accountFrom = resultSetFrom.getDouble("account_amount");
             } else {
-                throw new DAOException("Account with account_id " + fromAccount.getAccountId() + " not found");
+                throw new DAOException("Account with account_id " + fromAccount.getId() + " not found");
             }
 
             if (accountFrom >= payAmount){
@@ -90,16 +90,23 @@ public class AccountDAOImpl implements AccountTransactionDAO {
                 throw new DAOException("Invalid balance");
             }
 
-            if (resultSetFrom.next()){
+            if (resultSetTo.next()){
                 accountTo = resultSetTo.getInt("account_amount");
             } else {
-                throw new DAOException("Account with account_id " + toAccount.getAccountId() + " not found");
+                throw new DAOException("Account with account_id " + toAccount.getId() + " not found");
             }
 
             resultTo = accountTo + payAmount;
 
-            fromAccountStatement.executeUpdate("UPDATE account SET account_amount=" + resultFrom);
-            toAccountStatement.executeUpdate("UPDATE account SET account_amount=" + resultTo);
+            fromAccountStatement = proxyConnectionFrom.prepareStatement(DatabaseQueryConstant.UPDATE_ACCOUNT);
+            fromAccountStatement.setDouble(1, resultFrom);
+            fromAccountStatement.setInt(2, fromAccount.getId());
+            fromAccountStatement.executeUpdate();
+
+            fromAccountStatement = proxyConnectionTo.prepareStatement(DatabaseQueryConstant.UPDATE_ACCOUNT);
+            fromAccountStatement.setDouble(1, resultTo);
+            fromAccountStatement.setInt(2, toAccount.getId());
+            fromAccountStatement.executeUpdate();
 
             proxyConnectionFrom.commit();
             proxyConnectionTo.commit();

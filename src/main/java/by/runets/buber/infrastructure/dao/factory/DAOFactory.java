@@ -30,6 +30,9 @@ public class DAOFactory {
             case DAOType.ORDER_DAO_TYPE:
                 abstractDAO = OrderDAOImpl.getInstance();
                 break;
+            case DAOType.ACCOUNT_DAO_TYPE:
+                abstractDAO = AccountDAOImpl.getInstance();
+                break;
             default:
                 throw new DAOException("Wrong DAO type exception");
         }

@@ -24,4 +24,5 @@ public class LabelParameter {
     public final static String WAIT_LABEL = "waitLabel";
     public final static String ORDER = "order";
     public final static String ERROR = "error";
+    public final static String IS_PAID = "isPaid";
 }
