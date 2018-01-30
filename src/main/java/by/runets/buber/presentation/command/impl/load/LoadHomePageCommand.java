@@ -11,7 +11,7 @@ public class LoadHomePageCommand implements Command {
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
+        router.setRouteType(Router.RouteType.REDIRECT);
         router.setPagePath(JspPagePath.MAIN_PAGE);
         return router;
     }

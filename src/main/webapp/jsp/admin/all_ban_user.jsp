@@ -55,11 +55,8 @@
                                         <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.rating" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-                                        <c:if test="${not empty driver.car.mark}">
-                                            <th><fmt:message key="label.car" bundle="${rb}"/></th>
-                                        </c:if>
                                         <th><fmt:message key="label.role" bundle="${rb}"/></th>
-                                        <th><fmt:message key="label.ban" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.car" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
                                     </tr>
@@ -73,11 +70,8 @@
                                         <th><fmt:message key="label.phoneNumber" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.rating" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
-                                        <c:if test="${not empty driver.car.mark}">
-                                            <th><fmt:message key="label.car" bundle="${rb}"/></th>
-                                        </c:if>
                                         <th><fmt:message key="label.role" bundle="${rb}"/></th>
-                                        <th><fmt:message key="label.ban" bundle="${rb}"/></th>
+                                        <th><fmt:message key="label.car" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
                                         <th><fmt:message key="label.unbanDate" bundle="${rb}"/></th>
                                     </tr>
@@ -93,11 +87,15 @@
                                                 <td>${user.phoneNumber}</td>
                                                 <td>${user.rating}</td>
                                                 <td>${user.tripAmount}</td>
-                                                <td>${user.role.roleName}</td>
-                                                <c:if test="${not empty user.car.mark}">
-                                                    <td>${user.car.mark}</td>
+                                                <c:if test="${user.role.roleName == 'DRIVER'}">
+                                                    <td><fmt:message key="label.driver" bundle="${rb}"/></td>
                                                 </c:if>
-                                                <td>${user.ban.banType}</td>
+                                                <c:if test="${user.role.roleName == 'PASSENGER'}">
+                                                    <td><fmt:message key="label.passenger" bundle="${rb}"/></td>
+                                                </c:if>
+                                                <c:if test="${not empty user.car.mark}">
+                                                    <td>${user.car.mark} ${user.car.model} </td>
+                                                </c:if>
                                                 <td>${user.ban.banDescription}</td>
                                                 <td><fmt:formatDate value="${user.unBaneDate}" /></td>
                                             </tr>

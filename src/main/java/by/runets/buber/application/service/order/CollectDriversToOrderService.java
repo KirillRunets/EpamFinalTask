@@ -14,16 +14,16 @@ import java.util.Queue;
 public class CollectDriversToOrderService {
     public Queue<User> collect(User passenger) throws ServiceException {
         List<User> driverList = null;
-        Queue<User> userQueue = null;
+        Queue<User> driverQueue = null;
         try {
             driverList = new ReadUserService().find(UserRoleType.DRIVER);
             driverList.forEach(driver -> driver.setCurrentLocation(RandomGenerator.generatePoint()));
-            userQueue = new PriorityQueue<>(driverList.size(), new DistanceComparator(passenger));
-            userQueue.addAll(driverList);
+            driverQueue = new PriorityQueue<>(driverList.size(), new DistanceComparator(passenger));
+            driverQueue.addAll(driverList);
         } catch (ServiceException e) {
             throw new ServiceException("Collect drivers to order service exception", e);
         }
 
-        return userQueue;
+        return driverQueue;
     }
 }

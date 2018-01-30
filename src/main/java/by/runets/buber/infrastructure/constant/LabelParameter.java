@@ -21,8 +21,5 @@ public class LabelParameter {
     public final static String TRIP_DISTANCE_LABEL = "tripDistance";
     public final static String DESTINATION_POINT = "destinationPoint";
     public final static String AVERAGE_SPEED = "averageSpeed";
-    public final static String WAIT_LABEL = "waitLabel";
-    public final static String ORDER = "order";
-    public final static String ERROR = "error";
-    public final static String IS_PAID = "isPaid";
+    public final static String COMPLETED = "completed";
 }

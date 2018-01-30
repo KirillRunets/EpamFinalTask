@@ -1,9 +1,6 @@
 package by.runets.buber.infrastructure.dao.impl;
 
-import by.runets.buber.domain.entity.Ban;
-import by.runets.buber.domain.entity.Bonus;
-import by.runets.buber.domain.entity.Role;
-import by.runets.buber.domain.entity.User;
+import by.runets.buber.domain.entity.*;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.UserDAO;
@@ -99,7 +96,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
                 setGeneratedId(user, preparedStatement);
             }
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception", e);
+            throw new DAOException("Create user exception", e);
         } finally {
             close(preparedStatement, proxyConnection);
         }
@@ -155,6 +152,7 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         preparedStatement.setString(8, user.getPhoneNumber());
         preparedStatement.setDouble(9, user.getRating());
         preparedStatement.setInt(11, user.getTripAmount());
+        preparedStatement.setInt(12, user.getAccount().getId());
     }
 
     private void setGeneratedId(User user, PreparedStatement preparedStatement) throws SQLException, DAOException {
@@ -378,4 +376,24 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         return password;
     }
 
+    @Override
+    public Account findAccountByUserId(Integer id) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        Account account = null;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ACCOUNT_BY_USER_ID_FROM_USER);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                account = new Account();
+                account.setId(resultSet.getInt("account_id"));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Find account exception: ", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return account;
+    }
 }

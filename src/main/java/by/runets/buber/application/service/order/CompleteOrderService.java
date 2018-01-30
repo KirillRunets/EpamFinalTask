@@ -9,7 +9,6 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 public class CompleteOrderService {
     public boolean complete(Integer orderId) throws ServiceException {
         boolean state = false;
-
         try {
             OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
             state = orderDAO.completeOrder(orderId);

@@ -76,6 +76,9 @@ public class Order extends Entity{
     public boolean isPaid() {
         return isPaid;
     }
+    public boolean getPaid() {
+        return isPaid;
+    }
     public void setPaid(boolean paid) {
         isPaid = paid;
     }

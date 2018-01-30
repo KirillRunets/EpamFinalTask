@@ -3,6 +3,7 @@ package by.runets.buber.presentation.command.impl.user;
 import by.runets.buber.application.service.user.ReadUserService;
 import by.runets.buber.application.service.user.UpdateUserService;
 import by.runets.buber.application.validation.RequestValidator;
+import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
@@ -43,11 +44,9 @@ public class UpdateUserCommand implements Command {
             User user = init(req, sessionUser);
             if (user != null){
                 isAdmin = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN);
-                if (!updateUserService.update(user)){
-                    req.getSession().setAttribute("errorUpdate", "Something went wrong, please try again.");
-                }
+                updateUserService.update(user);
+                page = isAdmin ? switchPageByAdmin(user, req) : switchPageByUser(user, req);
             }
-            page = isAdmin ? switchPageByAdmin(user, req) : switchPageByUser(user, req);
         } catch (ServiceException | ParseException e) {
             LOGGER.error(e);
         }
@@ -98,7 +97,20 @@ public class UpdateUserCommand implements Command {
         if (RequestValidator.getInstance().isValidateDriverData(id, email, firstName, secondName, birthDate, phoneNumber, rating, tripAmount, role)) {
             switch (sessionUser.getRole().getRoleName().toUpperCase()){
                 case UserRoleType.ADMIN:
-                    user = new User(Integer.parseInt(id), email, firstName, secondName, new SimpleDateFormat(NumberFormatLocaleFactory.factory(locale)).parse(birthDate), Double.parseDouble(rating), Integer.parseInt(tripAmount), phoneNumber, new Role(role));
+                    User editedUser = (User) req.getSession().getAttribute(RequestParameter.USER);
+                    user = new User();
+                    user.setId(Integer.parseInt(id));
+                    user.setEmail(email);
+                    user.setFirstName(firstName);
+                    user.setSecondName(secondName);
+                    user.setBirthDate(new SimpleDateFormat(NumberFormatLocaleFactory.factory(locale)).parse(birthDate));
+                    user.setRating(Double.parseDouble(rating));
+                    user.setTripAmount(Integer.parseInt(tripAmount));
+                    user.setPhoneNumber(phoneNumber);
+                    user.setRole(new Role(role));
+                    if (editedUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER)){
+                        user.setCar(editedUser.getCar());
+                    }
                     break;
                 case UserRoleType.DRIVER:
                 case UserRoleType.PASSENGER:

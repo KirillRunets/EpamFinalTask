@@ -12,7 +12,7 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StatisticService {
+public class OrderStatisticService {
     public List<Integer> collectStats(Integer id, String role) throws ServiceException {
         List<Integer> stats = new LinkedList<>();
 

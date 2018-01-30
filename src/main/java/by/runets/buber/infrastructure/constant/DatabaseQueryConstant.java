@@ -5,6 +5,10 @@ public class DatabaseQueryConstant {
     //Account
     public final static String SELECT_PAY_AMOUNT_FROM_ACCOUNT = "SELECT account_amount FROM account WHERE account_id=?";
     public final static String UPDATE_ACCOUNT = "UPDATE account SET account_amount=? WHERE account_id=?";
+    public final static String COMMIT_TO_TRANSACTION_STORY = "INSERT INTO transaction_story(from_account, to_account, amount, transaction_date) VALUES(?,?,?,?)";
+    public final static String FIND_ACCOUNT_BY_USER_ID_FROM_USER = "SELECT account_id FROM user WHERE id=?";
+    public final static String FIND_ACCOUNT_BY_USER_ID_FROM_ACCOUNT = "SELECT account_id, account_amount FROM account WHERE account_id=?";
+    public final static String CREATE_NEW_ACCOUNT = "INSERT INTO account(account_amount) VALUES(10000);";
     //user
     public final static String SET_BAN_TO_USER = "UPDATE user SET ban=?, unban_date=?  WHERE id=?";
     public final static String FIND_ALL_USERS = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
@@ -29,7 +33,7 @@ public class DatabaseQueryConstant {
     public final static String FIND_EMAIL_EXIST = "SELECT email FROM user WHERE email=?";
     public final static String DELETE_USER_BY_ID = "DELETE FROM user WHERE id=?";
     public final static String UPDATE_USER_BY_ID = "UPDATE user SET email=?, first_name=?, second_name=?, birth_date=?, ban=?, unban_date=?, phone_number=?, rating=?, bonus=?, trip_amount=? WHERE id=?";
-    public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    public final static String INSERT_INTO_USER = "INSERT INTO user(email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, account_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
     public final static String FIND_BANNED_USERS = "SELECT id, email, password, first_name, second_name, ban, unban_date, birth_date, phone_number, rating, trip_amount, bonus, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +
@@ -43,12 +47,12 @@ public class DatabaseQueryConstant {
     public final static String INSERT_INTO_CAR = "INSERT INTO car(mark, model, release_date, license_plate, car_owner, current_location) VALUES(?,?,?,?,?,?)";
     public final static String UPDATE_CAR_BY_ID = "UPDATE car SET mark=?, model=?, release_date=?, license_plate=?, car_owner=?, current_location=? WHERE id=?";
     //order
-    public final static String FIND_ALL_ORDERS = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id, isConfirmed, isCompleted FROM `order` WHERE isCompleted=1";
-    public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating, isConfirmed, isCompleted, isConfirmed, isCompleted FROM `order`\n" +
+    public final static String FIND_ALL_ORDERS = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id, isConfirmed, isCompleted, isPaid FROM `order` WHERE isCompleted=1";
+    public final static String FIND_ORDER_BY_PASSENGER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating, isConfirmed, isCompleted, isPaid FROM `order`\n" +
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.driver_id " +
             "WHERE passenger_id=? AND isCompleted=1";
-    public final static String FIND_ORDER_BY_DRIVER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating, isConfirmed, isCompleted  FROM `order`\n" +
+    public final static String FIND_ORDER_BY_DRIVER_ID = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, first_name, second_name, email, birth_date, trip_amount, phone_number, rating, isConfirmed, isCompleted, isPaid  FROM `order`\n" +
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.passenger_id\n" +
             "WHERE driver_id=? AND isCompleted=1;";
@@ -56,13 +60,18 @@ public class DatabaseQueryConstant {
     public final static String INSERT_INTO_ORDER = "INSERT INTO `order`(distance, trip_cost, departure_point, destination_point, date, driver_id, passenger_id, trip_time) VALUES(?,?,?,?,?,?,?,?)";
     public final static String UPDATE_ORDER_BY_ID = "UPDATE `order` SET distance=?, trip_cost=?, departure_point=?, destination_point=?, date=?, driver_id=?, passenger_id=?, trip_time=? WHERE t_id=?";
     public final static String CONFIRM_ORDER_BY_DRIVER = "UPDATE `order` SET isConfirmed=1 WHERE t_id=?";
-    public final static String IS_EXIST_ORDER_FOR_DRIVER = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, isConfirmed, isCompleted,first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
+    public final static String IS_EXIST_ORDER_FOR_DRIVER = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, isConfirmed, isCompleted, isPaid, first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
             "INNER JOIN user AS u\n" +
             "ON u.id = `order`.passenger_id\n" +
             "WHERE driver_id=? AND isCompleted=0";
+    public final static String IS_EXIST_ORDER_FOR_PASSENGER = "SELECT t_id, distance, trip_cost, departure_point, destination_point, date, passenger_id, driver_id, isConfirmed, isCompleted, isPaid, first_name, second_name, email, birth_date, trip_amount, phone_number, rating FROM `order`\n" +
+            "INNER JOIN user AS u\n" +
+            "ON u.id = `order`.driver_id\n" +
+            "WHERE passenger_id=? AND isCompleted=0";
     public final static String REVOKE_ORDER_BY_DRIVER = "UPDATE `order` SET driver_id=? WHERE driver_id=? AND t_id=?";
     public final static String REVOKE_ORDER_BY_PASSENGER = "DELETE FROM `order` WHERE passenger_id=? AND t_id=? AND isConfirmed=0 AND isCompleted=0";
     public final static String COMPLETE_ORDER = "UPDATE `order` SET isCompleted=1 WHERE t_id=?";
+    public final static String SET_ORDER_IS_PAID = "UPDATE `order` SET isPaid=1 WHERE t_id=?";
     //ban
     public final static String FIND_ALL_BANS = "SELECT b_id, b_name, b_description FROM ban_reason";
     public final static String FIND_BAN_BY_ID = "SELECT b_id, b_name, b_description FROM ban_reason WHERE b_id=?";

@@ -80,6 +80,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <h1><fmt:message key="label.car_profile" bundle="${rb}"/></h1>
                                 <input type="hidden" name="command" id="car_command_id" value="">
                                 <input type="hidden" name="car_id" value="${sessionScope.USER.car.id}">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -92,12 +93,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="line">
-                                        <td>${sessionScope.USER.car.mark}</td>
-                                        <td>${sessionScope.USER.car.model}</td>
-                                        <td><fmt:formatDate value="${sessionScope.USER.car.releaseDate}" /></td>
-                                        <td>${sessionScope.USER.car.licensePlate}</td>
-                                    </tr>
+                                        <tr class="line">
+                                            <td>${sessionScope.USER.car.mark}</td>
+                                            <td>${sessionScope.USER.car.model}</td>
+                                            <td><fmt:formatDate value="${sessionScope.USER.car.releaseDate}" /></td>
+                                            <td>${sessionScope.USER.car.licensePlate}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <div class="button-container">
@@ -115,8 +116,6 @@
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>
-<script src="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery.mask.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>

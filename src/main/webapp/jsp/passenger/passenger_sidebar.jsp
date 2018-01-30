@@ -21,7 +21,7 @@
                         <i class="fa fa-user fa-lg"></i> <fmt:message key="label.profile" bundle="${rb}"/>
                     </a>
                 </li>
-                <li onClick="window.location='${pageContext.request.contextPath}/jsp/passenger/order.jsp'">
+                <li onClick="window.location='${pageContext.request.contextPath}/jsp/passenger/passenger_order_story.jsp'">
                     <a href="#">
                         <a href="#"><i class="fa fa-globe fa-lg"></i> <fmt:message key="label.orders" bundle="${rb}"/></a>
                     </a>

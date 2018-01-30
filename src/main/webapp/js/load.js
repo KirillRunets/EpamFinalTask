@@ -1,7 +1,7 @@
 var selectedRowId = null;
+
 $(document).ready(function() {
     $(".line").click(function(event){
-        console.log("click");
         var id = $(this).attr('id');
         var doc = document.getElementById(selectedRowId);
         if (doc){
@@ -28,8 +28,11 @@ $(document).ready(function() {
 });
 
 function redirectPage(uri) {
+    console.log(uri);
     window.location.href = uri;
 }
+
+
 
 function deleteCommand(type) {
     switch (type){
@@ -58,6 +61,11 @@ function banCommand() {
 function loadCommand(type) {
     switch (type){
         case 'order':
+            document.getElementById('command_id').value = 'make_order';
+            document.getElementById('driver_id').value = selectedRowId;
+            break;
+        case 'payOrder':
+            document.getElementById('command_id').value = 'pay_order';
             document.getElementById('driver_id').value = selectedRowId;
             break;
         case "car":
@@ -87,12 +95,10 @@ function loadCommand(type) {
             document.getElementById('driver_order_id').value = 'complete_order';
             submitForm('orderForm');
             break;
+        case 'rate':
+            break;
     }
 
-}
-
-function getSelectedRowId() {
-    return selectedRowId;
 }
 
 function submitForm(id) {

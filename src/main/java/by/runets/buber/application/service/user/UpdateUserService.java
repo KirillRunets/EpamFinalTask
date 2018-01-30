@@ -16,23 +16,20 @@ public class UpdateUserService {
         boolean isUpdated = false;
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-
-            switch (user.getRole().getRoleName().toUpperCase()){
+            /*switch (user.getRole().getRoleName().toUpperCase()){
                 case UserRoleType.DRIVER:
                     updateDriverBusinessTool(user);
                     break;
                 case UserRoleType.PASSENGER:
                     updatePassengerBusinessTool(user);
                     break;
-            }
+            }*/
             isUpdated = userDAO.update(user);
-
         } catch (DAOException e) {
-            throw new ServiceException("Update user exception " , e);
+            throw new ServiceException("Update user service exception", e);
         }
         return isUpdated;
     }
-
 
 
     private void changeUserRole(User user) throws DAOException {
@@ -42,13 +39,12 @@ public class UpdateUserService {
 
     private void updateDriverBusinessTool(User user) throws DAOException {
         AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
-        if (user.getCar() != null){
+        if (user.getCar() != null) {
             carDAO.update(user.getCar());
         }
     }
 
-    private void updatePassengerBusinessTool(User user){
-
+    private void updatePassengerBusinessTool(User user) {
     }
 }
 

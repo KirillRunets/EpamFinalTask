@@ -1,11 +1,8 @@
 package by.runets.buber.application.filter;
 
-import by.runets.buber.application.service.order.OrderExistService;
-import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.UserRoleType;
-import by.runets.buber.infrastructure.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,16 +30,24 @@ public class HomePageFilter implements Filter {
         if (session != null) {
             User user = (User) session.getAttribute(UserRoleType.USER);
             if (user != null){
-                LOGGER.debug("Filter work");
                 switch (user.getRole().getRoleName().toUpperCase()){
                     case UserRoleType.ADMIN:
+                        res.sendRedirect(JspPagePath.ADMIN_HOME_PAGE);
+/*
                         req.getRequestDispatcher(JspPagePath.ADMIN_HOME_PAGE).forward(req, res);
+*/
                         break;
                     case UserRoleType.DRIVER:
+                        res.sendRedirect(JspPagePath.DRIVER_HOME_PAGE);
+/*
                         req.getRequestDispatcher(JspPagePath.DRIVER_HOME_PAGE).forward(req, res);
+*/
                         break;
                     case UserRoleType.PASSENGER:
+                        res.sendRedirect(JspPagePath.PASSENGER_HOME_PAGE);
+/*
                         req.getRequestDispatcher(JspPagePath.PASSENGER_HOME_PAGE).forward(req, res);
+*/
                         break;
                 }
             } else {

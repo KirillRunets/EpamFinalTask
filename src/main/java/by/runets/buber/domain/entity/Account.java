@@ -3,6 +3,9 @@ package by.runets.buber.domain.entity;
 public class Account extends Entity {
     private double accountAmount;
 
+    public Account() {
+    }
+
     public Account(int id) {
         super(id);
     }

@@ -535,7 +535,7 @@ p[id="email"]{
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 }
 
@@ -584,3 +584,19 @@ p[id="email"]{
     color: #bab8b8;;
 }
 
+.noneTD{
+    display: none;
+}
+
+.star-rating {
+    line-height:32px;
+    font-size:1.25em;
+    cursor: pointer;
+}
+
+.static-rating{
+    line-height:32px;
+    font-size:1.25em;
+}
+.star-rating .fa-star{color: yellow;}
+.static-rating .fa-star{color: yellow;}

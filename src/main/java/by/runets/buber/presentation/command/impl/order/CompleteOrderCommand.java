@@ -1,10 +1,12 @@
 package by.runets.buber.presentation.command.impl.order;
 
 import by.runets.buber.application.service.order.CompleteOrderService;
+import by.runets.buber.application.service.user.UpdateUserService;
 import by.runets.buber.domain.entity.Order;
-import by.runets.buber.infrastructure.constant.JspPagePath;
-import by.runets.buber.infrastructure.constant.RequestParameter;
+import by.runets.buber.domain.entity.User;
+import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.ServiceException;
+import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -26,12 +28,21 @@ public class CompleteOrderCommand implements Command {
         Router router = new Router();
         String page = null;
         boolean state = false;
+
         Order order = (Order) req.getSession().getAttribute(RequestParameter.NEW_ORDER);
+        User sessionUser = (User) req.getSession().getAttribute(UserRoleType.USER);
 
         try {
             state = completeOrderService.complete(order.getId());
             if (state){
                 order.setCompleted(true);
+
+                sessionUser.getOrderSet().add(order);
+                sessionUser.setTripAmount(sessionUser.getOrderSet().size());
+
+                req.getSession().setAttribute(UserRoleType.USER, sessionUser);
+                req.getSession().setAttribute(LabelParameter.COMPLETED, true);
+
                 page = JspPagePath.DRIVER_HOME_PAGE;
             }
         } catch (ServiceException e) {

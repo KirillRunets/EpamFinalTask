@@ -4,6 +4,7 @@ import by.runets.buber.application.service.order.ConfirmOrderService;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
@@ -28,6 +29,7 @@ public class ConfirmOrderCommand implements Command{
         Router router = new Router();
         String page = null;
         Order order = (Order) req.getSession().getAttribute(RequestParameter.NEW_ORDER);
+        User user = (User) req.getSession().getAttribute(UserRoleType.USER);
         boolean state = false;
         try {
             order.setConfirmed(true);

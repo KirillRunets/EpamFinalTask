@@ -73,4 +73,8 @@ public class RequestValidator {
         return isStringEqualsPattern(driverId, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
 
+    public boolean isValidatePayData(Double amount){
+        return amount != null && amount > 0;
+
+    }
 }

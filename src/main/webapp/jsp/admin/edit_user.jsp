@@ -95,12 +95,10 @@
                         key="label.ratingPlaceHolder" bundle="${rb}"/>>
             </c:if>
             <c:if test="${empty sessionScope.user.rating}">
-                <input name="rating" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message
-                        key="label.ratingPlaceHolder" bundle="${rb}"/>>
+                <input name="rating" value="<fmt:message key="label.empty"  bundle="${rb}"/>" type="text" required placeholder=<fmt:message key="label.ratingPlaceHolder" bundle="${rb}"/>>
             </c:if>
 
             <label><fmt:message key="label.tripAmount" bundle="${rb}"/> </label>
-
             <c:if test="${not empty sessionScope.user.tripAmount}">
                 <input name="tripAmount" value="${sessionScope.user.tripAmount}" type="text" required placeholder=<fmt:message
                         key="label.tripAmountPlaceHolder" bundle="${rb}"/>>

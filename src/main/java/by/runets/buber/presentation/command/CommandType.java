@@ -8,7 +8,8 @@ import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
 import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.application.service.order.*;
-import by.runets.buber.application.service.statistic.StatisticService;
+import by.runets.buber.application.service.statistic.OrderStatisticService;
+import by.runets.buber.application.service.statistic.RatingStatisticService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
@@ -23,7 +24,7 @@ import by.runets.buber.presentation.command.impl.order.*;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
-    LOGIN(new LoginCommand(new LoginUserService(), new StatisticService())),
+    LOGIN(new LoginCommand(new LoginUserService(), new OrderStatisticService())),
     SIGNUP(new SignUpCommand(new RegisterUserService())),
     LOAD_SIGN_UP_PAGE(new LoadSignUpPageCommand()),
     CHANGE_LOCALE(new ChangeLocaleCommand()),
@@ -50,7 +51,8 @@ public enum CommandType {
     CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService())),
     REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
     COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService())),
-    PAY_ORDER_COMMAND(new PayOrderCommand(new PayOrderService()));
+    PAY_ORDER(new PayOrderCommand(new PayOrderService())),
+    RATE_USER(new RateUserCommand(new RatingStatisticService()));
 
     private Command command;
 

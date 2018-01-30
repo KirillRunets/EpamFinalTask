@@ -41,9 +41,7 @@
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-table"></i> Data Table Example
-                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <form name="driverListForm" action="${pageContext.request.contextPath}/controller"

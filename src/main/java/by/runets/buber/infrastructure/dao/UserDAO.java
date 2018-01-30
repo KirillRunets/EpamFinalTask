@@ -1,5 +1,6 @@
 package by.runets.buber.infrastructure.dao;
 
+import by.runets.buber.domain.entity.Account;
 import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.exception.DAOException;
@@ -13,4 +14,5 @@ public interface UserDAO extends AbstractDAO<Integer, User> {
     List<User> readBannedUsers() throws DAOException;
     int changePassword(String newPassword, int id) throws DAOException;
     String findPassword(int id) throws DAOException;
+    Account findAccountByUserId(Integer id) throws DAOException;
 }

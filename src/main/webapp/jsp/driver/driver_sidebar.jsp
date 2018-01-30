@@ -14,6 +14,9 @@
     <div class="menu-list">
         <ul id="menu-content" class="menu-content collapse out">
             <li onClick="window.location='${pageContext.request.contextPath}/jsp/driver/driver_home.jsp'">
+                <a href="#"><i class="fa fa-globe fa-lg"></i> <fmt:message key="label.home" bundle="${rb}"/></a>
+            </li>
+            <li onClick="window.location='${pageContext.request.contextPath}/jsp/driver/driver_order_story.jsp'">
                 <a href="#"><i class="fa fa-globe fa-lg"></i> <fmt:message key="label.orders" bundle="${rb}"/></a>
             </li>
             <li onClick="window.location='${pageContext.request.contextPath}/jsp/driver/driver_profile.jsp'">

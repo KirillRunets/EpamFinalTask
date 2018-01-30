@@ -22,6 +22,7 @@ public class RequestParameter {
     public final static String BAN_DESCRIPTION = "banDescription";
     public final static String USER_ROLE = "user_role";
     public final static String USER = "user";
+    public final static String CAR = "car";
     public final static String BAN_ID = "ban_id";
     public final static String CAR_ID = "car_id";
     public final static String CAR_OWNER = "car_owner";

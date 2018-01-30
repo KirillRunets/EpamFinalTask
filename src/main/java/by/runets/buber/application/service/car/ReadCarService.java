@@ -10,6 +10,7 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,34 +43,15 @@ public class ReadCarService {
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             AbstractDAO carDAO = DAOFactory.getInstance().createDAO(DAOType.CAR_DAO_TYPE);
+
             userList = userDAO.findAll();
             carList = carDAO.findAll();
+
             joinUserToCar(userList, carList);
         } catch (DAOException e) {
             throw new ServiceException("Find valid cars exception ", e);
         }
         return filterValidCar(carList);
-    }
-
-    private void joinUserToCar(List<User> userList, List<Car> carList) {
-        userList.forEach(user -> {
-            carList.stream()
-                    .filter(car -> car.getCarOwner().getId() == user.getId())
-                    .forEach(car -> car.setCarOwner(user));
-        });
-    }
-
-    private List<Car> filterValidCar(List<Car> carList) {
-        return carList.stream()
-                .filter(car -> car.getCarOwner().getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN))
-                .collect(Collectors.toList());
-    }
-
-    private Car getCarFromList(List<Car> cars, int id) {
-        return cars.stream()
-                .filter(car -> car.getId() == id)
-                .findFirst()
-                .get();
     }
 
     public Car findCarById(int id) throws ServiceException {
@@ -82,4 +64,28 @@ public class ReadCarService {
         }
         return getCarFromList(cars, id);
     }
+
+    private void joinUserToCar(List<User> userList, List<Car> carList) {
+        userList.forEach(user -> {
+            carList.stream()
+                    .filter(car -> car.getCarOwner().getId() == user.getId())
+                    .forEach(car -> car.setCarOwner(user));
+        });
+    }
+
+    private List<Car> filterValidCar(List<Car> carList) {
+        carList = carList.stream()
+                .filter(car -> car.getCarOwner().getRole().getRoleName().equalsIgnoreCase(UserRoleType.ADMIN))
+                .collect(Collectors.toList());
+        carList.sort(Comparator.comparing(Car::getMark).thenComparing(Car::getModel));
+        return carList;
+    }
+
+    private Car getCarFromList(List<Car> cars, int id) {
+        return cars.stream()
+                .filter(car -> car.getId() == id)
+                .findFirst()
+                .get();
+    }
+
 }

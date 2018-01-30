@@ -16,6 +16,6 @@ public class CalculateOrderDataService {
     }
 
     public Double calculateCost(Double distance, Double time){
-        return OrderConstant.CYLOMETER_PRICE * distance + OrderConstant.MINUTE_PRICE * time;
+        return OrderConstant.CYLOMETER_PRICE * distance + OrderConstant.MINUTE_PRICE * time / 60;
     }
 }

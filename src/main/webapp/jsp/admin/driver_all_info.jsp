@@ -75,7 +75,7 @@
                                         <td>${driver.rating}</td>
                                         <td>${driver.tripAmount}</td>
                                         <c:if test="${not empty driver.car.mark}">
-                                            <td>${driver.car.mark}</td>
+                                            <td>${driver.car.mark} ${driver.car.model} ${driver.car.releaseDate} ${driver.car.licensePlate}</td>
                                         </c:if>
                                         <c:if test="${empty driver.car.mark}">
                                             <td><fmt:message key="label.emptyCar" bundle="${rb}"/></td>

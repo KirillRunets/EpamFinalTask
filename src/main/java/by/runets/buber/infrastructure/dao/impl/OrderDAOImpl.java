@@ -110,7 +110,7 @@ public class OrderDAOImpl implements OrderDAO {
         preparedStatement.setDouble(2, order.getTripCost());
         preparedStatement.setString(3, order.getStartPoint().toString());
         preparedStatement.setString(4, order.getDestinationPoint().toString());
-        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
+        preparedStatement.setTimestamp(5, new Timestamp(order.getOrderDate().getTime()));
         preparedStatement.setInt(6, order.getDriver().getId());
         preparedStatement.setInt(7, order.getPassenger().getId());
         preparedStatement.setDouble(8, order.getTripTime());
@@ -138,7 +138,7 @@ public class OrderDAOImpl implements OrderDAO {
         preparedStatement.setDouble(2, order.getTripCost());
         preparedStatement.setString(3, order.getStartPoint().toString());
         preparedStatement.setString(4, order.getDestinationPoint().toString());
-        preparedStatement.setDate(5, new Date(order.getOrderDate().getTime()));
+        preparedStatement.setTimestamp(5, new Timestamp(order.getOrderDate().getTime()));
         preparedStatement.setInt(6, order.getDriver().getId());
         preparedStatement.setInt(7, order.getPassenger().getId());
         preparedStatement.setDouble(8, order.getTripTime());
@@ -156,12 +156,12 @@ public class OrderDAOImpl implements OrderDAO {
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
         order.setDestinationPoint(new Point(coordinates.get(0), coordinates.get(1)));
-        order.setOrderDate(resultSet.getDate("date"));
+        order.setOrderDate(resultSet.getTimestamp("date"));
         order.setDriver(new User(resultSet.getInt("driver_id")));
         order.setPassenger(new User(resultSet.getInt("passenger_id")));
         order.setConfirmed(resultSet.getBoolean("isConfirmed"));
         order.setCompleted(resultSet.getBoolean("isCompleted"));
-        order.setPaid(true);
+        order.setPaid(resultSet.getBoolean("isPaid"));
         return order;
     }
 
@@ -176,20 +176,20 @@ public class OrderDAOImpl implements OrderDAO {
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
         order.setDestinationPoint(new Point(coordinates.get(0), coordinates.get(1)));
-        order.setOrderDate(resultSet.getDate("date"));
+        order.setOrderDate(resultSet.getTimestamp("date"));
         order.setDriver(new User(resultSet.getInt("driver_id")));
         order.setPassenger(new User(resultSet.getInt("passenger_id"),
                 resultSet.getString("email"),
                 resultSet.getString("first_name"),
                 resultSet.getString("second_name"),
-                resultSet.getDate("birth_date"),
+                resultSet.getTimestamp("birth_date"),
                 resultSet.getDouble("rating"),
                 resultSet.getInt("trip_amount"),
                 resultSet.getString("phone_number"),
                 new Role(UserRoleType.DRIVER)));
         order.setConfirmed(resultSet.getBoolean("isConfirmed"));
         order.setCompleted(resultSet.getBoolean("isCompleted"));
-        order.setPaid(true);
+        order.setPaid(resultSet.getBoolean("isPaid"));
         return order;
     }
 
@@ -204,12 +204,12 @@ public class OrderDAOImpl implements OrderDAO {
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
         order.setDestinationPoint(new Point(coordinates.get(0), coordinates.get(1)));
-        order.setOrderDate(resultSet.getDate("date"));
+        order.setOrderDate(resultSet.getTimestamp("date"));
         order.setDriver(new User(resultSet.getInt("driver_id"),
                 resultSet.getString("email"),
                 resultSet.getString("first_name"),
                 resultSet.getString("second_name"),
-                resultSet.getDate("birth_date"),
+                resultSet.getTimestamp("birth_date"),
                 resultSet.getDouble("rating"),
                 resultSet.getInt("trip_amount"),
                 resultSet.getString("phone_number"),
@@ -217,7 +217,7 @@ public class OrderDAOImpl implements OrderDAO {
         order.setPassenger(new User(resultSet.getInt("passenger_id")));
         order.setConfirmed(resultSet.getBoolean("isConfirmed"));
         order.setCompleted(resultSet.getBoolean("isCompleted"));
-        order.setPaid(true);
+        order.setPaid(resultSet.getBoolean("isPaid"));
         return order;
     }
 
@@ -289,19 +289,19 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order isExistOrderForDriver(User driver) throws DAOException {
+    public Order isExistOrderForUser(User driver, String query) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         Order order = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.IS_EXIST_ORDER_FOR_DRIVER);
+            preparedStatement = proxyConnection.prepareStatement(query);
             preparedStatement.setInt(1, driver.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 order = getOrderFromDriverResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DAOException("Is exist order for driver exception", e);
+            throw new DAOException("Is exist order for user exception", e);
         } finally {
             close(preparedStatement, proxyConnection);
         }
@@ -362,4 +362,20 @@ public class OrderDAOImpl implements OrderDAO {
         return state;
     }
 
+    @Override
+    public boolean setOrderIsPaid(Integer orderId) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        boolean state = false;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SET_ORDER_IS_PAID);
+            preparedStatement.setInt(1, orderId);
+            state = preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new DAOException("Set order is paid exception", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return state;
+    }
 }

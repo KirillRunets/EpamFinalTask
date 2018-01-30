@@ -71,6 +71,7 @@ public class MakeOrderCommand implements Command {
             order.setOrderDate(new Date());
             order.setStartPoint(sessionUser.getCurrentLocation());
             order.setDestinationPoint(destinationPoint);
+            order.setPaid(false);
         }
 
         return order;

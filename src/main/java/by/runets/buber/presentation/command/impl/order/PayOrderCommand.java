@@ -1,7 +1,10 @@
 package by.runets.buber.presentation.command.impl.order;
 
 import by.runets.buber.application.service.order.PayOrderService;
+import by.runets.buber.application.service.user.UpdateUserService;
+import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Account;
+import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.LabelParameter;
@@ -29,17 +32,17 @@ public class PayOrderCommand implements Command {
         Router router = new Router();
         String page = null;
 
+        Order order = (Order) req.getSession().getAttribute(RequestParameter.NEW_ORDER);
+
         User fromUser = (User) req.getSession().getAttribute(UserRoleType.USER);
-        String accountId = req.getParameter(RequestParameter.TO_ACCOUNT_ID);
+        User toUser = order.getDriver();
 
-        Account fromAccount = fromUser.getAccount();
-        Account toAccount = new Account(new Integer(accountId));
-        Double amount = (Double) req.getSession().getAttribute(LabelParameter.TRIP_COST_LABEL);
-
+        Double amount = order.getTripCost();
         try {
-            payOrderService.payOrder(fromAccount, toAccount, amount);
-            req.getSession().setAttribute(LabelParameter.IS_PAID, true);
-            page = JspPagePath.PASSENGER_HOME_PAGE;
+            if (RequestValidator.getInstance().isValidatePayData(amount)){
+                payOrderService.payOrder(fromUser, toUser, amount, order);
+                page = JspPagePath.PASSENGER_HOME_PAGE;
+            }
         } catch (ServiceException e) {
             LOGGER.error(e);
         }

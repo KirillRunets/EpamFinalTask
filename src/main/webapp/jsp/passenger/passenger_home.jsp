@@ -26,7 +26,7 @@
             <a class="navbar-brand" href="#">Buber</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><fmt:message key="label.drivers" bundle="${rb}"/></a></li>
+            <li class="active"><a href="#"><fmt:message key="label.home" bundle="${rb}"/></a></li>
         </ul>
 
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
@@ -50,13 +50,24 @@
                     <tr>
                         <th><fmt:message key="label.tripAmount" bundle="${rb}"/></th>
                         <th><fmt:message key="label.rating" bundle="${rb}"/></th>
+                        <th><fmt:message key="label.accountAmount" bundle="${rb}"/></th>
                     </tr>
                     <tr>
                         <td>
                             <i class="fa fa-tachometer" aria-hidden="true"></i> ${sessionScope.USER.tripAmount}
                         </td>
                         <td>
-                            <p>${sessionScope.USER.rating}</p>
+                            <div class="static-rating">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.USER.rating}">
+                            </div>
+                        </td>
+                        <td>
+                            <p>${sessionScope.USER.account.accountAmount}</p>
                         </td>
                         <td>
                             <button class="button button-small" id="modal-button"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
@@ -80,13 +91,6 @@
         <c:import url="${pageContext.request.contextPath}/jsp/passenger/location_modal.jsp"/>
     </div>
 </div>
-<c:if test="${sessionScope.newOrder.confirmed == 'true'}">
-    <div class="static-modal">
-        <div class="modal-content">
-            <p><fmt:message key="label.confirmed" bundle="${rb}" /></p>
-        </div>
-    </div>
-</c:if>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
@@ -95,5 +99,6 @@
 <script src="${pageContext.request.contextPath}/js/chart.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
 <script src="${pageContext.request.contextPath}/js/modal.js"></script>
+<script src="${pageContext.request.contextPath}/js/rating.js"></script>
 </body>
 </html>

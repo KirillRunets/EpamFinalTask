@@ -1,13 +1,12 @@
 package by.runets.buber.application.service.join;
 
-import by.runets.buber.domain.entity.Ban;
-import by.runets.buber.domain.entity.Car;
-import by.runets.buber.domain.entity.Order;
-import by.runets.buber.domain.entity.User;
+import by.runets.buber.domain.entity.*;
 import by.runets.buber.infrastructure.constant.DAOType;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
+import by.runets.buber.infrastructure.dao.AccountTransactionDAO;
 import by.runets.buber.infrastructure.dao.OrderDAO;
+import by.runets.buber.infrastructure.dao.UserDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
@@ -20,6 +19,7 @@ public class JoinService {
     private final static int NULL = 0;
     public void join(User user) throws ServiceException {
         joinBanToUser(user);
+        joinAccountToUser(user);
         switch (user.getRole().getRoleName().toUpperCase()){
             case UserRoleType.DRIVER:
                 joinOrderToDriver(user);
@@ -76,6 +76,20 @@ public class JoinService {
                     .forEach(driver::setCar);
         } catch (DAOException e) {
             throw new ServiceException("Join car to driver exception", e);
+        }
+    }
+
+    private void joinAccountToUser(User user) throws ServiceException {
+        try {
+            UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
+            AccountTransactionDAO accountTransactionDAO = (AccountTransactionDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
+
+            Account account = userDAO.findAccountByUserId(user.getId());
+            account = accountTransactionDAO.find(account.getId());
+
+            user.setAccount(account);
+        } catch (DAOException e) {
+            throw new ServiceException("Join account to user service", e);
         }
     }
 
