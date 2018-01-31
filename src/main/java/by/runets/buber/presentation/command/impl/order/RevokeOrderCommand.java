@@ -34,14 +34,10 @@ public class RevokeOrderCommand implements Command {
         try {
             state = revokeOrderService.revoke(user.getRole().getRoleName(), user.getId(), order.getId());
             if (state){
-                /*page = user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)
-                        ? JspPagePath.PASSENGER_HOME_PAGE
-                        : JspPagePath.DRIVER_HOME_PAGE;*/
                 if (user.getRole().getRoleName().equalsIgnoreCase(UserRoleType.PASSENGER)){
                     req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
                     page = JspPagePath.PASSENGER_HOME_PAGE;
                 } else {
-                    req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
                     order.setDriver(new User());
                     req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
                     page = JspPagePath.DRIVER_HOME_PAGE;

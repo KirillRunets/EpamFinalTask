@@ -8,14 +8,16 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
 public class RevokeBanService {
-    public void revokeBan(User user) throws ServiceException {
+    public boolean revokeBan(User user) throws ServiceException {
+        boolean isRevoked = false;
         if (user != null) {
             try {
                 UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-                userDAO.setBanToUser(user);
+                isRevoked = userDAO.setBanToUser(user);
             } catch (DAOException e) {
                 throw new ServiceException("Revoke ban service exception ", e);
             }
         }
+        return isRevoked;
     }
 }

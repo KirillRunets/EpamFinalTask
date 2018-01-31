@@ -4,7 +4,6 @@ import by.runets.buber.application.service.account.CreateAccountService;
 import by.runets.buber.domain.entity.Account;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.DAOType;
-import by.runets.buber.infrastructure.dao.AccountTransactionDAO;
 import by.runets.buber.infrastructure.dao.UserDAO;
 import by.runets.buber.infrastructure.dao.UserRoleDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;

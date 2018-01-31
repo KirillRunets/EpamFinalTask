@@ -65,13 +65,11 @@
                                 <span class="fa fa-star-o" data-rating="3"></span>
                                 <span class="fa fa-star-o" data-rating="4"></span>
                                 <span class="fa fa-star-o" data-rating="5"></span>
-                                <input type="hidden" name="whatever1" class="rating-value"
-                                       value="${sessionScope.USER.rating}">
+                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.USER.rating}">
                             </div>
                         </td>
                         <td>
-                            <p>${sessionScope.USER.account.accountAmount} <fmt:message key="label.systemСost"
-                                                                                       bundle="${rb}"/></p>
+                            <p>${sessionScope.USER.account.accountAmount} <fmt:message key="label.systemСost" bundle="${rb}"/></p>
                         </td>
                     </tr>
                 </table>
@@ -124,8 +122,7 @@
                                 <span class="fa fa-star-o" data-rating="3"></span>
                                 <span class="fa fa-star-o" data-rating="4"></span>
                                 <span class="fa fa-star-o" data-rating="5"></span>
-                                <input type="hidden" name="whatever1" class="rating-value"
-                                       value="${sessionScope.newOrder.passenger.rating}">
+                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.newOrder.passenger.rating}">
                             </div>
                         </td>
                     </tr>

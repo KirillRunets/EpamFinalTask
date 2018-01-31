@@ -4,7 +4,7 @@ import by.runets.buber.domain.entity.*;
 import by.runets.buber.infrastructure.constant.DAOType;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
-import by.runets.buber.infrastructure.dao.AccountTransactionDAO;
+import by.runets.buber.infrastructure.dao.AccountDAO;
 import by.runets.buber.infrastructure.dao.OrderDAO;
 import by.runets.buber.infrastructure.dao.UserDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
@@ -82,15 +82,31 @@ public class JoinService {
     private void joinAccountToUser(User user) throws ServiceException {
         try {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
-            AccountTransactionDAO accountTransactionDAO = (AccountTransactionDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
+            AccountDAO accountDAO = (AccountDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
 
             Account account = userDAO.findAccountByUserId(user.getId());
-            account = accountTransactionDAO.find(account.getId());
+            account = accountDAO.find(account.getId());
 
             user.setAccount(account);
         } catch (DAOException e) {
             throw new ServiceException("Join account to user service", e);
         }
+    }
+
+    public void joinDriverToOrder(List<User> users, List<Order> orders){
+        users.forEach(user -> {
+                    orders.stream()
+                            .filter(order -> order.getDriver().getId() == user.getId())
+                            .forEach(order -> order.setDriver(user));
+                });
+    }
+
+    public void joinPassengerToOrder(List<User> users, List<Order> orders){
+        users.forEach(user -> {
+                    orders.stream()
+                            .filter(order -> order.getPassenger().getId() == user.getId())
+                            .forEach(order -> order.setPassenger(user));
+                });
     }
 
     public List<User> collectUserByRole(List<User> userList, String role){

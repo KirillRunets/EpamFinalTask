@@ -22,10 +22,8 @@ public class RequestParameter {
     public final static String BAN_DESCRIPTION = "banDescription";
     public final static String USER_ROLE = "user_role";
     public final static String USER = "user";
-    public final static String CAR = "car";
     public final static String BAN_ID = "ban_id";
     public final static String CAR_ID = "car_id";
-    public final static String CAR_OWNER = "car_owner";
     public final static String MARK = "mark";
     public final static String MODEL = "model";
     public final static String MARK_MODEL = "mark_model";
@@ -39,7 +37,7 @@ public class RequestParameter {
     public final static String LONGITUDE = "longitude";
     public final static String TRAFFIC = "traffic";
     public final static String DRIVER_ID = "driver_id";
-    public final static String DRIVER_CONFIRM_ORDER_COMMAND = "driver_confirm_order";
     public final static String NEW_ORDER = "newOrder";
     public final static String TO_ACCOUNT_ID = "toAccountId";
+    public final static String TRANSACTION_ID = "transactionId";
 }

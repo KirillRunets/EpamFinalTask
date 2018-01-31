@@ -5,9 +5,8 @@ public class DatabaseQueryConstant {
     //Account
     public final static String SELECT_PAY_AMOUNT_FROM_ACCOUNT = "SELECT account_amount FROM account WHERE account_id=?";
     public final static String UPDATE_ACCOUNT = "UPDATE account SET account_amount=? WHERE account_id=?";
-    public final static String COMMIT_TO_TRANSACTION_STORY = "INSERT INTO transaction_story(from_account, to_account, amount, transaction_date) VALUES(?,?,?,?)";
     public final static String FIND_ACCOUNT_BY_USER_ID_FROM_USER = "SELECT account_id FROM user WHERE id=?";
-    public final static String FIND_ACCOUNT_BY_USER_ID_FROM_ACCOUNT = "SELECT account_id, account_amount FROM account WHERE account_id=?";
+    public final static String FIND_ACCOUNT_BY_ID_FROM_ACCOUNT = "SELECT account_id, account_amount FROM account WHERE account_id=?";
     public final static String CREATE_NEW_ACCOUNT = "INSERT INTO account(account_amount) VALUES(10000);";
     //user
     public final static String SET_BAN_TO_USER = "UPDATE user SET ban=?, unban_date=?  WHERE id=?";
@@ -90,4 +89,11 @@ public class DatabaseQueryConstant {
     public final static String INSERT_INTO_USER_M2M_ROLE = "INSERT INTO user_m2m_role(ur_id, u_id) VALUES(?,?)";
     public final static String UPDATE_USER_M2M_ROLE = "UPDATE user_m2m_role SET ur_id=? WHERE u_id=?";
     public final static String DELETE_USER_M2M_ROLE = "DELETE FROM user_m2m_role WHERE u_id=?";
+
+    //transaction
+    public final static String COMMIT_TO_TRANSACTION_STORY = "INSERT INTO transaction_story(from_account, to_account, amount, transaction_date) VALUES(?,?,?,?)";
+    public final static String FIND_ALL_TRANSACTION = "SELECT transaction_id, from_account, to_account, amount, transaction_date FROM transaction_story";
+    public final static String COMMIT_TRANSACTION = "INSERT INTO transaction_story(from_account, to_account, amount, transaction_date) VALUES(?,?,?,?)";
+    public final static String ROLLBACK_TRANSACTION = "SELECT transaction_id, from_account, to_account, amount, transaction_date FROM transaction_story WHERE transaction_id=?";
+    public final static String EDIT_TRANSACTION = "UPDATE transaction_story SET amount=?, transaction_date=? WHERE transaction_id=?";
 }

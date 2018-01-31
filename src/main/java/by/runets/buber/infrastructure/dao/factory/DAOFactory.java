@@ -33,6 +33,9 @@ public class DAOFactory {
             case DAOType.ACCOUNT_DAO_TYPE:
                 abstractDAO = AccountDAOImpl.getInstance();
                 break;
+            case DAOType.TRANSACTION_DAO_TYPE:
+                abstractDAO = TransactionDAOImpl.getInstance();
+                break;
             default:
                 throw new DAOException("Wrong DAO type exception");
         }

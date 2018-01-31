@@ -75,6 +75,6 @@ public class RequestValidator {
 
     public boolean isValidatePayData(Double amount){
         return amount != null && amount > 0;
-
     }
+
 }

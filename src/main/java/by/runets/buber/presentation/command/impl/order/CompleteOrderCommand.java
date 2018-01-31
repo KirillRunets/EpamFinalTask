@@ -41,8 +41,6 @@ public class CompleteOrderCommand implements Command {
                 sessionUser.setTripAmount(sessionUser.getOrderSet().size());
 
                 req.getSession().setAttribute(UserRoleType.USER, sessionUser);
-                req.getSession().setAttribute(LabelParameter.COMPLETED, true);
-
                 page = JspPagePath.DRIVER_HOME_PAGE;
             }
         } catch (ServiceException e) {

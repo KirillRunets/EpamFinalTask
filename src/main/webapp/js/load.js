@@ -86,7 +86,10 @@ function loadCommand(type) {
         case 'find_all_driver':
         case 'find_all_valid_cars':
         case 'load_valid_car_to_add':
+        case 'show_order':
+        case 'show_transaction':
             document.getElementById('admin_command_id').value = type;
+            console.log(type);
             break;
         case 'confirm':
             document.getElementById('driver_order_id').value = 'confirm_order';
@@ -95,7 +98,9 @@ function loadCommand(type) {
             document.getElementById('driver_order_id').value = 'complete_order';
             submitForm('orderForm');
             break;
-        case 'rate':
+        case 'rollback_transaction':
+            console.log(selectedRowId);
+            document.getElementById('transactionId').value = selectedRowId;
             break;
     }
 

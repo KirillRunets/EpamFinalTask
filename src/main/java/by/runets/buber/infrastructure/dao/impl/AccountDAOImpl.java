@@ -1,11 +1,10 @@
 package by.runets.buber.infrastructure.dao.impl;
 
 import by.runets.buber.domain.entity.Account;
-import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
-import by.runets.buber.infrastructure.dao.AccountTransactionDAO;
+import by.runets.buber.infrastructure.dao.AccountDAO;
 import by.runets.buber.infrastructure.exception.DAOException;
 
 import java.sql.PreparedStatement;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class AccountDAOImpl implements AccountTransactionDAO {
+public class AccountDAOImpl implements AccountDAO {
     private static AccountDAOImpl instance;
     private static Lock lock = new ReentrantLock();
     private ProxyConnection proxyConnectionTo;
@@ -119,28 +118,10 @@ public class AccountDAOImpl implements AccountTransactionDAO {
             } catch (SQLException e1) {
                 throw new DAOException("Rollback exception in DAO", e);
             }
-            throw new DAOException("Transaction exception in DAO", e);
+            throw new DAOException("TransactionDAO exception in DAO", e);
         } finally {
             close(fromAccountStatement, proxyConnectionFrom);
             close(toAccountStatement, proxyConnectionTo);
-        }
-    }
-
-    @Override
-    public void commitToTransactionStory(Account from, Account to, Double payAmount, Date transactionDate) throws DAOException {
-        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.COMMIT_TO_TRANSACTION_STORY);
-            preparedStatement.setInt(1, from.getId());
-            preparedStatement.setInt(2, to.getId());
-            preparedStatement.setDouble(3, payAmount);
-            preparedStatement.setTimestamp(4, new java.sql.Timestamp(new Date().getTime()));
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("Commit transaction to transaction story exception", e);
-        } finally {
-            close(preparedStatement, proxyConnection);
         }
     }
 
@@ -155,7 +136,7 @@ public class AccountDAOImpl implements AccountTransactionDAO {
         PreparedStatement preparedStatement = null;
         Account account = null;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ACCOUNT_BY_USER_ID_FROM_ACCOUNT);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.FIND_ACCOUNT_BY_ID_FROM_ACCOUNT);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

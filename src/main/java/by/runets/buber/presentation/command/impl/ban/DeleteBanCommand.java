@@ -34,10 +34,11 @@ public class DeleteBanCommand implements Command {
 
         if (RequestValidator.getInstance().isValidate(userId)){
             try {
-                revokeBanService.revokeBan(new User(Integer.parseInt(userId)));
-                userList = new ReadBanUserService().read();
-                req.setAttribute(LabelParameter.USER_LIST_LABEL, userList);
-                page = JspPagePath.ALL_BANNED_USERS_PAGE;
+                if (revokeBanService.revokeBan(new User(Integer.parseInt(userId)))){
+                    userList = new ReadBanUserService().read();
+                    req.setAttribute(LabelParameter.USER_LIST_LABEL, userList);
+                    page = JspPagePath.ALL_BANNED_USERS_PAGE;
+                }
             } catch (ServiceException e) {
                 LOGGER.error(e);
             }

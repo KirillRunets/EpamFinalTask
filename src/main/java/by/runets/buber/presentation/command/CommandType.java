@@ -10,6 +10,8 @@ import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.application.service.order.*;
 import by.runets.buber.application.service.statistic.OrderStatisticService;
 import by.runets.buber.application.service.statistic.RatingStatisticService;
+import by.runets.buber.application.service.transaction.ReadTransactionService;
+import by.runets.buber.application.service.transaction.RollbackTransactionService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
@@ -21,6 +23,8 @@ import by.runets.buber.presentation.command.impl.load.LoadEditUserPageCommand;
 import by.runets.buber.presentation.command.impl.load.LoadSignUpPageCommand;
 import by.runets.buber.presentation.command.impl.load.LoadValidCarPage;
 import by.runets.buber.presentation.command.impl.order.*;
+import by.runets.buber.presentation.command.impl.transaction.RollbackTransactionCommand;
+import by.runets.buber.presentation.command.impl.transaction.ShowTransactionCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
 public enum CommandType {
@@ -52,7 +56,10 @@ public enum CommandType {
     REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
     COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService())),
     PAY_ORDER(new PayOrderCommand(new PayOrderService())),
-    RATE_USER(new RateUserCommand(new RatingStatisticService()));
+    RATE_USER(new RateUserCommand(new RatingStatisticService())),
+    SHOW_ORDER(new ShowOrderCommand(new ReadOrderService())),
+    SHOW_TRANSACTION(new ShowTransactionCommand(new ReadTransactionService())),
+    ROLLBACK_TRANSACTION(new RollbackTransactionCommand(new RollbackTransactionService()));
 
     private Command command;
 

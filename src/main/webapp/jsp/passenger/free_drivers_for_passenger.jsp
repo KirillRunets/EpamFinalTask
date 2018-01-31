@@ -192,26 +192,6 @@
         </div>
     </section>
 </c:if>
-<c:if test="${sessionScope.completed == true}">
-    <div id="myModal" class="static-modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 class="white">Оцените пользователя</h2>
-            <form action="${pageContext.request.contextPath}/controller" method="POST">
-                <input type="hidden" name="command" value="rate_user">
-                <input type="hidden" name="rating" id="rating" value="">
-                <div class="white star-rating">
-                    <span class="fa fa-star-o" data-rating="1"></span>
-                    <span class="fa fa-star-o" data-rating="2"></span>
-                    <span class="fa fa-star-o" data-rating="3"></span>
-                    <span class="fa fa-star-o" data-rating="4"></span>
-                    <span class="fa fa-star-o" data-rating="5"></span>
-                </div>
-                <button type="submit" onclick="setValue()" class="button-small">Rate</button>
-            </form>
-        </div>
-    </div>
-</c:if>
 <c:if test="${not empty param.errorLabel}">
     <div class="static-modal">
         <div class="modal-content">

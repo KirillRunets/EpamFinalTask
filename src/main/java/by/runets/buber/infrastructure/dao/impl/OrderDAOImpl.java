@@ -41,7 +41,7 @@ public class OrderDAOImpl implements OrderDAO {
                 orders.add(getOrderFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection orders exception ", e);
+            throw new DAOException("Selection orders dao exception ", e);
         } finally {
             close(preparedStatement, proxyConnection);
         }

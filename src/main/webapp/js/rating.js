@@ -14,7 +14,7 @@ var setRatingStar = function() {
 
 var setStaticRatingStar = function() {
     return $static_rating.each(function() {
-        if (parseInt($static_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+        if (parseInt($(this).siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
             return $(this).removeClass('fa-star-o').addClass('fa-star');
         } else {
             return $(this).removeClass('fa-star').addClass('fa-star-o');

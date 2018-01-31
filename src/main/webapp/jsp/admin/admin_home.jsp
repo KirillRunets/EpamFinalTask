@@ -71,32 +71,25 @@
                     <hr>
                     <ul>
                         <li>
-                            <button onclick="loadCommand('find_all_valid_cars')" class="admin-button"><i
-                                    class="fa fa-taxi" aria-hidden="true"></i> <fmt:message key="label.showTaxi"
-                                                                                            bundle="${rb}"/></button>
+                            <button onclick="loadCommand('find_all_valid_cars')" class="admin-button"><i class="fa fa-taxi" aria-hidden="true"></i> <fmt:message key="label.showTaxi" bundle="${rb}"/></button>
                         </li>
                         <li>
-                            <button onclick="loadCommand('load_valid_car_to_add')" class="admin-button"><i
-                                    class="fa fa-car" aria-hidden="true"></i> <fmt:message key="label.addTaxi"
-                                                                                           bundle="${rb}"/></button>
+                            <button onclick="loadCommand('load_valid_car_to_add')" class="admin-button"><i class="fa fa-car" aria-hidden="true"></i> <fmt:message key="label.addTaxi" bundle="${rb}"/></button>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="description-wrapper">
-                    <h2><i class="fa fa-database" aria-hidden="true"></i> <fmt:message key="label.order"
-                                                                                       bundle="${rb}"/></h2>
+                    <h2><i class="fa fa-database" aria-hidden="true"></i> <fmt:message key="label.order" bundle="${rb}"/></h2>
                     <hr>
                     <ul>
-                        <li><a href="" class="social-icon"><i class="fa fa-users" aria-hidden="true"></i> <fmt:message
-                                key="label.showOrder" bundle="${rb}"/></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-credit-card" aria-hidden="true"></i>
-                            <fmt:message key="label.payOrder" bundle="${rb}"/></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-trash" aria-hidden="true"></i> <fmt:message
-                                key="label.deleteOrder" bundle="${rb}"/></a></li>
-                        <li><a href="" class="social-icon"><i class="fa fa-pencil" aria-hidden="true"></i> <fmt:message
-                                key="label.editOrder" bundle="${rb}"/></a></li>
+                        <li>
+                            <button onclick="loadCommand('show_order')" class="admin-button"> <i class="fa fa-users" aria-hidden="true"></i> <fmt:message key="label.showOrder" bundle="${rb}"/></button>
+                        </li>
+                        <li>
+                            <button onclick="loadCommand('show_transaction')" class="admin-button"> <i class="fa fa-users" aria-hidden="true"></i> <fmt:message key="label.showTransactions" bundle="${rb}"/></button>
+                        </li>
                     </ul>
                 </div>
             </div>
