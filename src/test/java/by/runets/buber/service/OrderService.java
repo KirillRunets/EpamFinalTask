@@ -2,6 +2,7 @@ package by.runets.buber.service;
 
 import by.runets.buber.application.service.order.CollectDriversToOrderService;
 import by.runets.buber.application.service.order.PayOrderService;
+import by.runets.buber.application.service.statistic.RatingStatisticService;
 import by.runets.buber.domain.entity.Account;
 import by.runets.buber.domain.entity.Order;
 import by.runets.buber.domain.entity.User;
@@ -37,4 +38,10 @@ public class OrderService {
         PayOrderService payOrderService = new PayOrderService();
         payOrderService.payOrder(from, to, amount, new Order());
     }*/
+
+    @Test
+    public void testCalculateAverageRating() throws ServiceException {
+        RatingStatisticService ratingStatisticService = new RatingStatisticService();
+        ratingStatisticService.calculateAverageRating(2.0, 5);
+    }
 }

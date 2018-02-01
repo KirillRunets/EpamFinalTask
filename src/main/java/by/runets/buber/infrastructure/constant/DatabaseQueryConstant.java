@@ -39,6 +39,7 @@ public class DatabaseQueryConstant {
             "INNER JOIN role AS r\n" +
             "ON ur.ur_id = r.r_id\n" +
             "WHERE ban IS NOT NULL AND unban_date IS NOT NULL";
+    public final static String UPDATE_USER_RATING = "UPDATE user SET rating=? WHERE id=?";
     //car
     public final static String FIND_ALL_CARS = "SELECT id, mark, model, release_date, license_plate, car_owner, current_location FROM car";
     public final static String FIND_CAR_BY_OWNER = "SELECT id, mark, model, car_owner, release_date, license_plate, current_location FROM car WHERE car_owner=?";

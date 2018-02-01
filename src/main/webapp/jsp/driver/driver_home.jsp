@@ -152,19 +152,24 @@
                     </c:if>
                 </c:if>
             </form>
+            <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
         </div>
     </div>
-    <form action="${pageContext.request.contextPath}/controller" method="POST" id="driver_confirm">
-        <input type="hidden" name="command" value="${param.command}">
-    </form>
 </c:if>
-<c:if test="${sessionScope.completed == true}">
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <c:import url="${pageContext.request.contextPath}/jsp/modal_rate.jsp"/>
+    </div>
+</div>
+<%--<c:if test="${sessionScope.completed == true}">
     <div id="myModal" class="static-modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 class="white">Оцените пользователя</h2>
             <form action="${pageContext.request.contextPath}/controller" method="POST">
                 <input type="hidden" name="command" value="rate_user">
+                <input type="hidden" name="passenger_id" value="rate_user">
                 <input type="hidden" name="rating" id="rating" value="">
                 <div class="white star-rating">
                     <span class="fa fa-star-o" data-rating="1"></span>
@@ -176,9 +181,10 @@
                 </div>
                 <button type="submit" onclick="setValue()" class="button-small">Tab</button>
             </form>
+
         </div>
     </div>
-</c:if>
+</c:if>--%>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>

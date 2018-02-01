@@ -35,14 +35,17 @@ public class RateUserCommand implements Command {
         String ratingFromAnotherUser = req.getParameter(RequestParameter.RATING);
         boolean isDriver = sessionUser.getRole().getRoleName().equalsIgnoreCase(UserRoleType.DRIVER);
 
-        Order order = init(sessionUser);
-        User user = order.getPassenger();
+        String passengerId = req.getParameter(RequestParameter.PASSENGER_ID);
+        String driverId = req.getParameter(RequestParameter.DRIVER_ID);
 
-        if (RequestValidator.getInstance().isValidate(ratingFromAnotherUser)){
+
+        if (RequestValidator.getInstance().isValidate(ratingFromAnotherUser) && RequestValidator.getInstance().isValidate(passengerId) && RequestValidator.getInstance().isValidate(driverId)){
             try {
-                ratingStatisticService.calculateAverageRating(new Double(ratingFromAnotherUser), user);
-                req.getSession().removeAttribute(LabelParameter.COMPLETED);
-                page = isDriver ? JspPagePath.DRIVER_HOME_PAGE : JspPagePath.PASSENGER_HOME_PAGE;
+                User user = isDriver ? new User(new Integer(passengerId)) : new User(new Integer(driverId));
+                if (ratingStatisticService.calculateAverageRating(new Double(ratingFromAnotherUser), user.getId())){
+                    req.getSession().removeAttribute(LabelParameter.COMPLETED);
+                    page = isDriver ? JspPagePath.DRIVER_HOME_PAGE : JspPagePath.PASSENGER_HOME_PAGE;
+                }
             } catch (ServiceException e) {
                 LOGGER.error(e);
             }
@@ -54,10 +57,10 @@ public class RateUserCommand implements Command {
         return router;
     }
 
-    private Order init(User sessionUser){
+    /*private Order init(User sessionUser){
         return sessionUser.getOrderSet()
                 .stream()
                 .reduce((first, second) -> second)
                 .orElse(null);
-    }
+    }*/
 }

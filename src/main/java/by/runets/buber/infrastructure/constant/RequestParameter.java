@@ -19,6 +19,7 @@ public class RequestParameter {
     public final static String PHONE_NUMBER = "phoneNumber";
     public final static String TRIP_AMOUNT = "tripAmount";
     public final static String UNBAN_DATE = "unbanDate";
+    public final static String BAN_TYPE = "banType";
     public final static String BAN_DESCRIPTION = "banDescription";
     public final static String USER_ROLE = "user_role";
     public final static String USER = "user";
@@ -37,6 +38,7 @@ public class RequestParameter {
     public final static String LONGITUDE = "longitude";
     public final static String TRAFFIC = "traffic";
     public final static String DRIVER_ID = "driver_id";
+    public final static String PASSENGER_ID = "passenger_id";
     public final static String NEW_ORDER = "newOrder";
     public final static String TO_ACCOUNT_ID = "toAccountId";
     public final static String TRANSACTION_ID = "transactionId";

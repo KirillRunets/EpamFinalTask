@@ -23,6 +23,7 @@ public class RegisterUserService {
             createAccountService.create(account);
             if (user != null){
                 user.setAccount(account);
+                user.setRating(5.0);
                 if (!userDAO.isEmailExist(user.getEmail())){
                     if (userDAO.create(user)){
                         state = userRoleDAO.createUserRoleCommunication(user);

@@ -31,18 +31,15 @@ public class RollbackTransactionCommand implements Command {
         String page = null;
 
         String transactionId = req.getParameter(RequestParameter.TRANSACTION_ID);
-
-        LOGGER.debug(transactionId);
-
-        if (RequestValidator.getInstance().isValidateOrderData(transactionId)){
-            try {
+        try {
+            if (RequestValidator.getInstance().isValidateOrderData(transactionId)) {
                 rollbackTransactionService.rollbackTransaction(new Integer(transactionId));
                 page = JspPagePath.ADMIN_HOME_PAGE;
-            } catch (ServiceException e) {
-                LOGGER.error(e);
+            } else {
+                page = JspPagePath.TRANSACTION_PAGE + "?" + LabelParameter.ERROR_LABEL + "=" + true;
             }
-        } else {
-            page = JspPagePath.TRANSACTION_PAGE + "?" + LabelParameter.ERROR_LABEL + "=" + true;
+        } catch (ServiceException e) {
+            LOGGER.error(e);
         }
 
 

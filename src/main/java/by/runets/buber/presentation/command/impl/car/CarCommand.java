@@ -1,10 +1,8 @@
 package by.runets.buber.presentation.command.impl.car;
 
-import by.runets.buber.application.service.car.ReadCarService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.User;
-import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.LabelParameter;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.constant.UserRoleType;
@@ -17,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class CarCommand {
-
     Car init(HttpServletRequest req) throws ParseException {
         Car car = null;
         String carId = req.getParameter(RequestParameter.CAR_ID);

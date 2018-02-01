@@ -78,16 +78,32 @@
                         <td>${sessionScope.newOrder.passenger.firstName}</td>
                         <td>${sessionScope.newOrder.passenger.secondName}</td>
                         <td>${sessionScope.newOrder.passenger.phoneNumber}</td>
-                        <td>${sessionScope.newOrder.passenger.rating}</td>
+                        <td>
+                            <div class="static-rating">
+                                <span class="fa fa-star-o" data-rating="1"></span>
+                                <span class="fa fa-star-o" data-rating="2"></span>
+                                <span class="fa fa-star-o" data-rating="3"></span>
+                                <span class="fa fa-star-o" data-rating="4"></span>
+                                <span class="fa fa-star-o" data-rating="5"></span>
+                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.newOrder.passenger.rating}}">
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
                 <input type="hidden" name="command" value="pay_order">
                 <button class="button-small" type="submit"><fmt:message key="label.payOrder" bundle="${rb}" /></button>
             </form>
+            <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
         </div>
     </div>
 </c:if>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <c:import url="${pageContext.request.contextPath}/jsp/modal_rate.jsp"/>
+    </div>
+</div>
 <c:if test="${sessionScope.newOrder.paid == true}">
     <div class="static-modal">
         <div class="modal-content">
@@ -162,7 +178,16 @@
                                             <td>${driver.secondName}</td>
                                             <td><fmt:formatDate value="${driver.birthDate}" /></td>
                                             <td>${driver.phoneNumber}</td>
-                                            <td>${driver.rating}</td>
+                                            <td>
+                                                <div class="static-rating">
+                                                    <span class="fa fa-star-o" data-rating="1"></span>
+                                                    <span class="fa fa-star-o" data-rating="2"></span>
+                                                    <span class="fa fa-star-o" data-rating="3"></span>
+                                                    <span class="fa fa-star-o" data-rating="4"></span>
+                                                    <span class="fa fa-star-o" data-rating="5"></span>
+                                                    <input type="hidden" name="whatever1" class="rating-value" value="${driver.rating}">
+                                                </div>
+                                            </td>
                                             <td>${driver.tripAmount}</td>
                                             <td>${driver.currentLocation}</td>
                                             <c:if test="${not empty driver.car.mark}">
@@ -210,6 +235,6 @@
 <script src="${pageContext.request.contextPath}/js/sb-admin-datatables.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
 <script src="${pageContext.request.contextPath}/js/modal.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/rating.js"></script>
 </body>
 </html>

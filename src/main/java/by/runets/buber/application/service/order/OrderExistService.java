@@ -6,6 +6,7 @@ import by.runets.buber.infrastructure.constant.DAOType;
 import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.dao.OrderDAO;
+import by.runets.buber.infrastructure.dao.UserDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
@@ -19,7 +20,7 @@ public class OrderExistService {
                     ? orderDAO.isExistOrderForUser(user, DatabaseQueryConstant.IS_EXIST_ORDER_FOR_DRIVER)
                     : orderDAO.isExistOrderForUser(user, DatabaseQueryConstant.IS_EXIST_ORDER_FOR_PASSENGER);
         } catch (DAOException e) {
-            throw new ServiceException("Is exist order for driver exception", e);
+            throw new ServiceException("Is exist order for user exception", e);
         }
         return order;
     }

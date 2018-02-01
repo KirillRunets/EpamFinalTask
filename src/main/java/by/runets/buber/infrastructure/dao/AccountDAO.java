@@ -6,5 +6,5 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import java.util.Date;
 
 public interface AccountDAO extends AbstractDAO<Integer, Account> {
-    void payOrderTransaction(Account from, Account to, Double payAmount) throws DAOException;
+    void transfer(Account from, Account to, Double payAmount) throws DAOException;
 }

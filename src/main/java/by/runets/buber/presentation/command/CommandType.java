@@ -1,8 +1,6 @@
 package by.runets.buber.presentation.command;
 
-import by.runets.buber.application.service.ban.ReadBanService;
-import by.runets.buber.application.service.ban.RevokeBanService;
-import by.runets.buber.application.service.ban.SetBanService;
+import by.runets.buber.application.service.ban.*;
 import by.runets.buber.application.service.car.CreateCarService;
 import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
@@ -14,9 +12,7 @@ import by.runets.buber.application.service.transaction.ReadTransactionService;
 import by.runets.buber.application.service.transaction.RollbackTransactionService;
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
-import by.runets.buber.presentation.command.impl.ban.DeleteBanCommand;
-import by.runets.buber.presentation.command.impl.ban.FillBanFormCommand;
-import by.runets.buber.presentation.command.impl.ban.SetBanCommand;
+import by.runets.buber.presentation.command.impl.ban.*;
 import by.runets.buber.presentation.command.impl.car.*;
 import by.runets.buber.presentation.command.impl.load.LoadHomePageCommand;
 import by.runets.buber.presentation.command.impl.load.LoadEditUserPageCommand;
@@ -40,9 +36,12 @@ public enum CommandType {
     EDIT_USER(new UpdateUserCommand(new UpdateUserService())),
     HOME_PAGE(new LoadHomePageCommand()),
     BAN_USER(new SetBanCommand(new SetBanService())),
-    UNBAN_USER(new DeleteBanCommand(new RevokeBanService())),
+    UNBAN_USER(new RevokeBanCommand(new RevokeBanService())),
     SHOW_BANNED_USERS(new ShowBannedUsersCommand(new ReadBanUserService())),
     FILL_BAN_FORM(new FillBanFormCommand(new ReadBanService())),
+    CREATE_BAN(new CreateBanCommand(new CreateBanService())),
+    DELETE_BAN(new DeleteBanCommand(new DeleteBanService())),
+    UPDATE_BAN(new UpdateBanCommand(new UpdateBanService())),
     FIND_ALL_VALID_CARS(new ReadCarCommand(new ReadCarService())),
     DELETE_CAR(new DeleteCarCommand(new DeleteCarService())),
     EDIT_CAR(new EditCarCommand(new EditCarService())),

@@ -27,7 +27,7 @@ public class RollbackTransactionService {
             rollbackFrom = accountDAO.find(transaction.getTo().getId());
             amount = transaction.getAmount();
 
-            accountDAO.payOrderTransaction(rollbackFrom, rollbackTo, amount);
+            accountDAO.transfer(rollbackFrom, rollbackTo, amount);
             transactionDAO.commitToTransactionStory(new Transaction(rollbackFrom, rollbackTo, new Date(), amount));
         } catch (DAOException e) {
             throw new ServiceException("Rollback transaction service exception", e);

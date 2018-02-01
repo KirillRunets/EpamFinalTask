@@ -15,4 +15,5 @@ public interface UserDAO extends AbstractDAO<Integer, User> {
     int changePassword(String newPassword, int id) throws DAOException;
     String findPassword(int id) throws DAOException;
     Account findAccountByUserId(Integer id) throws DAOException;
+    boolean updateUserRating(Integer id, Double rating) throws DAOException;
 }

@@ -39,7 +39,6 @@ public class OrderFilter implements Filter {
                     req.getSession().setAttribute(RequestParameter.NEW_ORDER, order);
                 } else if (req.getSession().getAttribute(RequestParameter.NEW_ORDER) != null){
                     req.getSession().removeAttribute(RequestParameter.NEW_ORDER);
-                    LOGGER.debug("completed");
                     req.getSession().setAttribute(LabelParameter.COMPLETED, true);
                 }
             }

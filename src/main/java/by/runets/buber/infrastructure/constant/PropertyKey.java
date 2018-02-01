@@ -20,4 +20,5 @@ public class PropertyKey {
     public final static String ADD_CAR_ERROR = "label.addCarError";
     public final static String ORDER_ERROR = "label.orderError";
     public final static String FOOTER_CONTENT = "label.footerContent";
+    public final static String ERROR_LABEL_MESSAGE = "";
 }

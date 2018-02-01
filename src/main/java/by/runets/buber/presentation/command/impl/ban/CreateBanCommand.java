@@ -1,6 +1,6 @@
 package by.runets.buber.presentation.command.impl.ban;
 
-import by.runets.buber.application.service.ban.DeleteBanService;
+import by.runets.buber.application.service.ban.CreateBanService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.infrastructure.constant.JspPagePath;
@@ -17,22 +17,21 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteBanCommand implements Command {
-    private final static Logger LOGGER = LogManager.getLogger(DeleteBanCommand.class);
-    private DeleteBanService deleteBanService;
+public class CreateBanCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(CreateBanCommand.class);
+    private CreateBanService createBanService;
 
-    public DeleteBanCommand(DeleteBanService deleteBanService) {
-        this.deleteBanService = deleteBanService;
+    public CreateBanCommand(CreateBanService createBanService) {
+        this.createBanService = createBanService;
     }
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
-
-        String banId = req.getParameter(RequestParameter.BAN_ID);
+        Ban ban = null;
         try {
-            router = RequestValidator.getInstance().isValidate(banId)
-                    ? deleteBanService.delete(new Ban(new Integer(banId)))
+            router = (ban = init(req)) != null
+                    ? createBanService.create(ban)
                     ? rightRoute() : errorRoute(req) : errorRoute(req);
         } catch (ServiceException e) {
             LOGGER.error(e);
@@ -41,7 +40,7 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
-    private Router rightRoute() {
+    private Router rightRoute(){
         Router router = new Router();
         router.setPagePath(JspPagePath.BAN_PAGE);
         router.setRouteType(Router.RouteType.REDIRECT);
@@ -55,13 +54,22 @@ public class DeleteBanCommand implements Command {
         req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.ERROR_LABEL_MESSAGE));
 
         router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(JspPagePath.BAN_PAGE);
+        router.setPagePath(JspPagePath.BAN_FORM_PAGE);
 
         return router;
     }
 
-    private void errorNotification(HttpServletRequest req) {
-        String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
-        req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.ERROR_LABEL_MESSAGE));
+    private Ban init(HttpServletRequest req) {
+        String banType = req.getParameter(RequestParameter.BAN_TYPE);
+        String banDescription = req.getParameter(RequestParameter.BAN_DESCRIPTION);
+        Ban ban = null;
+
+        if (RequestValidator.getInstance().isValidate(banType) && RequestValidator.getInstance().isValidate(banDescription)) {
+            ban = new Ban();
+            ban.setBanType(banType);
+            ban.setBanDescription(banDescription);
+        }
+
+        return ban;
     }
 }

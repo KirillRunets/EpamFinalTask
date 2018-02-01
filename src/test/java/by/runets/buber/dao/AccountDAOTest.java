@@ -20,7 +20,7 @@ public class AccountDAOTest {
         Double amount = 100.0;
         AccountDAO accountDAO = (AccountDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
         TransactionDAO transactionDAO = (TransactionDAO) DAOFactory.getInstance().createDAO(DAOType.TRANSACTION_DAO_TYPE);
-        accountDAO.payOrderTransaction(fromAccount, toAccount, amount);
+        accountDAO.transfer(fromAccount, toAccount, amount);
         transactionDAO.commitToTransactionStory(new Transaction(fromAccount, toAccount, new Date(), amount));
     }
 

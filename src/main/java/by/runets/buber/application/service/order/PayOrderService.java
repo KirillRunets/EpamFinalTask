@@ -24,13 +24,14 @@ public class PayOrderService {
             AccountDAO accountDAO = (AccountDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             OrderDAO orderDAO = (OrderDAO) DAOFactory.getInstance().createDAO(DAOType.ORDER_DAO_TYPE);
-            TransactionDAOImpl transactionDAO = (TransactionDAOImpl) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
+            TransactionDAOImpl transactionDAO = (TransactionDAOImpl) DAOFactory.getInstance().createDAO(DAOType.TRANSACTION_DAO_TYPE);
+
             order.setPaid(true);
             if (from != null && driver != null && amount != null){
                 to = userDAO.findAccountByUserId(driver.getId());
 
                 orderDAO.setOrderIsPaid(order.getId());
-                accountDAO.payOrderTransaction(from, to, amount);
+                accountDAO.transfer(from, to, amount);
                 transactionDAO.commitToTransactionStory(new Transaction(from, to, new Date(), amount));
             }
         } catch (DAOException e) {

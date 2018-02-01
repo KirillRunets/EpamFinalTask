@@ -1,7 +1,7 @@
 var selectedRowId = null;
 
 $(document).ready(function() {
-    $(".line").click(function(event){
+    $(document).on('click',".line",function(){
         var id = $(this).attr('id');
         var doc = document.getElementById(selectedRowId);
         if (doc){
@@ -22,6 +22,7 @@ $(document).ready(function() {
             $("#bonus-button").show();
         }
     });
+
     $('[type="date"]').prop('max', function(){
         return new Date().toJSON().split('T')[0];
     });

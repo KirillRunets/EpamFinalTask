@@ -289,13 +289,13 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public Order isExistOrderForUser(User driver, String query) throws DAOException {
+    public Order isExistOrderForUser(User user, String query) throws DAOException {
         ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         Order order = null;
         try {
             preparedStatement = proxyConnection.prepareStatement(query);
-            preparedStatement.setInt(1, driver.getId());
+            preparedStatement.setInt(1, user.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 order = getOrderFromDriverResultSet(resultSet);

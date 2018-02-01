@@ -19,8 +19,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class AccountDAOImpl implements AccountDAO {
     private static AccountDAOImpl instance;
     private static Lock lock = new ReentrantLock();
-    private ProxyConnection proxyConnectionTo;
-    private ProxyConnection proxyConnectionFrom;
 
     private AccountDAOImpl(){}
 
@@ -29,8 +27,6 @@ public class AccountDAOImpl implements AccountDAO {
         try{
             if (instance == null){
                 instance = new AccountDAOImpl();
-                instance.getProxyConnectionFrom();
-                instance.getProxyConnectionTo();
             }
         } finally {
             lock.unlock();
@@ -38,33 +34,46 @@ public class AccountDAOImpl implements AccountDAO {
         return instance;
     }
 
-    private void getProxyConnectionTo() throws DAOException {
+    private ProxyConnection getProxyConnectionTo() throws DAOException {
+        lock.lock();
+        ProxyConnection proxyConnectionTo = null;
         try {
             proxyConnectionTo = ConnectionPool.getInstance().getConnection();
             proxyConnectionTo.setAutoCommit(false);
         } catch (SQLException e) {
             throw new DAOException("ProxyConnectionTo exception", e);
+        } finally {
+            lock.unlock();
         }
+        return proxyConnectionTo;
     }
 
-    private void getProxyConnectionFrom() throws DAOException {
+    private ProxyConnection getProxyConnectionFrom() throws DAOException {
+        lock.lock();
+        ProxyConnection proxyConnectionFrom = null;
         try {
             proxyConnectionFrom = ConnectionPool.getInstance().getConnection();
             proxyConnectionFrom.setAutoCommit(false);
         } catch (SQLException e) {
             throw new DAOException("ProxyConnectionFrom exception", e);
+        } finally {
+            lock.unlock();
         }
+        return proxyConnectionFrom;
     }
 
     @Override
-    public void payOrderTransaction(Account fromAccount, Account toAccount, Double payAmount) throws DAOException {
+    public void transfer(Account fromAccount, Account toAccount, Double payAmount) throws DAOException {
+        ProxyConnection proxyConnectionFrom = getProxyConnectionFrom();
+        ProxyConnection proxyConnectionTo = getProxyConnectionTo();
+
         PreparedStatement fromAccountStatement = null;
         PreparedStatement toAccountStatement = null;
 
-        double accountFrom = 0.0;
-        double accountTo = 0.0;
-        double resultFrom= 0.0;
-        double resultTo = 0.0;
+        double accountFrom = 0.0d;
+        double accountTo = 0.0d;
+        double resultFrom= 0.0d;
+        double resultTo = 0.0d;
 
         if (payAmount <= 0){
             throw new DAOException("Invalid pay balance balance");

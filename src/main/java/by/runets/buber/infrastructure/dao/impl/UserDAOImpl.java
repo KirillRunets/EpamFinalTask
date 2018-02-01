@@ -396,4 +396,22 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         }
         return account;
     }
+
+    @Override
+    public boolean updateUserRating(Integer id, Double rating) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        boolean isUpdated = false;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_USER_RATING);
+            preparedStatement.setDouble(1, rating);
+            preparedStatement.setInt(2, id);
+            isUpdated = preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new DAOException("Update rating exception: ", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return isUpdated;
+    }
 }
