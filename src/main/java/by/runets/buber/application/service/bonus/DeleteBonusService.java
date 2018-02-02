@@ -7,15 +7,15 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
-public class CreateBonusService {
-    public boolean create(Bonus bonus) throws ServiceException {
-        boolean isCreated = false;
+public class DeleteBonusService {
+    public boolean delete(Bonus bonus) throws ServiceException {
+        boolean isDeleted = false;
         try {
             AbstractDAO bonusDAO = DAOFactory.getInstance().createDAO(DAOType.BONUS_DAO_TYPE);
-            isCreated = bonusDAO.create(bonus);
+            isDeleted = bonusDAO.delete(bonus);
         } catch (DAOException e) {
-            throw new ServiceException("Create bonus service exception", e);
+            throw new ServiceException("Delete bonus service exception", e);
         }
-        return isCreated;
+        return isDeleted;
     }
 }
