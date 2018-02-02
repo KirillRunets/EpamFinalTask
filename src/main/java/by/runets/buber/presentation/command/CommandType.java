@@ -14,10 +14,7 @@ import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.*;
 import by.runets.buber.presentation.command.impl.car.*;
-import by.runets.buber.presentation.command.impl.load.LoadHomePageCommand;
-import by.runets.buber.presentation.command.impl.load.LoadEditUserPageCommand;
-import by.runets.buber.presentation.command.impl.load.LoadSignUpPageCommand;
-import by.runets.buber.presentation.command.impl.load.LoadValidCarPage;
+import by.runets.buber.presentation.command.impl.load.*;
 import by.runets.buber.presentation.command.impl.order.*;
 import by.runets.buber.presentation.command.impl.transaction.RollbackTransactionCommand;
 import by.runets.buber.presentation.command.impl.transaction.ShowTransactionCommand;
@@ -42,6 +39,8 @@ public enum CommandType {
     CREATE_BAN(new CreateBanCommand(new CreateBanService())),
     DELETE_BAN(new DeleteBanCommand(new DeleteBanService())),
     UPDATE_BAN(new UpdateBanCommand(new UpdateBanService())),
+    LOAD_BAN_FORM(new LoadBanFormCommand(new ReadBanService())),
+    SHOW_BAN(new ReadBanCommand(new ReadBanService())),
     FIND_ALL_VALID_CARS(new ReadCarCommand(new ReadCarService())),
     DELETE_CAR(new DeleteCarCommand(new DeleteCarService())),
     EDIT_CAR(new EditCarCommand(new EditCarService())),

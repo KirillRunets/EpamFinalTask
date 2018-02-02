@@ -21,4 +21,17 @@ public class ReadBanService {
         }
         return banList;
     }
+
+    public Ban find(Integer id) throws ServiceException {
+        AbstractDAO abstractDAO = null;
+        Ban ban = null;
+        try {
+            abstractDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
+            ban = (Ban) abstractDAO.find(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Find all ban exception", e);
+        }
+        return ban;
+    }
+
 }

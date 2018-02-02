@@ -59,6 +59,4 @@ public class SetBanCommand implements Command {
 
         return user;
     }
-
-
 }

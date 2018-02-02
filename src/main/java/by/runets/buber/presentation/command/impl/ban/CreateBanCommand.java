@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class CreateBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(CreateBanCommand.class);
@@ -32,7 +33,7 @@ public class CreateBanCommand implements Command {
         try {
             router = (ban = init(req)) != null
                     ? createBanService.create(ban)
-                    ? rightRoute() : errorRoute(req) : errorRoute(req);
+                    ? rightRoute(req, ban) : errorRoute(req) : errorRoute(req);
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
@@ -40,8 +41,11 @@ public class CreateBanCommand implements Command {
         return router;
     }
 
-    private Router rightRoute(){
+    private Router rightRoute(HttpServletRequest req, Ban ban){
         Router router = new Router();
+
+        createBanInSession(req, ban);
+
         router.setPagePath(JspPagePath.BAN_PAGE);
         router.setRouteType(Router.RouteType.REDIRECT);
         return router;
@@ -71,5 +75,11 @@ public class CreateBanCommand implements Command {
         }
 
         return ban;
+    }
+
+    private void createBanInSession(HttpServletRequest req, Ban ban){
+        List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
+        banList.add(ban);
+        req.getSession().setAttribute(LabelParameter.BAN_LIST, banList);
     }
 }

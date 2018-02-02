@@ -52,6 +52,10 @@ function deleteCommand(type) {
         case 'orderByDriver':
             document.getElementById('driver_order_id').value = 'revoke_order';
             break;
+        case 'delete_ban':
+            document.getElementById('command_id').value = type;
+            document.getElementById('ban_id').value = selectedRowId;
+            break;
     }
 }
 
@@ -89,8 +93,8 @@ function loadCommand(type) {
         case 'load_valid_car_to_add':
         case 'show_order':
         case 'show_transaction':
+        case 'show_ban':
             document.getElementById('admin_command_id').value = type;
-            console.log(type);
             break;
         case 'confirm':
             document.getElementById('driver_order_id').value = 'confirm_order';
@@ -102,6 +106,11 @@ function loadCommand(type) {
         case 'rollback_transaction':
             console.log(selectedRowId);
             document.getElementById('transactionId').value = selectedRowId;
+            break;
+        case 'load_ban_form':
+            document.getElementById('command_id').value = type;
+            document.getElementById('ban_id').value = selectedRowId;
+            console.log(selectedRowId);
             break;
     }
 

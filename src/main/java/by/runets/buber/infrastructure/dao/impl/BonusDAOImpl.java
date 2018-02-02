@@ -125,8 +125,8 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     private Bonus getBonusFromResultSet(ResultSet resultSet) throws SQLException {
         Bonus bonus = new Bonus();
         bonus.setId(resultSet.getInt("bonus_id"));
-        bonus.setBonusType(Optional.ofNullable(resultSet.getString("bonus_name")));
-        bonus.setBonusDescription(Optional.ofNullable(resultSet.getString("bonus_description")));
+        bonus.setBonusType(resultSet.getString("bonus_name"));
+        bonus.setBonusDescription(resultSet.getString("bonus_description"));
         return bonus;
     }
 }

@@ -90,12 +90,16 @@
                         <li>
                             <button onclick="loadCommand('show_transaction')" class="admin-button"> <i class="fa fa-users" aria-hidden="true"></i> <fmt:message key="label.showTransactions" bundle="${rb}"/></button>
                         </li>
+                        <li>
+                            <button onclick="loadCommand('show_ban')" class="admin-button"> <i class="fa fa-ban" aria-hidden="true"></i> <fmt:message key="label.showBans" bundle="${rb}"/></button>
+                        </li>
                     </ul>
                 </div>
             </div>
         </form>
     </div>
 </section>
+
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>

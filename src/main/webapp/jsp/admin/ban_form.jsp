@@ -42,7 +42,7 @@
             <table id="ban_table" class="table">
             <th><fmt:message key="label.banType" bundle="${rb}"/></th>
             <th><fmt:message key="label.banDescription" bundle="${rb}"/></th>
-            <c:forEach items="${banList}" var="ban">
+            <c:forEach items="${sessionScope.banList}" var="ban">
                 <tr class="line" id="${ban.id}">
                     <td>${ban.banType}</td>
                     <td>${ban.banDescription}</td>

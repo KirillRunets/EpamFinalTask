@@ -17,7 +17,8 @@ public class JspPagePath {
 
     public final static String ALL_BANNED_USERS_PAGE = "jsp/admin/all_ban_user.jsp";
     public final static String BAN_FORM_PAGE = "jsp/admin/ban_form.jsp";
-    public final static String BAN_PAGE = "";
+    public final static String SECOND_BAN_FORM_PAGE = "jsp/ban/ban_form.jsp";
+    public final static String BAN_PAGE = "/jsp/ban/ban.jsp";
     public final static String ADMIN_CAR_LIST_PAGE = "jsp/admin/admin_car_list.jsp";
     public final static String ADMIN_ORDER_LIST_PAGE = "jsp/admin/admin_order_list.jsp";
     public final static String DRIVER_CAR_PROFILE_PAGE = "jsp/driver/car_profile.jsp";

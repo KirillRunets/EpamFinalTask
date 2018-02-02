@@ -3,8 +3,8 @@ package by.runets.buber.domain.entity;
 import java.util.Optional;
 
 public class Bonus extends Entity {
-    private Optional<String> bonusType;
-    private Optional<String> bonusDescription;
+    private String bonusType;
+    private String bonusDescription;
 
     public Bonus() {
     }
@@ -13,22 +13,22 @@ public class Bonus extends Entity {
         super(id);
     }
 
-    public Bonus(int id, Optional<String> bonusType, Optional<String> bonusDescription) {
+    public Bonus(int id, String bonusType, String bonusDescription) {
         super(id);
         this.bonusType = bonusType;
         this.bonusDescription = bonusDescription;
     }
 
-    public Optional<String> getBonusType() {
+    public String getBonusType() {
         return bonusType;
     }
-    public void setBonusType(Optional<String> bonusType) {
+    public void setBonusType(String bonusType) {
         this.bonusType = bonusType;
     }
-    public Optional<String> getBonusDescription() {
+    public String getBonusDescription() {
         return bonusDescription;
     }
-    public void setBonusDescription(Optional<String> bonusDescription) {
+    public void setBonusDescription(String bonusDescription) {
         this.bonusDescription = bonusDescription;
     }
 

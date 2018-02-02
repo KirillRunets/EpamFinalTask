@@ -37,4 +37,15 @@ public class BanDAOTest {
         userDAO.setBanToUser(user);
         Assert.assertNotNull(userDAO.readBannedUsers());
     }
+
+    @Test
+    public void testCreateBan() throws DAOException {
+        AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
+        Ban ban = new Ban();
+        ban.setBanType("Test");
+        ban.setBanDescription("Test");
+        abstractDAO.create(ban);
+
+        Assert.assertNotEquals(0, ban.getId());
+    }
 }

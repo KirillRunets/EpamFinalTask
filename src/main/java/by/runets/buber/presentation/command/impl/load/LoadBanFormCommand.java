@@ -1,4 +1,4 @@
-package by.runets.buber.presentation.command.impl.ban;
+package by.runets.buber.presentation.command.impl.load;
 
 import by.runets.buber.application.service.ban.ReadBanService;
 import by.runets.buber.application.validation.RequestValidator;
@@ -14,36 +14,33 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
-public class FillBanFormCommand implements Command {
-    private final static Logger LOGGER = LogManager.getLogger(FillBanFormCommand.class);
+public class LoadBanFormCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(LoadBanFormCommand.class);
     private ReadBanService readBanService;
 
-    public FillBanFormCommand(ReadBanService readBanService) {
+    public LoadBanFormCommand(ReadBanService readBanService) {
         this.readBanService = readBanService;
     }
 
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
-        String page = null;
-        List<Ban> banList = null;
-        String userId = req.getParameter(RequestParameter.USER_ID);
+        String banId = req.getParameter(RequestParameter.BAN_ID);
 
-        if (RequestValidator.getInstance().isValidate(userId)) {
-            req.getSession().setAttribute(RequestParameter.USER_ID, userId);
-            try {
-                banList = readBanService.find();
-                req.setAttribute(LabelParameter.BAN_LIST, banList);
-                page = JspPagePath.BAN_FORM_PAGE;
-            } catch (ServiceException e) {
-                LOGGER.error(e);
+        try {
+            if (RequestValidator.getInstance().isValidate(banId)){
+                Ban ban = readBanService.find(new Integer(banId));
+                req.getSession().setAttribute(LabelParameter.BAN, ban);
+            } else {
+                req.getSession().removeAttribute(LabelParameter.BAN);
             }
+        } catch (ServiceException e){
+            LOGGER.error(e);
         }
 
-        router.setPagePath(page);
-        router.setRouteType(Router.RouteType.FORWARD);
+        router.setRouteType(Router.RouteType.REDIRECT);
+        router.setPagePath(JspPagePath.SECOND_BAN_FORM_PAGE);
 
         return router;
     }

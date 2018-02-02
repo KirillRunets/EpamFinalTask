@@ -1,6 +1,7 @@
 package by.runets.buber.infrastructure.dao.impl;
 
 import by.runets.buber.domain.entity.Ban;
+import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
@@ -11,6 +12,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,16 +92,29 @@ public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
         PreparedStatement preparedStatement = null;
         boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BAN);
-            preparedStatement.setString(1, String.valueOf(ban.getBanType()));
-            preparedStatement.setString(2, String.valueOf(ban.getBanDescription()));
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BAN,  Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, ban.getBanType());
+            preparedStatement.setString(2, ban.getBanDescription());
             state = preparedStatement.executeUpdate() != 0;
+            if (state) {
+                setGeneratedId(ban, preparedStatement);
+            }
         } catch (SQLException e) {
-            throw new DAOException("Insertion exception", e);
+            throw new DAOException("Create ban exception", e);
         } finally {
            close(preparedStatement, proxyConnection);
         }
         return state;
+    }
+
+    private void setGeneratedId(Ban ban, PreparedStatement preparedStatement) throws SQLException, DAOException {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                ban.setId(generatedKeys.getInt(1));
+            } else {
+                throw new DAOException("Creating ban failed, no ID obtained.");
+            }
+        }
     }
 
     @Override

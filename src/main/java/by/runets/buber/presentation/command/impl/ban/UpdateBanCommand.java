@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class UpdateBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(UpdateBanCommand.class);
@@ -32,7 +33,7 @@ public class UpdateBanCommand implements Command {
         try{
             router = (ban = init(req)) != null
                     ? updateBanService.update(ban)
-                    ? rightRoute() : errorRoute(req) : errorRoute(req);
+                    ? rightRoute(req, ban) : errorRoute(req) : errorRoute(req);
         } catch (ServiceException e){
             LOGGER.error(e);
         }
@@ -40,8 +41,11 @@ public class UpdateBanCommand implements Command {
         return router;
     }
 
-    private Router rightRoute(){
+    private Router rightRoute(HttpServletRequest req, Ban ban){
         Router router = new Router();
+
+        updateBanInSession(req, ban);
+
         router.setPagePath(JspPagePath.BAN_PAGE);
         router.setRouteType(Router.RouteType.REDIRECT);
         return router;
@@ -74,5 +78,14 @@ public class UpdateBanCommand implements Command {
         }
 
         return ban;
+    }
+
+    private void updateBanInSession(HttpServletRequest req, Ban ban){
+        List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
+
+        banList.removeIf(b -> b.getId() == ban.getId());
+        banList.add(ban);
+
+        req.getSession().setAttribute(LabelParameter.BAN_LIST, banList);
     }
 }

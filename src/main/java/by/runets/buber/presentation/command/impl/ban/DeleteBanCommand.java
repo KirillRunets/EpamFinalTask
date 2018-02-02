@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class DeleteBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(DeleteBanCommand.class);
@@ -33,7 +34,7 @@ public class DeleteBanCommand implements Command {
         try {
             router = RequestValidator.getInstance().isValidate(banId)
                     ? deleteBanService.delete(new Ban(new Integer(banId)))
-                    ? rightRoute() : errorRoute(req) : errorRoute(req);
+                    ? rightRoute(req, new Integer(banId)) : errorRoute(req) : errorRoute(req);
         } catch (ServiceException e) {
             LOGGER.error(e);
         }
@@ -41,8 +42,11 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
-    private Router rightRoute() {
+    private Router rightRoute(HttpServletRequest req, Integer banId) {
         Router router = new Router();
+
+        deleteBanInSession(req, banId);
+
         router.setPagePath(JspPagePath.BAN_PAGE);
         router.setRouteType(Router.RouteType.REDIRECT);
         return router;
@@ -60,8 +64,9 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
-    private void errorNotification(HttpServletRequest req) {
-        String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
-        req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.ERROR_LABEL_MESSAGE));
+    private void deleteBanInSession(HttpServletRequest req, Integer banId){
+        List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
+        banList.removeIf(ban -> ban.getId() == banId);
+        req.getSession().setAttribute(LabelParameter.BAN_LIST, banList);
     }
 }
