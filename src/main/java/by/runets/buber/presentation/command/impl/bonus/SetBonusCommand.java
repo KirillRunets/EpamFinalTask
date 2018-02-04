@@ -2,7 +2,6 @@ package by.runets.buber.presentation.command.impl.bonus;
 
 import by.runets.buber.application.service.bonus.SetBonusService;
 import by.runets.buber.application.validation.RequestValidator;
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.JspPagePath;
@@ -11,7 +10,6 @@ import by.runets.buber.infrastructure.constant.PropertyKey;
 import by.runets.buber.infrastructure.constant.RequestParameter;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
-import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -19,9 +17,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
+/**
+ * This class provides method to implement set bonus command to user from admin.
+ */
 public class SetBonusCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(DeleteBonusCommand.class);
     private SetBonusService setBonusService;
@@ -46,6 +45,11 @@ public class SetBonusCommand implements Command{
         return router;
     }
 
+    /**
+     *
+     * @param user
+     * @return router value with route type and page path
+     */
     private Router rightRoute(User user) {
         Router router = new Router();
 
@@ -55,6 +59,12 @@ public class SetBonusCommand implements Command{
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return router value with route type and page path and also set error notification in request
+     * @throws ServiceException
+     */
     private Router errorRoute(HttpServletRequest req) throws ServiceException {
         Router router = new Router();
 
@@ -67,6 +77,11 @@ public class SetBonusCommand implements Command{
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return user from request.
+     */
     private User init(HttpServletRequest req) {
         User user = null;
 

@@ -19,6 +19,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class provides method to implement set ban command to user from admin.
+ */
 public class SetBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(SetBanCommand.class);
     private SetBanService banService;
@@ -45,6 +48,12 @@ public class SetBanCommand implements Command {
         return router;
     }
 
+    /**
+     * Initialize user object from request parameters
+     * @param req
+     * @return user object if request parameters is valid else null.
+     * @throws ParseException
+     */
     private User init(HttpServletRequest req) throws ParseException {
         User user = null;
         String locale = req.getSession().getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();

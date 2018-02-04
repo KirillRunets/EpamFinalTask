@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement revoke ban command by admin.
+ */
 public class RevokeBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(RevokeBanCommand.class);
     private RevokeBanService revokeBanService;
@@ -30,6 +33,7 @@ public class RevokeBanCommand implements Command {
         Router router = new Router();
         String page = null;
         List<User> userList = null;
+
         String userId = req.getParameter(RequestParameter.USER_ID);
 
         if (RequestValidator.getInstance().isValidate(userId)){

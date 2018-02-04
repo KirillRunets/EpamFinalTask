@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement delete ban command.
+ */
 public class DeleteBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(DeleteBanCommand.class);
     private DeleteBanService deleteBanService;
@@ -42,6 +45,12 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param banId
+     * @return right router value with route type and page path and also delete create ban in session
+     */
     private Router rightRoute(HttpServletRequest req, Integer banId) {
         Router router = new Router();
 
@@ -52,6 +61,11 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and also set error message to request
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -64,6 +78,11 @@ public class DeleteBanCommand implements Command {
         return router;
     }
 
+    /**
+     * This method deletes ban in session.
+     * @param req
+     * @param banId
+     */
     private void deleteBanInSession(HttpServletRequest req, Integer banId){
         List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
         banList.removeIf(ban -> ban.getId() == banId);

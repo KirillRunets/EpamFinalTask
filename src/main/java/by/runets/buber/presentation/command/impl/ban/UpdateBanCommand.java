@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement update ban command.
+ */
 public class UpdateBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(UpdateBanCommand.class);
     private UpdateBanService updateBanService;
@@ -41,6 +44,12 @@ public class UpdateBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param ban
+     * @return right router value with route type and page path and also update ban in session.
+     */
     private Router rightRoute(HttpServletRequest req, Ban ban){
         Router router = new Router();
 
@@ -51,6 +60,11 @@ public class UpdateBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and set error message to request.
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -63,6 +77,11 @@ public class UpdateBanCommand implements Command {
         return router;
     }
 
+    /**
+     * This method initialize ban object from request parameters.
+     * @param req
+     * @return ban object if request parameters valid else null
+     */
     private Ban init(HttpServletRequest req){
         Ban ban = null;
 
@@ -80,6 +99,11 @@ public class UpdateBanCommand implements Command {
         return ban;
     }
 
+    /**
+     * This method update ban list in session.
+     * @param req
+     * @param ban
+     */
     private void updateBanInSession(HttpServletRequest req, Ban ban){
         List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
 

@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement command to fill ban form.
+ */
 public class FillBanFormCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(FillBanFormCommand.class);
     private ReadBanService readBanService;

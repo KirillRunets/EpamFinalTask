@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement create ban by admin.
+ */
 public class CreateBanCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(CreateBanCommand.class);
     private CreateBanService createBanService;
@@ -41,6 +44,12 @@ public class CreateBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param ban
+     * @return right router value with route type and page path and also create create ban in session
+     */
     private Router rightRoute(HttpServletRequest req, Ban ban){
         Router router = new Router();
 
@@ -51,6 +60,11 @@ public class CreateBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and also set error message to request
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -63,6 +77,11 @@ public class CreateBanCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return ban value from request
+     */
     private Ban init(HttpServletRequest req) {
         String banType = req.getParameter(RequestParameter.BAN_TYPE);
         String banDescription = req.getParameter(RequestParameter.BAN_DESCRIPTION);
@@ -77,6 +96,11 @@ public class CreateBanCommand implements Command {
         return ban;
     }
 
+    /**
+     * This method creates ban in session
+     * @param req
+     * @param ban
+     */
     private void createBanInSession(HttpServletRequest req, Ban ban){
         List<Ban> banList = (List<Ban>) req.getSession().getAttribute(LabelParameter.BAN_LIST);
         banList.add(ban);
