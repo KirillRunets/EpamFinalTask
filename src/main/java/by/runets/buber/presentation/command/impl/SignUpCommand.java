@@ -29,23 +29,20 @@ public class SignUpCommand implements Command {
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {
         Router router = new Router();
-        String page = null;
 
         String locale = req.getSession(false).getAttribute(RequestParameter.LOCALE) == null ? RequestParameter.DEFAULT_LOCALE : req.getSession().getAttribute(RequestParameter.LOCALE).toString();
         User user = null;
         try {
             user = init(req);
-            page = user != null && userService.registerUser(user)
-                    ? JspPagePath.LOGIN_PAGE
-                    : setErrorAttribute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE), user);
+            router = user != null && userService.registerUser(user)
+                    ? rightRoute()
+                    : errorRoute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.SIGN_UP_ERROR_LABEL_MESSAGE), user);
         } catch (ServiceException e) {
             LOGGER.error(e);
         } catch (AuthenticationException e) {
+            router = errorRoute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.EMAIL_EXIST_LABEL_MESSAGE), user);
             LOGGER.error(e);
-            page = setErrorAttribute(req, LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.EMAIL_EXIST_LABEL_MESSAGE), user);
         }
-        router.setPagePath(page);
-        router.setRouteType(Router.RouteType.FORWARD);
 
         return router;
     }
@@ -56,14 +53,34 @@ public class SignUpCommand implements Command {
         String firstName = req.getParameter(RequestParameter.FIRST_NAME);
         String secondName = req.getParameter(RequestParameter.SECOND_NAME);
         String role = req.getParameter(RequestParameter.USER_ROLE);
+        User user = null;
 
-        return RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role) ? new User(email, password, firstName, secondName, new Role(role)) : null;
+        if (RequestValidator.getInstance().isValidateRegisterData(email, password, firstName, secondName, role)){
+            user = new User(email, password, firstName, secondName, new Role(role));
+        }
+
+        return user;
     }
 
-    private String setErrorAttribute(HttpServletRequest req, String label, String message, User user){
+    private Router rightRoute(){
+        Router router = new Router();
+
+        router.setPagePath(JspPagePath.LOGIN_PAGE);
+        router.setRouteType(Router.RouteType.REDIRECT);
+
+        return router;
+    }
+
+    private Router errorRoute(HttpServletRequest req, String label, String message, User user){
+        Router router = new Router();
+
         req.setAttribute(label, message);
         req.setAttribute(UserRoleType.USER, user);
-        return JspPagePath.SIGN_UP_PAGE;
+
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(JspPagePath.SIGN_UP_PAGE);
+
+        return router;
     }
 }
 

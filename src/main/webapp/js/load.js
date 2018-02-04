@@ -56,6 +56,10 @@ function deleteCommand(type) {
             document.getElementById('command_id').value = type;
             document.getElementById('ban_id').value = selectedRowId;
             break;
+        case 'delete_bonus':
+            document.getElementById('command_id').value = type;
+            document.getElementById('bonus_id').value = selectedRowId;
+            break;
     }
 }
 
@@ -94,6 +98,7 @@ function loadCommand(type) {
         case 'show_order':
         case 'show_transaction':
         case 'show_ban':
+        case 'show_bonus':
             document.getElementById('admin_command_id').value = type;
             break;
         case 'confirm':
@@ -110,7 +115,14 @@ function loadCommand(type) {
         case 'load_ban_form':
             document.getElementById('command_id').value = type;
             document.getElementById('ban_id').value = selectedRowId;
-            console.log(selectedRowId);
+            break;
+        case 'load_bonus_form':
+            document.getElementById('command_id').value = type;
+            document.getElementById('bonus_id').value = selectedRowId;
+            break;
+        case 'set_bonus':
+            document.getElementById('user_command_id').value = type;
+            document.getElementById('user_id').value = selectedRowId;
             break;
     }
 

@@ -25,4 +25,6 @@ public class LabelParameter {
     public final static String ORDER_LIST = "orderList";
     public final static String TRANSACTION_LIST = "transactionList";
     public final static String BAN = "ban";
+    public final static String BONUS_LIST = "bonusList";
+    public final static String BONUS = "bonus";
 }

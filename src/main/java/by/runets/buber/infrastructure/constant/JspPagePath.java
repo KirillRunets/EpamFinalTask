@@ -24,6 +24,9 @@ public class JspPagePath {
     public final static String DRIVER_CAR_PROFILE_PAGE = "jsp/driver/car_profile.jsp";
     public final static String CAR_FORM_PAGE = "jsp/car/car_form.jsp";
 
+    public final static String BONUS_PAGE = "/jsp/bonus/bonus.jsp";
+    public final static String BONUS_FORM = "/jsp/bonus/bonus_form.jsp";
+
     public final static String ERROR_USER_NOTIFICATION = "jsp/error_user_notification.jsp";
     public final static String FREE_DRIVERS_FOR_PASSENGER_PAGE = "/jsp/passenger/free_drivers_for_passenger.jsp";
     public final static String TRANSACTION_PAGE = "/jsp/admin/admin_transaction_list.jsp";

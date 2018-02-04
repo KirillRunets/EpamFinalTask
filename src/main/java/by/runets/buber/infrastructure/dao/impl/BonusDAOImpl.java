@@ -1,5 +1,6 @@
 package by.runets.buber.infrastructure.dao.impl;
 
+import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
@@ -11,6 +12,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +42,7 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
                 bonuses.add(getBonusFromResultSet(resultSet));
             }
         } catch (SQLException e) {
-            throw new DAOException("Selection bonuses exception ", e);
+            throw new DAOException("Find all bonuses DAO exception", e);
         } finally {
            close(preparedStatement, proxyConnection);
         }
@@ -91,16 +93,29 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         PreparedStatement preparedStatement = null;
         boolean state = false;
         try {
-            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BONUS);
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.INSERT_INTO_BONUS,   Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
             preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
             state = preparedStatement.executeUpdate() != 0;
+            if (state){
+                setGeneratedId(bonus, preparedStatement);
+            }
         } catch (SQLException e) {
             throw new DAOException("Insertion exception", e);
         } finally {
            close(preparedStatement, proxyConnection);
         }
         return state;
+    }
+
+    private void setGeneratedId(Bonus bonus, PreparedStatement preparedStatement) throws SQLException, DAOException {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                bonus.setId(generatedKeys.getInt(1));
+            } else {
+                throw new DAOException("Creating bonus failed, no ID obtained.");
+            }
+        }
     }
 
     @Override
@@ -110,12 +125,12 @@ public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
         boolean state = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.UPDATE_BONUS_BY_ID);
-            preparedStatement.setString(1, String.valueOf(bonus.getBonusType()));
-            preparedStatement.setString(2, String.valueOf(bonus.getBonusDescription()));
-            preparedStatement.setInt(7, bonus.getId());
+            preparedStatement.setString(1, bonus.getBonusType());
+            preparedStatement.setString(2, bonus.getBonusDescription());
+            preparedStatement.setInt(3, bonus.getId());
             state = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
-            throw new DAOException("Update exception", e);
+            throw new DAOException("Update bonus DAO exception", e);
         } finally {
            close(preparedStatement, proxyConnection);
         }

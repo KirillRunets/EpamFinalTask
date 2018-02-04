@@ -1,6 +1,7 @@
 package by.runets.buber.presentation.command;
 
 import by.runets.buber.application.service.ban.*;
+import by.runets.buber.application.service.bonus.*;
 import by.runets.buber.application.service.car.CreateCarService;
 import by.runets.buber.application.service.car.DeleteCarService;
 import by.runets.buber.application.service.car.EditCarService;
@@ -13,6 +14,7 @@ import by.runets.buber.application.service.transaction.RollbackTransactionServic
 import by.runets.buber.application.service.user.*;
 import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.*;
+import by.runets.buber.presentation.command.impl.bonus.*;
 import by.runets.buber.presentation.command.impl.car.*;
 import by.runets.buber.presentation.command.impl.load.*;
 import by.runets.buber.presentation.command.impl.order.*;
@@ -40,6 +42,7 @@ public enum CommandType {
     DELETE_BAN(new DeleteBanCommand(new DeleteBanService())),
     UPDATE_BAN(new UpdateBanCommand(new UpdateBanService())),
     LOAD_BAN_FORM(new LoadBanFormCommand(new ReadBanService())),
+    LOAD_BONUS_FORM(new LoadBonusFormCommand(new ReadBonusService())),
     SHOW_BAN(new ReadBanCommand(new ReadBanService())),
     FIND_ALL_VALID_CARS(new ReadCarCommand(new ReadCarService())),
     DELETE_CAR(new DeleteCarCommand(new DeleteCarService())),
@@ -57,7 +60,12 @@ public enum CommandType {
     RATE_USER(new RateUserCommand(new RatingStatisticService())),
     SHOW_ORDER(new ShowOrderCommand(new ReadOrderService())),
     SHOW_TRANSACTION(new ShowTransactionCommand(new ReadTransactionService())),
-    ROLLBACK_TRANSACTION(new RollbackTransactionCommand(new RollbackTransactionService()));
+    ROLLBACK_TRANSACTION(new RollbackTransactionCommand(new RollbackTransactionService())),
+    CREATE_BONUS(new CreateBonusCommand(new CreateBonusService())),
+    DELETE_BONUS(new DeleteBonusCommand(new DeleteBonusService())),
+    UPDATE_BONUS(new UpdateBonusCommand(new UpdateBonusService())),
+    SHOW_BONUS(new ReadBonusCommand(new ReadBonusService())),
+    SET_BONUS(new SetBonusCommand(new SetBonusService()));
 
     private Command command;
 

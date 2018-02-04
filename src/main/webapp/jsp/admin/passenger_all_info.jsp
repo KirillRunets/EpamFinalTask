@@ -63,22 +63,38 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${passengerList}" var="passenger">
-                                    <tr class="line" id="${passenger.id}">
-                                        <td>${passenger.firstName}</td>
-                                        <td>${passenger.secondName}</td>
-                                        <td>${passenger.email}</td>
-                                        <td><fmt:formatDate value="${passenger.birthDate}" /></td>
-                                        <td>${passenger.phoneNumber}</td>
-                                        <td>${passenger.rating}</td>
-                                        <td>${passenger.tripAmount}</td>
-                                    </tr>
+                                    <c:forEach items="${sessionScope.passengerList}" var="passenger">
+                                    <c:choose>
+                                        <c:when test="${passenger.tripAmount > 10}">
+                                            <tr class="yellow line" id="${passenger.id}">
+                                                <td>${passenger.firstName}</td>
+                                                <td>${passenger.secondName}</td>
+                                                <td>${passenger.email}</td>
+                                                <td><fmt:formatDate value="${passenger.birthDate}" /></td>
+                                                <td>${passenger.phoneNumber}</td>
+                                                <td>${passenger.rating}</td>
+                                                <td>${passenger.tripAmount}</td>
+                                            </tr>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <tr class="line" id="${passenger.id}">
+                                            <td>${passenger.firstName}</td>
+                                            <td>${passenger.secondName}</td>
+                                            <td>${passenger.email}</td>
+                                            <td><fmt:formatDate value="${passenger.birthDate}" /></td>
+                                            <td>${passenger.phoneNumber}</td>
+                                            <td>${passenger.rating}</td>
+                                            <td>${passenger.tripAmount}</td>
+                                        </tr>
+                                        </c:otherwise>
+                                    </c:choose>
                                     </c:forEach>
                                 </table>
                                 <div class="button-container">
                                     <button id="btn-load1" class="button-small" onclick="deleteCommand('user');"><fmt:message key="label.delete" bundle="${rb}"/></button>
                                     <button id="btn-load2" class="button-small" onclick="loadCommand('user');"><fmt:message key="label.edit" bundle="${rb}"/></button>
                                     <button id="ban-button" class="button-small" onclick="loadCommand('ban')"><fmt:message key="label.ban" bundle="${rb}"/></button>
+                                    <button id="bonus-button" class="button-small" onclick="loadCommand('set_bonus')"><fmt:message key="label.bonus" bundle="${rb}"/></button>
                                 </div>
                             </form>
                         </div>

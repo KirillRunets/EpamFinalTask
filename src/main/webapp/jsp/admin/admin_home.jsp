@@ -93,6 +93,9 @@
                         <li>
                             <button onclick="loadCommand('show_ban')" class="admin-button"> <i class="fa fa-ban" aria-hidden="true"></i> <fmt:message key="label.showBans" bundle="${rb}"/></button>
                         </li>
+                        <li>
+                            <button onclick="loadCommand('show_bonus')" class="admin-button"> <i class="fa fa-gift" aria-hidden="true"></i> <fmt:message key="label.showBonus" bundle="${rb}"/></button>
+                        </li>
                     </ul>
                 </div>
             </div>

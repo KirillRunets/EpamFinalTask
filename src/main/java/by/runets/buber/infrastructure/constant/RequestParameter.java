@@ -42,4 +42,8 @@ public class RequestParameter {
     public final static String NEW_ORDER = "newOrder";
     public final static String TO_ACCOUNT_ID = "toAccountId";
     public final static String TRANSACTION_ID = "transactionId";
+    public final static String BONUS_TYPE = "bonusType";
+    public final static String BONUS_DESCRIPTION = "bonusDescription";
+    public final static String BONUS_ID = "bonus_id";
+
 }

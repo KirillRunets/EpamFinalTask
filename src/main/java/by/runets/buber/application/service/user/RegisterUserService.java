@@ -21,11 +21,11 @@ public class RegisterUserService {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             UserRoleDAO userRoleDAO = (UserRoleDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             createAccountService.create(account);
-            if (user != null){
+            if (user != null) {
                 user.setAccount(account);
                 user.setRating(5.0);
-                if (!userDAO.isEmailExist(user.getEmail())){
-                    if (userDAO.create(user)){
+                if (!userDAO.isEmailExist(user.getEmail())) {
+                    if (userDAO.create(user)) {
                         state = userRoleDAO.createUserRoleCommunication(user);
                     }
                 } else {
@@ -33,7 +33,7 @@ public class RegisterUserService {
                 }
             }
         } catch (DAOException e) {
-            throw new ServiceException("Register user exception " , e);
+            throw new ServiceException("Register user exception ", e);
         }
         return state;
     }

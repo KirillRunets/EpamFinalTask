@@ -27,7 +27,7 @@
             <li><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home"
                                                                                                    bundle="${rb}"/></a>
             </li>
-            <li class="active"><a href="#"><fmt:message key="label.ban" bundle="${rb}"/></a></li>
+            <li class="active"><a href="#"><fmt:message key="label.bonus" bundle="${rb}"/></a></li>
         </ul>
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
@@ -37,39 +37,33 @@
     </div>
 </nav>
 <div class="form" id="ban-form">
-    <h1><fmt:message key="label.ban" bundle="${rb}"/></h1>
-    <c:if test="${empty sessionScope.ban}">
+    <h1><fmt:message key="label.bonus" bundle="${rb}"/></h1>
+    <c:if test="${empty sessionScope.bonus}">
         <form action="${pageContext.request.contextPath}/controller" method="POST">
-            <input type="hidden" name="command" value="create_ban"/>
+            <input type="hidden" name="command" value="create_bonus"/>
             <div class="hiddenError">
                 <br/>${requestScope.errorLabel}<br/>
             </div>
-            <label><fmt:message key="label.banType" bundle="${rb}"/></label>
-            <input name="banType" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banTypeTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
-            <label><fmt:message key="label.banDescription" bundle="${rb}"/></label>
-<%--
-            <input name="banDescription" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banDescriptionTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/>>
---%>
-            <textarea name="banDescription" type="text" placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/> required>${sessionScope.ban.banDescription}</textarea>
+            <label><fmt:message key="label.bonusType" bundle="${rb}"/></label>
+            <input name="bonusType" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banTypeTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
+            <label><fmt:message key="label.bonusDescription" bundle="${rb}"/></label>
+            <textarea name="bonusDescription" type="text" placeholder=<fmt:message key="label.bonusDescriptionPlaceholder" bundle="${rb}"/> required></textarea>
             <div class="button-container">
                 <button id="btn-load3" class="button-small"><fmt:message key="label.submit" bundle="${rb}"/></button>
             </div>
         </form>
     </c:if>
-    <c:if test="${not empty sessionScope.ban}">
+    <c:if test="${not empty sessionScope.bonus}">
         <form id="notEmptyForm" action="${pageContext.request.contextPath}/controller" method="POST">
-            <input type="hidden" name="command" value="update_ban"/>
-            <input type="hidden" name="ban_id" value="${sessionScope.ban.id}"/>
+            <input type="hidden" name="command" value="update_bonus"/>
+            <input type="hidden" name="bonus_id" value="${sessionScope.bonus.id}"/>
             <div class="hiddenError">
                 <br/>${requestScope.errorLabel}<br/>
             </div>
-            <label><fmt:message key="label.banType" bundle="${rb}"/></label>
-            <input name="banType" type="text" value="${sessionScope.ban.banType}" pattern='([A-Z][a-z]+)|([А-ЯІЎЁ][а-яіўё]+)' required placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
-            <label><fmt:message key="label.banDescription" bundle="${rb}"/></label>
-<%--
-            <input name="banDescription" type="text" value="${sessionScope.ban.banDescription}" pattern='([A-Z][a-z]+)|([А-ЯІЎЁ][а-яіўё]+)' required placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/>>
---%>
-            <textarea name="banDescription" type="text" placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/> required>${sessionScope.ban.banDescription}</textarea>
+            <label><fmt:message key="label.bonusType" bundle="${rb}"/></label>
+            <input name="bonusType" type="text" value="${sessionScope.bonus.bonusType}" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required placeholder=<fmt:message key="label.bonusTypePlaceholder" bundle="${rb}"/>>
+            <label><fmt:message key="label.bonusDescription" bundle="${rb}"/></label>
+            <textarea name="bonusDescription" type="text" placeholder=<fmt:message key="label.bonusDescriptionPlaceholder" bundle="${rb}"/> required>${sessionScope.bonus.bonusDescription}</textarea>
             <div class="button-container">
                 <button class="button-small"><fmt:message key="label.submit" bundle="${rb}"/></button>
             </div>

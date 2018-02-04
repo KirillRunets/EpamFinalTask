@@ -77,14 +77,14 @@ public class DatabaseQueryConstant {
     public final static String FIND_BAN_BY_ID = "SELECT b_id, b_name, b_description FROM ban_reason WHERE b_id=?";
     public final static String DELETE_BAN_BY_ID = "DELETE FROM ban_reason WHERE b_id=?";
     public final static String INSERT_INTO_BAN = "INSERT INTO ban_reason(b_name, b_description) VALUES(?, ?)";
-    public final static String UPDATE_BAN_BY_ID = "UPDATE ban_reason SET b_name=?, b_description=?";
+    public final static String UPDATE_BAN_BY_ID = "UPDATE ban_reason SET b_name=?, b_description=? WHERE b_id=?";
 
     //bonus
-    public final static String  FIND_ALL_BONUSES = "SELECT bonus_name, bonus_description FROM bonus";
-    public final static String FIND_BONUS_BY_ID = "SELECT bonus_name, bonus_description FROM bonus WHERE bonus_id=?";
+    public final static String  FIND_ALL_BONUSES = "SELECT bonus_id, bonus_name, bonus_description FROM bonus";
+    public final static String FIND_BONUS_BY_ID = "SELECT bonus_id, bonus_name, bonus_description FROM bonus WHERE bonus_id=?";
     public final static String DELETE_BONUS_BY_ID = "DELETE FROM bonus WHERE bonus_id=?";
     public final static String INSERT_INTO_BONUS = "INSERT INTO bonus(bonus_name, bonus_description) VALUES(?,?)";
-    public final static String UPDATE_BONUS_BY_ID = "UPDATE bonus SET bonus_name?, bonus_description=? WHERE bonus_id=?";
+    public final static String UPDATE_BONUS_BY_ID = "UPDATE bonus SET bonus_name=?, bonus_description=? WHERE bonus_id=?";
 
     //user_m2m_role
     public final static String INSERT_INTO_USER_M2M_ROLE = "INSERT INTO user_m2m_role(ur_id, u_id) VALUES(?,?)";

@@ -33,9 +33,7 @@
             <h1><fmt:message key="label.current" bundle="${rb}"/></h1>
             <input type="hidden" name="command" value="signup"/>
             <div id="hiddenError">
-                <br/>
-                ${errorLabel}
-                <br/>
+                <br/>${requestScope.errorLabel}<br/>
             </div>
             <c:if test="${empty requestScope.USER}">
                 <div class="top-row">
@@ -98,8 +96,7 @@
                        placeholder=<fmt:message key="label.password" bundle="${rb}"/>>
 
                 <label><fmt:message key="label.role" bundle="${rb}"/></label>
-                <select name="role" required id="userRole">
-                    <option disabled value="NONE"><fmt:message key="label.chooseRole" bundle="${rb}"/></option>
+                <select name="user_role" required id="userRole">
                     <option value="DRIVER"><fmt:message key="label.driver" bundle="${rb}"/></option>
                     <option value="PASSENGER"><fmt:message key="label.passenger" bundle="${rb}"/></option>
                 </select>
