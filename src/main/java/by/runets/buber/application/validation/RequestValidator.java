@@ -77,4 +77,8 @@ public class RequestValidator {
         return amount != null && amount > 0;
     }
 
+    public boolean isValidateBonusData(String bonusId){
+        return  isStringEqualsPattern(bonusId, ValidationConstant.INTEGER_NUMBER_PATTERN);
+    }
+
 }

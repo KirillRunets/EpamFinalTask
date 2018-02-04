@@ -11,6 +11,7 @@ public interface UserDAO extends AbstractDAO<Integer, User> {
     boolean isEmailExist(String email) throws DAOException;
     User checkEmailPassword(String email, String password) throws DAOException;
     boolean setBanToUser(User user) throws DAOException;
+    boolean setBonusToUser(User user) throws DAOException;
     List<User> readBannedUsers() throws DAOException;
     int changePassword(String newPassword, int id) throws DAOException;
     String findPassword(int id) throws DAOException;

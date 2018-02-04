@@ -67,6 +67,10 @@ function banCommand() {
     document.getElementById('ban_id').value = selectedRowId;
 }
 
+function bonusCommand() {
+    document.getElementById('bonus_id').value = selectedRowId;
+}
+
 function loadCommand(type) {
     switch (type){
         case 'order':
@@ -120,7 +124,7 @@ function loadCommand(type) {
             document.getElementById('command_id').value = type;
             document.getElementById('bonus_id').value = selectedRowId;
             break;
-        case 'set_bonus':
+        case 'fill_bonus_form':
             document.getElementById('user_command_id').value = type;
             document.getElementById('user_id').value = selectedRowId;
             break;

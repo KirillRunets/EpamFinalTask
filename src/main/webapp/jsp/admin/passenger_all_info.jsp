@@ -94,7 +94,7 @@
                                     <button id="btn-load1" class="button-small" onclick="deleteCommand('user');"><fmt:message key="label.delete" bundle="${rb}"/></button>
                                     <button id="btn-load2" class="button-small" onclick="loadCommand('user');"><fmt:message key="label.edit" bundle="${rb}"/></button>
                                     <button id="ban-button" class="button-small" onclick="loadCommand('ban')"><fmt:message key="label.ban" bundle="${rb}"/></button>
-                                    <button id="bonus-button" class="button-small" onclick="loadCommand('set_bonus')"><fmt:message key="label.bonus" bundle="${rb}"/></button>
+                                    <button id="bonus-button" class="button-small" onclick="loadCommand('fill_bonus_form')"><fmt:message key="label.bonus" bundle="${rb}"/></button>
                                 </div>
                             </form>
                         </div>

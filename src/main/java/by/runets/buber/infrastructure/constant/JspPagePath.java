@@ -30,4 +30,5 @@ public class JspPagePath {
     public final static String ERROR_USER_NOTIFICATION = "jsp/error_user_notification.jsp";
     public final static String FREE_DRIVERS_FOR_PASSENGER_PAGE = "/jsp/passenger/free_drivers_for_passenger.jsp";
     public final static String TRANSACTION_PAGE = "/jsp/admin/admin_transaction_list.jsp";
+    public final static String SET_BONUS_FORM_PAGE = "/jsp/admin/bonus_form.jsp";
 }

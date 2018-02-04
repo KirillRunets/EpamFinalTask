@@ -10,6 +10,7 @@ public class DatabaseQueryConstant {
     public final static String CREATE_NEW_ACCOUNT = "INSERT INTO account(account_amount) VALUES(10000);";
     //user
     public final static String SET_BAN_TO_USER = "UPDATE user SET ban=?, unban_date=?  WHERE id=?";
+    public final static String SET_BONUS_TO_USER = "UPDATE user SET bonus=?  WHERE id=?";
     public final static String FIND_ALL_USERS = "SELECT id, email, password, first_name, second_name, birth_date, ban, unban_date, phone_number, rating, bonus, trip_amount, r_name, r_id FROM user AS u\n" +
             "INNER JOIN user_m2m_role AS ur\n" +
             "ON u.id = ur.u_id\n" +

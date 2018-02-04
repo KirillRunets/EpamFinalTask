@@ -38,6 +38,7 @@ public enum CommandType {
     UNBAN_USER(new RevokeBanCommand(new RevokeBanService())),
     SHOW_BANNED_USERS(new ShowBannedUsersCommand(new ReadBanUserService())),
     FILL_BAN_FORM(new FillBanFormCommand(new ReadBanService())),
+    FILL_BONUS_FORM(new FillBonusFormCommand(new ReadBonusService())),
     CREATE_BAN(new CreateBanCommand(new CreateBanService())),
     DELETE_BAN(new DeleteBanCommand(new DeleteBanService())),
     UPDATE_BAN(new UpdateBanCommand(new UpdateBanService())),

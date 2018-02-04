@@ -35,7 +35,7 @@ public class FillBanFormCommand implements Command {
             req.getSession().setAttribute(RequestParameter.USER_ID, userId);
             try {
                 banList = readBanService.find();
-                req.setAttribute(LabelParameter.BAN_LIST, banList);
+                req.getSession().setAttribute(LabelParameter.BAN_LIST, banList);
                 page = JspPagePath.BAN_FORM_PAGE;
             } catch (ServiceException e) {
                 LOGGER.error(e);

@@ -308,6 +308,24 @@ public class UserDAOImpl implements UserRoleDAO, UserDAO {
         return state;
     }
 
+    @Override
+    public boolean setBonusToUser(User user) throws DAOException {
+        ProxyConnection proxyConnection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        boolean state = false;
+        try {
+            preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.SET_BONUS_TO_USER);
+            preparedStatement.setInt(1, user.getBonus().getId());
+            preparedStatement.setInt(2, user.getId());
+            state = preparedStatement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            throw new DAOException("SET bonus to user exception ", e);
+        } finally {
+            close(preparedStatement, proxyConnection);
+        }
+        return state;
+    }
+
     private void setBanToPreparedStatement(User user, PreparedStatement preparedStatement) throws SQLException {
         if (user.getBan() != null) {
             preparedStatement.setInt(1, user.getBan().getId());
