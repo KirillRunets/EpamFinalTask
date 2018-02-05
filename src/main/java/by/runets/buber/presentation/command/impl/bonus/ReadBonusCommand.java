@@ -1,7 +1,6 @@
 package by.runets.buber.presentation.command.impl.bonus;
 
 import by.runets.buber.application.service.bonus.ReadBonusService;
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.LabelParameter;
@@ -18,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement read bonus command from admin.
+ */
 public class ReadBonusCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(DeleteBonusCommand.class);
     private ReadBonusService readBonusService;
@@ -42,6 +44,12 @@ public class ReadBonusCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param bonusList
+     * @return right router value with route type and page path and also set bonusList to session.
+     */
     private Router rightRoute(HttpServletRequest req, List<Bonus> bonusList){
         Router router = new Router();
         req.getSession().setAttribute(LabelParameter.BONUS_LIST, bonusList);
@@ -52,6 +60,11 @@ public class ReadBonusCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and also set error message to request.
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 

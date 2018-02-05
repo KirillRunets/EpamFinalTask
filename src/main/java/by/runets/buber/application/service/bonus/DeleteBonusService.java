@@ -6,7 +6,9 @@ import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
-
+/**
+ * This class provides method to delete bonus in DAO.
+ */
 public class DeleteBonusService {
     public boolean delete(Bonus bonus) throws ServiceException {
         boolean isDeleted = false;

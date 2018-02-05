@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to read all user pay transactions from DAO.
+ */
 public class ReadTransactionService {
     public List<Transaction> read() throws ServiceException {
         List<Transaction> transactions = null;

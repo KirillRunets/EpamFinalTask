@@ -11,6 +11,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method which check is exist order for user.
+ */
 public class OrderExistService {
     public Order isExistOrderForUser(User user) throws ServiceException {
         Order order = null;

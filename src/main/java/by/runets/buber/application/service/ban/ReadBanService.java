@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to read ban in DAO.
+ */
 public class ReadBanService {
     public List<Ban> find() throws ServiceException {
         AbstractDAO abstractDAO = null;

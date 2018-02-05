@@ -16,6 +16,9 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
+/**
+ * Provide methods to work with order table.
+ */
 public class OrderDAOImpl implements OrderDAO {
     private static OrderDAOImpl instance;
 

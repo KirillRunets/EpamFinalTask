@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to delete car in DAO.
+ */
 public class DeleteCarService {
     public void delete(Car car) throws ServiceException {
         try {

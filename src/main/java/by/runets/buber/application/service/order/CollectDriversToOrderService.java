@@ -12,6 +12,9 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.logging.Logger;
 
+/**
+ * This class provides method to collect free drivers by distance data.
+ */
 public class CollectDriversToOrderService {
     public Queue<User> collect(User passenger) throws ServiceException {
         List<User> driverList = null;

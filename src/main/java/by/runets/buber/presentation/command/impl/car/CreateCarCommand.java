@@ -6,7 +6,6 @@ import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
 import by.runets.buber.infrastructure.exception.ServiceException;
-import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
@@ -18,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * This class provides method to implement create car command from admin or driver role type.
+ */
 public class CreateCarCommand extends CarCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(CreateCarCommand.class);
     private CreateCarService createCarService;
@@ -56,6 +58,14 @@ public class CreateCarCommand extends CarCommand implements Command {
         return router;
     }
 
+    /**
+     * Call if session user role type is admin. Initialize car object if request values are valid else return null.
+     * @param req
+     * @param user
+     * @param locale
+     * @return user object or null.
+     * @throws ParseException
+     */
     private Car initByAdmin(HttpServletRequest req, User user, String locale) throws ParseException {
         Car car = null;
 
@@ -71,6 +81,14 @@ public class CreateCarCommand extends CarCommand implements Command {
         return car;
     }
 
+    /**
+     * Call if session user role type is driver. Initialize car object if request values are valid else return null.
+     * @param req
+     * @param user
+     * @param locale
+     * @return car object or null.
+     * @throws ParseException
+     */
     private Car initByDriver(HttpServletRequest req, User user, String locale) throws ParseException {
         Car car = null;
         String markModel = req.getParameter(RequestParameter.MARK_MODEL);

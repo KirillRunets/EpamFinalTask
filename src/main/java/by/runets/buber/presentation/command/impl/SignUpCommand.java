@@ -17,7 +17,9 @@ import org.apache.logging.log4j.Logger;
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * This class provides method to implement sign up command.
+ */
 public class SignUpCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(SignUpCommand.class);
     private RegisterUserService userService;

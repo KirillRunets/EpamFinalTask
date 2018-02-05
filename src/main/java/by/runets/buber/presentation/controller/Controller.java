@@ -25,7 +25,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class realize front controller pattern.
+ */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
     private final static Logger LOGGER = LogManager.getLogger(Controller.class);

@@ -13,6 +13,9 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Stream;
 
+/**
+ * This class provides method to calculate user rating statistic.
+ */
 public class RatingStatisticService {
     public boolean calculateAverageRating(Double ratingFromAnotherUser, Integer id) throws ServiceException {
         Double averageRating = 0.0;

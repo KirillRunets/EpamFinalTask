@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to read bonus in DAO.
+ */
 public class ReadBonusService {
     public List<Bonus> readAll() throws ServiceException {
         List<Bonus> listBonus = null;

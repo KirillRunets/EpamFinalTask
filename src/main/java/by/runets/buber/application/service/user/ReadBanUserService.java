@@ -13,6 +13,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This class provides method to read ban user from DAO.
+ */
 public class ReadBanUserService {
     public List<User> read() throws ServiceException {
         List<User> userList = null;
@@ -21,11 +24,14 @@ public class ReadBanUserService {
             UserDAO userDAO = (UserDAO) DAOFactory.getInstance().createDAO(DAOType.USER_DAO_TYPE);
             AbstractDAO abstractDAO = DAOFactory.getInstance().createDAO(DAOType.BAN_DAO_TYPE);
             JoinService joinService = new JoinService();
+
             banList = abstractDAO.findAll();
             userList = userDAO.readBannedUsers();
+
             for (User user : userList){
                 joinService.join(user);
             }
+
             for (Ban ban : banList){
                 for (User user : userList){
                     if (user.getBan().getId() == ban.getId()){
@@ -38,4 +44,5 @@ public class ReadBanUserService {
         }
         return userList;
     }
+
 }

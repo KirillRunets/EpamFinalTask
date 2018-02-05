@@ -4,7 +4,6 @@ import by.runets.buber.application.service.user.ChangePasswordService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
-import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.presentation.command.Command;
@@ -15,6 +14,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides method to implement change password command from driver of passenger.
+ */
 public class ChangePasswordCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(ChangePasswordCommand.class);
     private ChangePasswordService changePasswordService;

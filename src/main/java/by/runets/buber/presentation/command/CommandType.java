@@ -22,6 +22,9 @@ import by.runets.buber.presentation.command.impl.transaction.RollbackTransaction
 import by.runets.buber.presentation.command.impl.transaction.ShowTransactionCommand;
 import by.runets.buber.presentation.command.impl.user.*;
 
+/**
+ * This enum contains attributes which provides special command class and service.
+ */
 public enum CommandType {
     LOGIN(new LoginCommand(new LoginUserService(), new OrderStatisticService())),
     SIGNUP(new SignUpCommand(new RegisterUserService())),
@@ -47,7 +50,7 @@ public enum CommandType {
     SHOW_BAN(new ReadBanCommand(new ReadBanService())),
     FIND_ALL_VALID_CARS(new ReadCarCommand(new ReadCarService())),
     DELETE_CAR(new DeleteCarCommand(new DeleteCarService())),
-    EDIT_CAR(new EditCarCommand(new EditCarService())),
+    EDIT_CAR(new UpdateCarCommand(new EditCarService())),
     LOAD_VALID_CAR_TO_EDIT(new LoadEditCarPageCommand(new ReadCarService())),
     LOAD_VALID_CAR_TO_ADD(new LoadValidCarPage()),
     ADD_CAR(new CreateCarCommand(new CreateCarService())),

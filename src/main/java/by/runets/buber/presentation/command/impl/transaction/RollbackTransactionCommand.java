@@ -17,6 +17,9 @@ import org.apache.logging.log4j.core.appender.routing.Route;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides method to implement rollback transaction command from admin.
+ */
 public class RollbackTransactionCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(RollbackTransactionCommand.class);
     private RollbackTransactionService rollbackTransactionService;

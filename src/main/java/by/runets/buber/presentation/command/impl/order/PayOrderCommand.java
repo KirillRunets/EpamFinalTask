@@ -19,6 +19,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides method to implement pay order from passenger.
+ */
 public class PayOrderCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(PayOrderCommand.class);
     private PayOrderService payOrderService;

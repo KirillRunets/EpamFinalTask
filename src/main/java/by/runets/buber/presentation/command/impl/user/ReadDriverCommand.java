@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class provides methods to implement read driver command.
+ */
 public class ReadDriverCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(ReadDriverCommand.class);
     private ReadUserService readUserService;

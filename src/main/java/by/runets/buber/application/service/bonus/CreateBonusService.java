@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to create bonus in DAO.
+ */
 public class CreateBonusService {
     public boolean create(Bonus bonus) throws ServiceException {
         boolean isCreated = false;

@@ -6,6 +6,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to complete order in DAO.
+ */
 public class CompleteOrderService {
     public boolean complete(Integer orderId) throws ServiceException {
         boolean state = false;

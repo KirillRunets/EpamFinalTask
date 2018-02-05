@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Provide methods to work with car table.
+ */
 public class CarDAOImpl implements AbstractDAO<Integer, Car> {
     private static CarDAOImpl instance;
 

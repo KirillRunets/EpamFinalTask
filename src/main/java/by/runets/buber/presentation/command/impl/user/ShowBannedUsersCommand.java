@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement show banned users command.
+ */
 public class ShowBannedUsersCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(ShowBannedUsersCommand.class);
     private ReadBanUserService readBanUserService;

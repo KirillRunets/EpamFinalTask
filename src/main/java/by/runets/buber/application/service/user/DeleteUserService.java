@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to delete user  in DAO.
+ */
 public class DeleteUserService {
     public boolean delete(String id, String role) throws ServiceException {
         boolean state = false;

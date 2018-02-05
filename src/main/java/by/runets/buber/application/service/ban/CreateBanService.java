@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to create ban in DAO.
+ */
 public class CreateBanService {
     public boolean create(Ban ban) throws ServiceException {
         boolean isCreated = false;

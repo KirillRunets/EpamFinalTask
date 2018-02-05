@@ -16,7 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Provide methods to work with ban table.
+ */
 public class BanDAOImpl implements AbstractDAO<Integer, Ban> {
     private static BanDAOImpl instance;
 

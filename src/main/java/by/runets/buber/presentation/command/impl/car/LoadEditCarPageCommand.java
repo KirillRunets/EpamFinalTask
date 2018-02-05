@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 
+/**
+ * This class provides method to implement load car data to jsp form command.
+ */
 public class LoadEditCarPageCommand extends CarCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoadEditCarPageCommand.class);
     private ReadCarService readCarService;

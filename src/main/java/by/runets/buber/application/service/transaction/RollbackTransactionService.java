@@ -11,6 +11,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.Date;
 
+/**
+ * This class provides method to rollback user pay transaction.
+ */
 public class RollbackTransactionService {
     public void rollbackTransaction(Integer transactionId) throws ServiceException {
         Account rollbackTo = null;

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * This class provides method to implement log out command.
+ */
 public class LogoutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {

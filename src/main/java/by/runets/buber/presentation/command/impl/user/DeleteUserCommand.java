@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * This class provides methods to implement delete user command
+ */
 public class DeleteUserCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(DeleteUserCommand.class);
     private DeleteUserService deleteUserService;

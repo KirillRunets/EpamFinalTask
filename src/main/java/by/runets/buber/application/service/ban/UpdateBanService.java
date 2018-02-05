@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to update ban in DAO.
+ */
 public class UpdateBanService {
     public boolean update(Ban ban) throws ServiceException {
         boolean isUpdated = false;

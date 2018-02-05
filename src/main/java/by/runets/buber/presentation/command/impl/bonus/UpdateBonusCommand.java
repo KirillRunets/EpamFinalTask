@@ -2,7 +2,6 @@ package by.runets.buber.presentation.command.impl.bonus;
 
 import by.runets.buber.application.service.bonus.UpdateBonusService;
 import by.runets.buber.application.validation.RequestValidator;
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.LabelParameter;
@@ -19,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement update bonus command from admin.
+ */
 public class UpdateBonusCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(DeleteBonusCommand.class);
     private UpdateBonusService updateBonusService;
@@ -42,6 +44,12 @@ public class UpdateBonusCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param bonus
+     * @return right router value with route type and page path and also update bonus in session bonus list.
+     */
     private Router rightRoute(HttpServletRequest req, Bonus bonus){
         Router router = new Router();
 
@@ -52,6 +60,11 @@ public class UpdateBonusCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and also set error message to request.
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -64,6 +77,11 @@ public class UpdateBonusCommand implements Command {
         return router;
     }
 
+    /**
+     * Init bonus object from request values.
+     * @param req
+     * @return bonus object if request values are valid or null.
+     */
     private Bonus init(HttpServletRequest req){
         Bonus bonus = null;
 
@@ -81,6 +99,11 @@ public class UpdateBonusCommand implements Command {
         return bonus;
     }
 
+    /**
+     * Update bonus list in session.
+     * @param req
+     * @param bonus
+     */
     private void updateBonusInSession(HttpServletRequest req, Bonus bonus){
         List<Bonus> bonusList = (List<Bonus>) req.getSession().getAttribute(LabelParameter.BONUS_LIST);
 

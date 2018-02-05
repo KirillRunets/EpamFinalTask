@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class provides method to implement login command.
+ */
 public class LoginCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private LoginUserService userService;

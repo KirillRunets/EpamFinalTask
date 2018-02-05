@@ -6,7 +6,9 @@ import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
-
+/**
+ * This class provides method to delete ban in DAO.
+ */
 public class DeleteBanService {
     public boolean delete(Ban ban) throws ServiceException {
         boolean isDeleted = false;

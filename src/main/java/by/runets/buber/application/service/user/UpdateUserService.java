@@ -11,6 +11,9 @@ import by.runets.buber.infrastructure.dao.impl.CarDAOImpl;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to update user in DAO.
+ */
 public class UpdateUserService {
     public boolean update(User user) throws ServiceException {
         boolean isUpdated = false;

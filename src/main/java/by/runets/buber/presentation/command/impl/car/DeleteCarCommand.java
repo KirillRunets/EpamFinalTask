@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.List;
 
+/**
+ * This class provides method to implement delete car command from admin or driver role type.
+ */
 public class DeleteCarCommand extends CarCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(DeleteCarCommand.class);
     private DeleteCarService deleteCarService;

@@ -16,6 +16,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.Date;
 
+/**
+ * This class provides method to pay order in DAO.
+ */
 public class PayOrderService {
     public void payOrder(User fromUser, User driver, Double amount, Order order) throws ServiceException {
         Account from = fromUser.getAccount();

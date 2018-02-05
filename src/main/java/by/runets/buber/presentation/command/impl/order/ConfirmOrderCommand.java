@@ -16,6 +16,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides method to confirm order command from passenger.
+ */
 public class ConfirmOrderCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(ConfirmOrderCommand.class);
     private ConfirmOrderService confirmOrderService;

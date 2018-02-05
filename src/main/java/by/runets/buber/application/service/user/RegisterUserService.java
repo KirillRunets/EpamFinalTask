@@ -12,6 +12,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import javax.naming.AuthenticationException;
 
+/**
+ * This class provides method to register user in DAO.
+ */
 public class RegisterUserService {
     public boolean registerUser(User user) throws ServiceException, AuthenticationException {
         CreateAccountService createAccountService = new CreateAccountService();

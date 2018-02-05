@@ -1,12 +1,10 @@
 package by.runets.buber.infrastructure.dao.impl;
 
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
-import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
-import by.runets.buber.infrastructure.exception.ConnectionException;
+import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.exception.DAOException;
 
 import java.sql.PreparedStatement;
@@ -15,8 +13,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Provide methods to work with bonus table.
+ */
 public class BonusDAOImpl implements AbstractDAO<Integer, Bonus> {
     private static BonusDAOImpl instance;
 

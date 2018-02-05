@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * This class provides method to implement change locale command.
+ */
 public class ChangeLocaleCommand implements Command {
     @Override
     public Router execute(HttpServletRequest req, HttpServletResponse res) {

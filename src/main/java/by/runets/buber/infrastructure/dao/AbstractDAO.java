@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+/**
+ * Provides methods to CRUD table data.
+ */
 public interface AbstractDAO<K, T extends Entity> {
     Logger LOGGER = LogManager.getLogger(AbstractDAO.class);
 

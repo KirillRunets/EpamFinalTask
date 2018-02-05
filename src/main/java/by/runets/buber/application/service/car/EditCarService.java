@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to update car in DAO.
+ */
 public class EditCarService {
     public boolean edit(Car car) throws ServiceException {
         boolean state = false;

@@ -18,6 +18,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides methods to implement rate user command.
+ */
 public class RateUserCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(RateUserCommand.class);
     private RatingStatisticService ratingStatisticService;
@@ -57,10 +60,4 @@ public class RateUserCommand implements Command {
         return router;
     }
 
-    /*private Order init(User sessionUser){
-        return sessionUser.getOrderSet()
-                .stream()
-                .reduce((first, second) -> second)
-                .orElse(null);
-    }*/
 }

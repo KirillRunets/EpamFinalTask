@@ -5,6 +5,9 @@ import by.runets.buber.domain.enumeration.TrafficEnum;
 import by.runets.buber.infrastructure.constant.OrderConstant;
 import by.runets.buber.infrastructure.util.RandomGenerator;
 
+/**
+ * This class provides method to calculate order data.
+ */
 public class CalculateOrderDataService {
     public Double calculateDistance(Point departurePoint, Point destinationPoint){
         Double distance = Math.hypot((destinationPoint.getX() - departurePoint.getX()), (destinationPoint.getY() - departurePoint.getY()));

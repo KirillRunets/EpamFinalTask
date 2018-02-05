@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to update bonus in DAO.
+ */
 public class UpdateBonusService {
     public boolean update(Bonus bonus) throws ServiceException {
         boolean isUpdated = false;

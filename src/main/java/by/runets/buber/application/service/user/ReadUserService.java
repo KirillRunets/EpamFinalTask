@@ -10,6 +10,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to read user from DAO.
+ */
 public class ReadUserService {
     private final static int NULL = 0;
 

@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement show all transactions command to admin.
+ */
 public class ShowTransactionCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(ShowOrderCommand.class);
     private ReadTransactionService readTransactionService;

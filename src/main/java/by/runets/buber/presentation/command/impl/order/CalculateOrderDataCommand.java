@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import java.util.Queue;
 
+/**
+ * This class provides method to calculate order data like trip cost, trip time, trip distance and other from passenger request.
+ */
 public class CalculateOrderDataCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(CalculateOrderDataCommand.class);
     private CalculateOrderDataService calculateOrderDistanceService;

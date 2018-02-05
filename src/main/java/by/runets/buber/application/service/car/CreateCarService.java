@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to create car in DAO.
+ */
 public class CreateCarService {
     public boolean create(Car car) throws ServiceException {
         boolean isCreated = true;

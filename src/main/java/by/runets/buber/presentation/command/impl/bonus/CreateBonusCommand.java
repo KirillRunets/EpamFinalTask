@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement create bonus command from admin.
+ */
 public class CreateBonusCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(CreateBonusCommand.class);
     private CreateBonusService createBonusService;
@@ -40,7 +43,12 @@ public class CreateBonusCommand implements Command {
 
         return router;
     }
-
+    /**
+     *
+     * @param req
+     * @param bonus
+     * @return right router value with route type and page path and also create bonus in session.
+     */
     private Router rightRoute(HttpServletRequest req, Bonus bonus) {
         Router router = new Router();
 
@@ -52,6 +60,11 @@ public class CreateBonusCommand implements Command {
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -64,12 +77,22 @@ public class CreateBonusCommand implements Command {
         return router;
     }
 
+    /**
+     * This method creates bonus object in user session.
+     * @param req
+     * @param bonus
+     */
     private void createBonusInSession(HttpServletRequest req, Bonus bonus){
         List<Bonus> bonusList = (List<Bonus>) req.getSession().getAttribute(LabelParameter.BONUS_LIST);
         bonusList.add(bonus);
         req.getSession().setAttribute(LabelParameter.BONUS_LIST, bonusList);
     }
 
+    /**
+     * This method get request values and init bonus object if they are valid else null.
+     * @param req
+     * @return bonus object.
+     */
     private Bonus init(HttpServletRequest req){
         String bonusType = req.getParameter(RequestParameter.BONUS_TYPE);
         String bonusDescription = req.getParameter(RequestParameter.BONUS_DESCRIPTION);

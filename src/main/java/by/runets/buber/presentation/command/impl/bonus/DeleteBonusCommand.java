@@ -2,7 +2,6 @@ package by.runets.buber.presentation.command.impl.bonus;
 
 import by.runets.buber.application.service.bonus.DeleteBonusService;
 import by.runets.buber.application.validation.RequestValidator;
-import by.runets.buber.domain.entity.Ban;
 import by.runets.buber.domain.entity.Bonus;
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.LabelParameter;
@@ -19,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+
+/**
+ * This class provides method to implement delete bonus command from admin.
+ */
 public class DeleteBonusCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(DeleteBonusCommand.class);
     private DeleteBonusService deleteBonusService;
@@ -43,6 +46,12 @@ public class DeleteBonusCommand implements Command{
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @param banId
+     * @return right router value with route type and page path and also delete bonus object in session bonus list.
+     */
     private Router rightRoute(HttpServletRequest req, Integer banId) {
         Router router = new Router();
 
@@ -53,6 +62,11 @@ public class DeleteBonusCommand implements Command{
         return router;
     }
 
+    /**
+     *
+     * @param req
+     * @return error router value with route type and page path and also set error message to request.
+     */
     private Router errorRoute(HttpServletRequest req) {
         Router router = new Router();
 
@@ -65,6 +79,11 @@ public class DeleteBonusCommand implements Command{
         return router;
     }
 
+    /**
+     * Delete bonus in bonus session list.
+     * @param req
+     * @param bonusId
+     */
     private void deleteBonusInSession(HttpServletRequest req, Integer bonusId){
         List<Bonus> bonusList = (List<Bonus>) req.getSession().getAttribute(LabelParameter.BONUS_LIST);
         bonusList.removeIf(bonus -> bonus.getId() == bonusId);

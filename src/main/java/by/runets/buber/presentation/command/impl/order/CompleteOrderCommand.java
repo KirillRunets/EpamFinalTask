@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provide method to implement complete order command from driver when order is completed.
+ */
 public class CompleteOrderCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(CompleteOrderCommand.class);
     private CompleteOrderService completeOrderService;

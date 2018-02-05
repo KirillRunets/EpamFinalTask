@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to revoke ban in DAO.
+ */
 public class RevokeBanService {
     public boolean revokeBan(User user) throws ServiceException {
         boolean isRevoked = false;

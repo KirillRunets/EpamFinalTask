@@ -11,10 +11,14 @@ import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method to implement read car command from admin or driver role type.
+ */
 public class ReadCarCommand extends CarCommand implements Command{
     private final static Logger LOGGER = LogManager.getLogger(ReadCarCommand.class);
     private ReadCarService readCarService;

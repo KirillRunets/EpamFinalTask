@@ -14,6 +14,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provide methods to work with user table.
+ */
 public class UserDAOImpl implements UserRoleDAO, UserDAO {
     private static UserDAOImpl instance;
 

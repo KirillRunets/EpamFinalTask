@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to make order in DAO.
+ */
 public class MakeOrderService {
     public boolean makeOrder(Order order) throws ServiceException {
         boolean isCreated = false;

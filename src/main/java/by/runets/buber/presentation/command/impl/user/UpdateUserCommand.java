@@ -1,14 +1,14 @@
 package by.runets.buber.presentation.command.impl.user;
 
-import by.runets.buber.application.service.user.ReadUserService;
 import by.runets.buber.application.service.user.UpdateUserService;
 import by.runets.buber.application.validation.RequestValidator;
-import by.runets.buber.domain.entity.Car;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
-import by.runets.buber.infrastructure.constant.*;
+import by.runets.buber.infrastructure.constant.JspPagePath;
+import by.runets.buber.infrastructure.constant.LabelParameter;
+import by.runets.buber.infrastructure.constant.RequestParameter;
+import by.runets.buber.infrastructure.constant.UserRoleType;
 import by.runets.buber.infrastructure.exception.ServiceException;
-import by.runets.buber.infrastructure.util.LocaleFileManager;
 import by.runets.buber.infrastructure.util.NumberFormatLocaleFactory;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
@@ -18,14 +18,14 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class provides method to implement update user command.
+ */
 public class UpdateUserCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(UpdateUserCommand.class);
     private UpdateUserService updateUserService;

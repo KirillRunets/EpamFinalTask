@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Provide methods to work with account table.
+ */
 public class AccountDAOImpl implements AccountDAO {
     private static AccountDAOImpl instance;
     private static Lock lock = new ReentrantLock();

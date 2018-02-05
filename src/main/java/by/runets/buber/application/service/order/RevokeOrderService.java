@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to revoke order in DAO.
+ */
 public class RevokeOrderService {
     public boolean revoke(String role, Integer userId, Integer orderId) throws ServiceException {
         boolean state = false;

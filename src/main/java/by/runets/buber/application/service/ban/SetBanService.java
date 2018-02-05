@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to set ban in DAO.
+ */
 public class SetBanService {
     public void setBan(User user) throws ServiceException {
         if (user != null) {

@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to confirm order in DAO.
+ */
 public class ConfirmOrderService {
     public boolean confirm(Order order) throws ServiceException {
         boolean isConfirmed = false;

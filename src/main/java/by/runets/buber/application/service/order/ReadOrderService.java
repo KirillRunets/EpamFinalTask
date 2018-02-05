@@ -12,6 +12,9 @@ import by.runets.buber.infrastructure.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * This class provides method to read order from DAO.
+ */
 public class ReadOrderService {
     public List<Order> readOrderList() throws ServiceException {
         List<Order> orders = null;

@@ -17,6 +17,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Provide methods to work with transaction table.
+ */
 public class TransactionDAOImpl implements TransactionDAO {
     private static TransactionDAOImpl instance;
 

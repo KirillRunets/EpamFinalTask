@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * This class provides method which set in session all orders.
+ */
 public class ShowOrderCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(ShowOrderCommand.class);
     private ReadOrderService readOrderService;

@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This class provides method to implement revoke order command from driver or passenger.
+ */
 public class RevokeOrderCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(RevokeOrderCommand.class);
     private RevokeOrderService revokeOrderService;

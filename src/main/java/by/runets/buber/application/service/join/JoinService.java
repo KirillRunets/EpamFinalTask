@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This class provides methods to join several objects from different DAO.
+ */
 public class JoinService {
     private final static int NULL = 0;
     public void join(User user) throws ServiceException {

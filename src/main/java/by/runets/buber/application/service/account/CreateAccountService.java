@@ -7,6 +7,9 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+/**
+ * This class provides method to create account with amount 10000.
+ */
 public class CreateAccountService {
     public boolean create(Account account) throws ServiceException {
         boolean state = false;

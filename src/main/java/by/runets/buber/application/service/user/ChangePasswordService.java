@@ -9,6 +9,9 @@ import by.runets.buber.infrastructure.util.PasswordEncrypt;
 
 import javax.xml.ws.Service;
 
+/**
+ * This class provides method to change user password in DAO.
+ */
 public class ChangePasswordService {
     public boolean change(String oldPassword, String newPassword, int userId) throws ServiceException {
         UserDAO userDAO = null;

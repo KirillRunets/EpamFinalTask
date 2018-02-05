@@ -14,6 +14,9 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class provides commons methods to CRUD car object in session.
+ */
 class CarCommand {
     Car init(HttpServletRequest req) throws ParseException {
         Car car = null;
