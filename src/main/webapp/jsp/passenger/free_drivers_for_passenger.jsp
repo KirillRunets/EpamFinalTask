@@ -44,8 +44,14 @@
 <c:if test="${sessionScope.newOrder.confirmed == false && sessionScope.newOrder.paid == false}">
     <div class="static-modal">
         <div class="modal-content">
-            <div class="loader"></div>
-            <p><fmt:message key="label.wait" bundle="${rb}" /></p>
+            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                <div class="loader"></div>
+                <p><fmt:message key="label.wait" bundle="${rb}" /></p>
+                <input type="hidden" name="command" value="revoke_order">
+                <div class="button-container">
+                    <button class="button-small"><fmt:message key="label.revoke" bundle="${rb}"/></button>
+                </div>
+            </form>
         </div>
     </div>
 </c:if>
@@ -94,7 +100,9 @@
                 <input type="hidden" name="command" value="pay_order">
                 <button class="button-small" type="submit"><fmt:message key="label.payOrder" bundle="${rb}" /></button>
             </form>
-            <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
+            <c:if test="${sessionScope.isRated != true}">
+                <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
+            </c:if>
         </div>
     </div>
 </c:if>

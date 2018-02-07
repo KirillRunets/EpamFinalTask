@@ -6,10 +6,12 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title><fmt:message key="label.title" bundle="${rb}"/></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css" />
-    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <title><fmt:message key="label.transactions" bundle="${rb}"/></title>
+    <link href="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css"/>
+    <link href="${pageContext.request.contextPath}/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/social_icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sb-admin.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/sidebar.css">
@@ -38,11 +40,8 @@
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-table"></i> Data Table Example</div>
-                    <div class="card-body">
                         <div class="table-responsive">
-                            <form name="carListForm" action="${pageContext.request.contextPath}/controller" method="POST">
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
                                 <input type="hidden" name="command" id="ban_command_id" value="">
                                 <input type="hidden" name="user_id" id="user_id" value="">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -93,8 +92,11 @@
                                                 <c:if test="${user.role.roleName == 'PASSENGER'}">
                                                     <td><fmt:message key="label.passenger" bundle="${rb}"/></td>
                                                 </c:if>
-                                                <c:if test="${not empty user.car.mark}">
+                                                <c:if test="${not empty user.car}">
                                                     <td>${user.car.mark} ${user.car.model} </td>
+                                                </c:if>
+                                                <c:if test="${empty user.car.mark}">
+                                                    <td><fmt:message key="label.empty" bundle="${rb}"/></td>
                                                 </c:if>
                                                 <td>${user.ban.banDescription}</td>
                                                 <td><fmt:formatDate value="${user.unBaneDate}" /></td>
@@ -116,6 +118,7 @@
     </div>
 </section>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+<script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/datatables/jquery.dataTables.js"></script>

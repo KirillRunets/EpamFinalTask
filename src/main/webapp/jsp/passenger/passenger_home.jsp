@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/passenger.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/form_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/loader.css">
+
 </head>
 <body class="custom-body" onload="init(${sessionScope.tripAmountStatistics})">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -102,6 +104,14 @@
                 </div>
                 <button type="submit" onclick="setValue()" class="button-small">Rate</button>
             </form>
+        </div>
+    </div>
+</c:if>
+<c:if test="${sessionScope.newOrder.confirmed == false && sessionScope.newOrder.paid == false}">
+    <div class="static-modal">
+        <div class="modal-content">
+            <div class="loader"></div>
+            <p><fmt:message key="label.wait" bundle="${rb}" /></p>
         </div>
     </div>
 </c:if>

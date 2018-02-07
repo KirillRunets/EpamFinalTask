@@ -53,7 +53,7 @@
                                 <input type="hidden" name="command" value="signup" />
                                 <div id="hiddenError">
                                     <br/>
-                                    ${errorLabel}
+                                    ${errorLabelMessage}
                                     <br/>
                                 </div>
                                 <div class="top-row">

@@ -9,6 +9,7 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class RollbackTransactionService {
     public void rollbackTransaction(Integer transactionId) throws ServiceException {
         Account rollbackTo = null;
         Account rollbackFrom = null;
-        Double amount = null;
+        BigDecimal amount = null;
 
         try {
             AccountDAO accountDAO = (AccountDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);

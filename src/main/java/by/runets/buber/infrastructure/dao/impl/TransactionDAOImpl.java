@@ -78,7 +78,7 @@ public class TransactionDAOImpl implements TransactionDAO {
         transaction.setFrom(new Account(resultSet.getInt("from_account")));
         transaction.setTo(new Account(resultSet.getInt("to_account")));
         transaction.setDate(resultSet.getTimestamp("transaction_date"));
-        transaction.setAmount(resultSet.getDouble("amount"));
+        transaction.setAmount(resultSet.getBigDecimal("amount"));
         return transaction;
     }
 
@@ -96,7 +96,7 @@ public class TransactionDAOImpl implements TransactionDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.COMMIT_TO_TRANSACTION_STORY);
             preparedStatement.setInt(1, transaction.getFrom().getId());
             preparedStatement.setInt(2, transaction.getTo().getId());
-            preparedStatement.setDouble(3, transaction.getAmount());
+            preparedStatement.setBigDecimal(3, transaction.getAmount());
             preparedStatement.setTimestamp(4, new java.sql.Timestamp(transaction.getDate().getTime()));
             isCreated = preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
@@ -114,7 +114,7 @@ public class TransactionDAOImpl implements TransactionDAO {
         boolean isUpdated = false;
         try {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.COMMIT_TO_TRANSACTION_STORY);
-            preparedStatement.setDouble(1, transaction.getAmount());
+            preparedStatement.setBigDecimal(1, transaction.getAmount());
             preparedStatement.setTimestamp(2, new java.sql.Timestamp(transaction.getDate().getTime()));
             preparedStatement.setInt(3, transaction.getId());
             isUpdated = preparedStatement.executeUpdate() != 0;
@@ -134,7 +134,7 @@ public class TransactionDAOImpl implements TransactionDAO {
             preparedStatement = proxyConnection.prepareStatement(DatabaseQueryConstant.COMMIT_TO_TRANSACTION_STORY);
             preparedStatement.setInt(1, transaction.getFrom().getId());
             preparedStatement.setInt(2, transaction.getTo().getId());
-            preparedStatement.setDouble(3, transaction.getAmount());
+            preparedStatement.setBigDecimal(3, transaction.getAmount());
             preparedStatement.setTimestamp(4, new java.sql.Timestamp(transaction.getDate().getTime()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

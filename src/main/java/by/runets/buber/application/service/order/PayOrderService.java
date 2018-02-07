@@ -14,13 +14,14 @@ import by.runets.buber.infrastructure.dao.impl.TransactionDAOImpl;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * This class provides method to pay order in DAO.
  */
 public class PayOrderService {
-    public void payOrder(User fromUser, User driver, Double amount, Order order) throws ServiceException {
+    public void payOrder(User fromUser, User driver, BigDecimal amount, Order order) throws ServiceException {
         Account from = fromUser.getAccount();
         Account to = null;
         try {

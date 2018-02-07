@@ -23,7 +23,7 @@ $(document).ready(function() {
         }
     });
 
-    $('[type="date"]').prop('max', function(){
+    $('custom-date').prop('max', function(){
         return new Date().toJSON().split('T')[0];
     });
 });

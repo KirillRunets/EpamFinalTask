@@ -141,3 +141,17 @@ create index u_id_idx
 	on user_m2m_role (u_id)
 ;
 
+CREATE TRIGGER `calculate_passenger_trip_amount` AFTER INSERT ON `order`
+FOR EACH ROW BEGIN
+	DECLARE count INT;
+	SET count = (SELECT COUNT(*) FROM `order` WHERE passenger_id = NEW.passenger_id AND isCompleted=1);
+	UPDATE user SET trip_amount = count WHERE id = new.passenger_id;
+END;
+
+CREATE TRIGGER `calculate_driver_trip_amount` AFTER INSERT ON `order`
+FOR EACH ROW BEGIN
+	DECLARE count INT;
+	SET count = (SELECT COUNT(*) FROM `order` WHERE driver_id = NEW.driver_id AND isCompleted=1);
+	UPDATE user SET trip_amount = count WHERE id = new.driver_id;
+END;
+

@@ -65,11 +65,13 @@
                                 <span class="fa fa-star-o" data-rating="3"></span>
                                 <span class="fa fa-star-o" data-rating="4"></span>
                                 <span class="fa fa-star-o" data-rating="5"></span>
-                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.USER.rating}">
+                                <input type="hidden" name="whatever1" class="rating-value"
+                                       value="${sessionScope.USER.rating}">
                             </div>
                         </td>
                         <td>
-                            <p>${sessionScope.USER.account.accountAmount} <fmt:message key="label.systemСost" bundle="${rb}"/></p>
+                            <p>${sessionScope.USER.account.accountAmount} <fmt:message key="label.systemСost"
+                                                                                       bundle="${rb}"/></p>
                         </td>
                     </tr>
                 </table>
@@ -122,7 +124,8 @@
                                 <span class="fa fa-star-o" data-rating="3"></span>
                                 <span class="fa fa-star-o" data-rating="4"></span>
                                 <span class="fa fa-star-o" data-rating="5"></span>
-                                <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.newOrder.passenger.rating}">
+                                <input type="hidden" name="whatever1" class="rating-value"
+                                       value="${sessionScope.newOrder.passenger.rating}">
                             </div>
                         </td>
                     </tr>
@@ -150,9 +153,12 @@
                         <label class="white"><fmt:message key="label.paid" bundle="${rb}"/></label>
                         <td><input type="checkbox" disabled/></td>
                     </c:if>
+                    <c:if test="${sessionScope.isRated != true}">
+                        <input type="button" class="button-small" id="modal-button"
+                               value="<fmt:message key="label.rate" bundle="${rb}" />"/>
+                    </c:if>
                 </c:if>
             </form>
-            <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
         </div>
     </div>
 </c:if>

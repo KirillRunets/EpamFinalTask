@@ -10,6 +10,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,8 +21,8 @@ public class OrderDAOTest {
     public void testCreateOrder() throws DAOException {
         Order order = new Order();
         order.setDistance(12.5);
-        order.setTripTime(12.5);
-        order.setTripCost(12.5);
+        order.setTripTime((long) 12);
+        order.setTripCost(BigDecimal.valueOf(12.5));
         order.setStartPoint(new Point(1.0, 1.0));
         order.setDestinationPoint(new Point(2.0, 2.0));
         order.setOrderDate(new Date());

@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Queue;
 
@@ -48,10 +49,10 @@ public class CalculateOrderDataCommand implements Command{
         Point departurePoint = RandomGenerator.generatePoint();
         Point destinationPoint = new Point(latitude, longitude);
 
-        Double averageSpeed = RandomGenerator.generateAverageSpeed(trafficEnum);
+        Integer averageSpeed = RandomGenerator.generateAverageSpeed(trafficEnum);
         Double distance = calculateOrderDistanceService.calculateDistance(departurePoint, destinationPoint);
-        Double time = calculateOrderDistanceService.calculateTime(distance, trafficEnum, averageSpeed);
-        Double cost = calculateOrderDistanceService.calculateCost(distance, time);
+        Long time = calculateOrderDistanceService.calculateTime(distance, averageSpeed).longValue();
+        BigDecimal cost = calculateOrderDistanceService.calculateCost(distance, time);
 
         sessionPassenger.setCurrentLocation(departurePoint);
 
@@ -59,9 +60,9 @@ public class CalculateOrderDataCommand implements Command{
             Queue<User> priorityQueue = collectDriversToOrderService.collect(sessionPassenger);
             if (priorityQueue != null){
                 req.getSession().setAttribute(LabelParameter.PRIORITY_DRIVERS_QUEUE_LABEL, priorityQueue);
-                req.getSession().setAttribute(LabelParameter.TRIP_COST_LABEL, distance);
+                req.getSession().setAttribute(LabelParameter.TRIP_DISTANCE_LABEL, distance);
                 req.getSession().setAttribute(LabelParameter.TRIP_TIME_LABEL, time);
-                req.getSession().setAttribute(LabelParameter.TRIP_DISTANCE_LABEL, cost);
+                req.getSession().setAttribute(LabelParameter.TRIP_COST_LABEL, cost);
                 req.getSession().setAttribute(LabelParameter.DESTINATION_POINT, destinationPoint);
                 req.getSession().setAttribute(LabelParameter.AVERAGE_SPEED, averageSpeed);
             }

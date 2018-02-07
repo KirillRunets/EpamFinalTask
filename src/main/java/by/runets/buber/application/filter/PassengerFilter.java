@@ -40,9 +40,8 @@ public class PassengerFilter implements Filter {
                 if (order.isCompleted()){
                     updateUserInDbAndSession(user, order, req);
                     res.sendRedirect(JspPagePath.PASSENGER_HOME_PAGE);
-                }else if (order.getConfirmed()){
-                    res.sendRedirect(JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE);
                 }
+                res.sendRedirect(JspPagePath.FREE_DRIVERS_FOR_PASSENGER_PAGE);
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);

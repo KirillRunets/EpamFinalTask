@@ -7,6 +7,7 @@ import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
 import by.runets.buber.infrastructure.dao.AccountDAO;
 import by.runets.buber.infrastructure.exception.DAOException;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,19 +67,19 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public void transfer(Account fromAccount, Account toAccount, Double payAmount) throws DAOException {
+    public void transfer(Account fromAccount, Account toAccount, BigDecimal payAmount) throws DAOException {
         ProxyConnection proxyConnectionFrom = getProxyConnectionFrom();
         ProxyConnection proxyConnectionTo = getProxyConnectionTo();
 
         PreparedStatement fromAccountStatement = null;
         PreparedStatement toAccountStatement = null;
 
-        double accountFrom = 0.0d;
-        double accountTo = 0.0d;
-        double resultFrom= 0.0d;
-        double resultTo = 0.0d;
+        BigDecimal accountFrom;
+        BigDecimal accountTo;
+        BigDecimal resultFrom;
+        BigDecimal resultTo;
 
-        if (payAmount <= 0){
+        if (payAmount.compareTo(BigDecimal.valueOf(0.0)) < 0){
             throw new DAOException("Invalid pay balance balance");
         }
 
@@ -92,32 +93,33 @@ public class AccountDAOImpl implements AccountDAO {
             ResultSet resultSetTo = toAccountStatement.executeQuery();
 
             if (resultSetFrom.next()){
-                accountFrom = resultSetFrom.getDouble("account_amount");
+                accountFrom = resultSetFrom.getBigDecimal("account_amount");
             } else {
                 throw new DAOException("Account with account_id " + fromAccount.getId() + " not found");
             }
 
-            if (accountFrom >= payAmount){
-                resultFrom = accountFrom - payAmount;
+            if (accountFrom.compareTo(payAmount) >= 0){
+                resultFrom = accountFrom.subtract(payAmount);
             } else {
                 throw new DAOException("Invalid balance");
             }
 
+
             if (resultSetTo.next()){
-                accountTo = resultSetTo.getInt("account_amount");
+                accountTo = resultSetTo.getBigDecimal("account_amount");
             } else {
                 throw new DAOException("Account with account_id " + toAccount.getId() + " not found");
             }
 
-            resultTo = accountTo + payAmount;
+            resultTo = accountTo.add(payAmount);
 
             fromAccountStatement = proxyConnectionFrom.prepareStatement(DatabaseQueryConstant.UPDATE_ACCOUNT);
-            fromAccountStatement.setDouble(1, resultFrom);
+            fromAccountStatement.setBigDecimal(1, resultFrom);
             fromAccountStatement.setInt(2, fromAccount.getId());
             fromAccountStatement.executeUpdate();
 
             fromAccountStatement = proxyConnectionTo.prepareStatement(DatabaseQueryConstant.UPDATE_ACCOUNT);
-            fromAccountStatement.setDouble(1, resultTo);
+            fromAccountStatement.setBigDecimal(1, resultTo);
             fromAccountStatement.setInt(2, toAccount.getId());
             fromAccountStatement.executeUpdate();
 
@@ -154,7 +156,7 @@ public class AccountDAOImpl implements AccountDAO {
             if (resultSet.next()) {
                 account = new Account();
                 account.setId(resultSet.getInt("account_id"));
-                account.setAccountAmount(resultSet.getDouble("account_amount"));
+                account.setAccountAmount(resultSet.getBigDecimal("account_amount"));
             }
         } catch (SQLException e) {
             throw new DAOException("Find account exception: ", e);

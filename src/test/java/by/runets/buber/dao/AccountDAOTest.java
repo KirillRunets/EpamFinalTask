@@ -10,6 +10,7 @@ import by.runets.buber.infrastructure.exception.DAOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class AccountDAOTest {
@@ -17,7 +18,7 @@ public class AccountDAOTest {
     public void testPayOrder() throws DAOException {
         Account fromAccount = new Account(1);
         Account toAccount = new Account(2);
-        Double amount = 100.0;
+        BigDecimal amount = BigDecimal.valueOf(100.0);
         AccountDAO accountDAO = (AccountDAO) DAOFactory.getInstance().createDAO(DAOType.ACCOUNT_DAO_TYPE);
         TransactionDAO transactionDAO = (TransactionDAO) DAOFactory.getInstance().createDAO(DAOType.TRANSACTION_DAO_TYPE);
         accountDAO.transfer(fromAccount, toAccount, amount);

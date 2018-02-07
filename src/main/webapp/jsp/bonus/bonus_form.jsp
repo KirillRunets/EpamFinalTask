@@ -2,11 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="property/ban/ban" var="rb"/>
+<fmt:setBundle basename="property/bonus/bonus" var="rb"/>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title><fmt:message key="label.ban" bundle="${rb}"/></title>
+    <title><fmt:message key="label.bonus_form" bundle="${rb}"/></title>
     <link href="${pageContext.request.contextPath}/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/bootstrap-theme.css"/>
@@ -24,20 +24,17 @@
             <a class="navbar-brand" href="">Buber</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home"
-                                                                                                   bundle="${rb}"/></a>
-            </li>
-            <li class="active"><a href="#"><fmt:message key="label.bonus" bundle="${rb}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/jsp/admin/admin_home.jsp"><fmt:message key="label.home" bundle="${rb}"/></a></li>
+            <li class="active"><a href="#"><fmt:message key="label.bonus_form" bundle="${rb}"/></a></li>
         </ul>
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
-            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
-                    key="label.LogOut" bundle="${rb}"/></button>
+            <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message key="label.logout" bundle="${rb}"/></button>
         </div>
     </div>
 </nav>
 <div class="form" id="ban-form">
-    <h1><fmt:message key="label.bonus" bundle="${rb}"/></h1>
+    <h1><fmt:message key="label.bonus_form" bundle="${rb}"/></h1>
     <c:if test="${empty sessionScope.bonus}">
         <form action="${pageContext.request.contextPath}/controller" method="POST">
             <input type="hidden" name="command" value="create_bonus"/>
@@ -45,7 +42,7 @@
                 <br/>${requestScope.errorLabel}<br/>
             </div>
             <label><fmt:message key="label.bonusType" bundle="${rb}"/></label>
-            <input name="bonusType" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banTypeTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
+            <input name="bonusType" type="text"  required placeholder=<fmt:message key="label.bonusTypePlaceholder" bundle="${rb}"/>>
             <label><fmt:message key="label.bonusDescription" bundle="${rb}"/></label>
             <textarea name="bonusDescription" type="text" placeholder=<fmt:message key="label.bonusDescriptionPlaceholder" bundle="${rb}"/> required></textarea>
             <div class="button-container">
@@ -61,7 +58,7 @@
                 <br/>${requestScope.errorLabel}<br/>
             </div>
             <label><fmt:message key="label.bonusType" bundle="${rb}"/></label>
-            <input name="bonusType" type="text" value="${sessionScope.bonus.bonusType}" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required placeholder=<fmt:message key="label.bonusTypePlaceholder" bundle="${rb}"/>>
+            <input name="bonusType" type="text" value="${sessionScope.bonus.bonusType}" required placeholder=<fmt:message key="label.bonusTypePlaceholder" bundle="${rb}"/>>
             <label><fmt:message key="label.bonusDescription" bundle="${rb}"/></label>
             <textarea name="bonusDescription" type="text" placeholder=<fmt:message key="label.bonusDescriptionPlaceholder" bundle="${rb}"/> required>${sessionScope.bonus.bonusDescription}</textarea>
             <div class="button-container">

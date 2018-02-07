@@ -1,7 +1,9 @@
 package by.runets.buber.domain.entity;
 
+import java.math.BigDecimal;
+
 public class Account extends Entity {
-    private double accountAmount;
+    private BigDecimal accountAmount;
 
     public Account() {
     }
@@ -10,10 +12,10 @@ public class Account extends Entity {
         super(id);
     }
 
-    public double getAccountAmount() {
+    public BigDecimal getAccountAmount() {
         return accountAmount;
     }
-    public void setAccountAmount(double accountAmount) {
+    public void setAccountAmount(BigDecimal accountAmount) {
         this.accountAmount = accountAmount;
     }
 
@@ -25,15 +27,13 @@ public class Account extends Entity {
 
         Account account = (Account) o;
 
-        return Double.compare(account.accountAmount, accountAmount) == 0;
+        return accountAmount != null ? accountAmount.equals(account.accountAmount) : account.accountAmount == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        long temp;
-        temp = Double.doubleToLongBits(accountAmount);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (accountAmount != null ? accountAmount.hashCode() : 0);
         return result;
     }
 

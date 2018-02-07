@@ -32,7 +32,7 @@
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
             <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
-                    key="label.LogOut" bundle="${rb}"/></button>
+                    key="label.logout" bundle="${rb}"/></button>
         </div>
     </div>
 </nav>
@@ -45,7 +45,7 @@
                 <br/>${requestScope.errorLabel}<br/>
             </div>
             <label><fmt:message key="label.banType" bundle="${rb}"/></label>
-            <input name="banType" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banTypeTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
+            <input name="banType" type="text" required title='<fmt:message key="label.banTypeTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
             <label><fmt:message key="label.banDescription" bundle="${rb}"/></label>
 <%--
             <input name="banDescription" type="text" pattern='([A-Z][a-z\s]+)|([А-ЯІЎЁ][а-яіўё\s]+)' required title='<fmt:message key="label.banDescriptionTitle"  bundle="${rb}"/>' placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/>>
@@ -64,7 +64,7 @@
                 <br/>${requestScope.errorLabel}<br/>
             </div>
             <label><fmt:message key="label.banType" bundle="${rb}"/></label>
-            <input name="banType" type="text" value="${sessionScope.ban.banType}" pattern='([A-Z][a-z]+)|([А-ЯІЎЁ][а-яіўё]+)' required placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
+            <input name="banType" type="text" value="${sessionScope.ban.banType}"  required placeholder=<fmt:message key="label.banTypePlaceholder" bundle="${rb}"/>>
             <label><fmt:message key="label.banDescription" bundle="${rb}"/></label>
 <%--
             <input name="banDescription" type="text" value="${sessionScope.ban.banDescription}" pattern='([A-Z][a-z]+)|([А-ЯІЎЁ][а-яіўё]+)' required placeholder=<fmt:message key="label.banDescriptionPlaceholder" bundle="${rb}"/>>

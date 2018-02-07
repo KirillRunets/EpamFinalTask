@@ -5,14 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class DistanceComparator implements Comparator<User> {
-    private User passenger;
-
+    private User passgienger;
     public DistanceComparator(User passenger) {
         this.passenger = passenger;
     }
-
     @Override
     public int compare(User driver1, User driver2) {
         Double distanceBetweenFirstDriverAndPassenger = Math.hypot((driver1.getCurrentLocation().getX() - passenger.getCurrentLocation().getX()), (driver1.getCurrentLocation().getY() - passenger.getCurrentLocation().getY()));

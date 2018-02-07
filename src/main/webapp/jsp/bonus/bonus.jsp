@@ -32,7 +32,7 @@
         <c:import url="${pageContext.request.contextPath}/jsp/change_locale.jsp"/>
         <div class="top-button">
             <button class="button-small" id="aut-btn" onclick="redirectPage('/controller?command=logout')"><fmt:message
-                    key="label.LogOut" bundle="${rb}"/></button>
+                    key="label.logout" bundle="${rb}"/></button>
         </div>
     </div>
 </nav>

@@ -17,8 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * This class provides method to implement login command.
@@ -66,7 +65,6 @@ public class LoginCommand implements Command {
 
 
     private String loadPageByRole(HttpServletRequest request, Optional<User> user) throws ServiceException {
-        Router router = new Router();
         String page = null;
         HttpSession httpSession = request.getSession();
 

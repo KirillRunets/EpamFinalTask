@@ -47,6 +47,7 @@ public class RateUserCommand implements Command {
                 User user = isDriver ? new User(new Integer(passengerId)) : new User(new Integer(driverId));
                 if (ratingStatisticService.calculateAverageRating(new Double(ratingFromAnotherUser), user.getId())){
                     req.getSession().removeAttribute(LabelParameter.COMPLETED);
+                    req.getSession().setAttribute(LabelParameter.IS_RATED, true);
                     page = isDriver ? JspPagePath.DRIVER_HOME_PAGE : JspPagePath.PASSENGER_HOME_PAGE;
                 }
             } catch (ServiceException e) {

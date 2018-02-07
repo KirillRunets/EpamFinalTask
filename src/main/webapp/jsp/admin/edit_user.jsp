@@ -75,10 +75,10 @@
             <label><fmt:message key="label.birthDate" bundle="${rb}"/> </label>
             <c:if test="${not empty sessionScope.user.birthDate}">
                 <fmt:formatDate pattern = "yyyy-MM-dd" value = "${sessionScope.user.birthDate}" var="formated" />
-                <input type="date" name="birthDate"  value="${formated}">
+                <input type="date" class="custom-date" name="birthDate"  value="${formated}">
             </c:if>
             <c:if test="${empty sessionScope.user.birthDate}">
-                <input type="date" name="birthDate" value="<fmt:message key="label.empty"  bundle="${rb}"/>">
+                <input type="date" class="custom-date" name="birthDate" value="<fmt:message key="label.empty"  bundle="${rb}"/>">
             </c:if>
             <label><fmt:message key="label.phoneNumber" bundle="${rb}"/> </label>
             <c:if test="${not empty sessionScope.user.phoneNumber}">

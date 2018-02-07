@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <label><fmt:message key="label.release_date" bundle="${rb}"/> </label>
-                    <input type="date" name="release_date"  value="${sessionScope.car.releaseDate}">
+                    <input type="date" class="custom-date" name="release_date"  value="${sessionScope.car.releaseDate}">
                     <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
                 </form>
             </c:if>

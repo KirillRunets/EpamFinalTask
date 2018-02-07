@@ -16,9 +16,9 @@ public class RandomGenerator {
         return new Point(latitude, longitude);
     }
 
-    public static Double generateAverageSpeed(TrafficEnum trafficEnum){
+    public static int generateAverageSpeed(TrafficEnum trafficEnum){
         Random randomGenerator = new Random();
-        return (double) (trafficEnum == TrafficEnum.CITY
+        return (int) (trafficEnum == TrafficEnum.CITY
                 ? OrderConstant.CITY_AVERAGE_SPEED
                 : OrderConstant.HIGHWAY_AVERAGE_SPEED);
     }

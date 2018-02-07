@@ -1,12 +1,13 @@
 package by.runets.buber.domain.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Optional;
 
 public class Order extends Entity{
     private Double distance;
-    private Double tripCost;
-    private Double tripTime;
+    private BigDecimal tripCost;
+    private Long tripTime;
     private Point startPoint;
     private Point destinationPoint;
     private Date orderDate;
@@ -25,10 +26,10 @@ public class Order extends Entity{
     public void setDistance(Double distance) {
         this.distance = distance;
     }
-    public Double getTripCost() {
+    public BigDecimal getTripCost() {
         return tripCost;
     }
-    public void setTripCost(Double tripCost) {
+    public void setTripCost(BigDecimal tripCost) {
         this.tripCost = tripCost;
     }
     public Point getStartPoint() {
@@ -49,10 +50,10 @@ public class Order extends Entity{
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
-    public Double getTripTime() {
+    public Long getTripTime() {
         return tripTime;
     }
-    public void setTripTime(Double tripTime) {
+    public void setTripTime(Long tripTime) {
         this.tripTime = tripTime;
     }
     public boolean isConfirmed() {

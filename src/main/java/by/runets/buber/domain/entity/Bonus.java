@@ -1,7 +1,5 @@
 package by.runets.buber.domain.entity;
 
-import java.util.Optional;
-
 public class Bonus extends Entity {
     private String bonusType;
     private String bonusDescription;

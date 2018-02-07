@@ -27,4 +27,5 @@ public class LabelParameter {
     public final static String BAN = "ban";
     public final static String BONUS_LIST = "bonusList";
     public final static String BONUS = "bonus";
+    public final static String IS_RATED = "isRated";
 }

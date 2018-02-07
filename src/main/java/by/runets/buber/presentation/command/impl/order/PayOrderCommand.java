@@ -18,6 +18,9 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+
+import static java.math.BigDecimal.ROUND_FLOOR;
 
 /**
  * This class provides method to implement pay order from passenger.
@@ -40,7 +43,7 @@ public class PayOrderCommand implements Command {
         User fromUser = (User) req.getSession().getAttribute(UserRoleType.USER);
         User toUser = order.getDriver();
 
-        Double amount = order.getTripCost();
+        BigDecimal amount = order.getTripCost();
         try {
             if (RequestValidator.getInstance().isValidatePayData(amount)){
                 payOrderService.payOrder(fromUser, toUser, amount, order);

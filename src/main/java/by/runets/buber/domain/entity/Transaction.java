@@ -1,12 +1,13 @@
 package by.runets.buber.domain.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Transaction extends Entity {
     private Account from;
     private Account to;
     private Date date;
-    private Double amount;
+    private BigDecimal amount;
 
     public Transaction() {
     }
@@ -15,7 +16,7 @@ public class Transaction extends Entity {
         super(id);
     }
 
-    public Transaction(Account from, Account to, Date date, Double amount) {
+    public Transaction(Account from, Account to, Date date, BigDecimal amount) {
         this.from = from;
         this.to = to;
         this.date = date;
@@ -40,10 +41,10 @@ public class Transaction extends Entity {
     public void setDate(Date date) {
         this.date = date;
     }
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.math.BigDecimal;
 import java.sql.Driver;
 import java.util.Date;
 import java.util.Optional;
@@ -56,8 +57,8 @@ public class MakeOrderCommand implements Command {
         Order order = new Order();
 
         Double distance = (Double) req.getSession().getAttribute(LabelParameter.TRIP_DISTANCE_LABEL);
-        Double time = (Double) req.getSession().getAttribute(LabelParameter.TRIP_TIME_LABEL);
-        Double cost = (Double) req.getSession().getAttribute(LabelParameter.TRIP_COST_LABEL);
+        Long time = (Long) req.getSession().getAttribute(LabelParameter.TRIP_TIME_LABEL);
+        BigDecimal cost = (BigDecimal) req.getSession().getAttribute(LabelParameter.TRIP_COST_LABEL);
         Point destinationPoint = (Point) req.getSession().getAttribute(LabelParameter.DESTINATION_POINT);
         String driverId = req.getParameter(RequestParameter.DRIVER_ID);
 

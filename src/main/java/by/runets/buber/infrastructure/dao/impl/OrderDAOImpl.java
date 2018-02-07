@@ -110,7 +110,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     private void setOrderInsertPrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setDouble(1, order.getDistance());
-        preparedStatement.setDouble(2, order.getTripCost());
+        preparedStatement.setBigDecimal(2, order.getTripCost());
         preparedStatement.setString(3, order.getStartPoint().toString());
         preparedStatement.setString(4, order.getDestinationPoint().toString());
         preparedStatement.setTimestamp(5, new Timestamp(order.getOrderDate().getTime()));
@@ -138,7 +138,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     private void setOrderUpdatePrepareStatement(Order order, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setDouble(1, order.getDistance());
-        preparedStatement.setDouble(2, order.getTripCost());
+        preparedStatement.setBigDecimal(2, order.getTripCost());
         preparedStatement.setString(3, order.getStartPoint().toString());
         preparedStatement.setString(4, order.getDestinationPoint().toString());
         preparedStatement.setTimestamp(5, new Timestamp(order.getOrderDate().getTime()));
@@ -154,7 +154,7 @@ public class OrderDAOImpl implements OrderDAO {
 
         order.setId(resultSet.getInt("t_id"));
         order.setDistance(resultSet.getDouble("distance"));
-        order.setTripCost(resultSet.getDouble("trip_cost"));
+        order.setTripCost(resultSet.getBigDecimal("trip_cost"));
         coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
@@ -174,7 +174,7 @@ public class OrderDAOImpl implements OrderDAO {
 
         order.setId(resultSet.getInt("t_id"));
         order.setDistance(resultSet.getDouble("distance"));
-        order.setTripCost(resultSet.getDouble("trip_cost"));
+        order.setTripCost(resultSet.getBigDecimal("trip_cost"));
         coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));
@@ -202,7 +202,7 @@ public class OrderDAOImpl implements OrderDAO {
 
         order.setId(resultSet.getInt("t_id"));
         order.setDistance(resultSet.getDouble("distance"));
-        order.setTripCost(resultSet.getDouble("trip_cost"));
+        order.setTripCost(resultSet.getBigDecimal("trip_cost"));
         coordinates = LocationParser.parseLocation(resultSet.getString("departure_point"));
         order.setStartPoint(new Point(coordinates.get(0), coordinates.get(1)));
         coordinates = LocationParser.parseLocation(resultSet.getString("destination_point"));

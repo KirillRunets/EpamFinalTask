@@ -3,6 +3,7 @@ package by.runets.buber.application.validation;
 
 import by.runets.buber.infrastructure.constant.ValidationConstant;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,8 +74,8 @@ public class RequestValidator {
         return isStringEqualsPattern(driverId, ValidationConstant.INTEGER_NUMBER_PATTERN);
     }
 
-    public boolean isValidatePayData(Double amount){
-        return amount != null && amount > 0;
+    public boolean isValidatePayData(BigDecimal amount){
+        return amount != null && amount.compareTo(BigDecimal.valueOf(0.0)) != 0;
     }
 
     public boolean isValidateBonusData(String bonusId){

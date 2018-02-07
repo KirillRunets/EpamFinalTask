@@ -7,9 +7,6 @@ import by.runets.buber.infrastructure.dao.factory.DAOFactory;
 import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Stream;
 
@@ -20,6 +17,7 @@ public class RatingStatisticService {
     public boolean calculateAverageRating(Double ratingFromAnotherUser, Integer id) throws ServiceException {
         Double averageRating = 0.0;
         Double currentUserRating = 0.0;
+        Integer tripAmount = 0;
         boolean isUpdated = false;
 
         try {
@@ -27,7 +25,8 @@ public class RatingStatisticService {
             User user = userDAO.find(id);
 
             currentUserRating = user.getRating();
-            averageRating = calculateAverageRating(ratingFromAnotherUser, currentUserRating);
+            tripAmount = user.getTripAmount();
+            averageRating = calculateAverageRating(ratingFromAnotherUser, currentUserRating, tripAmount);
 
             isUpdated = userDAO.updateUserRating(id, averageRating);
         } catch (DAOException e) {
@@ -36,10 +35,11 @@ public class RatingStatisticService {
         return isUpdated;
     }
 
-    private Double calculateAverageRating(Double ratingFromAnotherUser, Double currentUserRating){
+    private Double calculateAverageRating(Double ratingFromAnotherUser, Double currentUserRating, int tripAmount){
         OptionalDouble optional = Stream.of(ratingFromAnotherUser, currentUserRating)
                 .mapToDouble(p -> p)
                 .average();
-        return optional.isPresent() ? optional.getAsDouble() : 0.0;
+        Double average = optional.getAsDouble();
+        return average + tripAmount / 100;
     }
 }
