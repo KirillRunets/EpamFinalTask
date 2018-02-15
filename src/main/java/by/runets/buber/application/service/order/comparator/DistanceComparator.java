@@ -8,14 +8,15 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class DistanceComparator implements Comparator<User> {
-    private User passgienger;
+    private User passenger;
     public DistanceComparator(User passenger) {
         this.passenger = passenger;
     }
+
     @Override
     public int compare(User driver1, User driver2) {
-        Double distanceBetweenFirstDriverAndPassenger = Math.hypot((driver1.getCurrentLocation().getX() - passenger.getCurrentLocation().getX()), (driver1.getCurrentLocation().getY() - passenger.getCurrentLocation().getY()));
-        Double distanceBetweenSecondDriverAndPassenger = Math.hypot((driver2.getCurrentLocation().getX() - passenger.getCurrentLocation().getX()), (driver2.getCurrentLocation().getY() - passenger.getCurrentLocation().getY()));
+        Double distanceBetweenFirstDriverAndPassenger = Math.hypot((driver1.getCurrentLocation().getLatitude() - passenger.getCurrentLocation().getLatitude()), (driver1.getCurrentLocation().getLongitude() - passenger.getCurrentLocation().getLongitude()));
+        Double distanceBetweenSecondDriverAndPassenger = Math.hypot((driver2.getCurrentLocation().getLatitude() - passenger.getCurrentLocation().getLatitude()), (driver2.getCurrentLocation().getLongitude() - passenger.getCurrentLocation().getLongitude()));
 
         if (distanceBetweenFirstDriverAndPassenger < distanceBetweenSecondDriverAndPassenger){
             return -1;

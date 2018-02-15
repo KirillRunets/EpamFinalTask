@@ -2,6 +2,7 @@ package by.runets.buber.infrastructure.constant;
 
 public class LabelParameter {
     public final static String ERROR_LABEL = "errorLabel";
+    public final static String ERROR_LABEL_MESSAGE = "errorLabelMessage";
     public final static String EMAIL = "email";
     public final static String PASSWORD = "password";
     public final static String USER_LIST_LABEL = "userList";

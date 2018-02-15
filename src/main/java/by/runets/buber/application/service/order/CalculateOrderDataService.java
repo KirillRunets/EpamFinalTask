@@ -14,17 +14,8 @@ import java.util.concurrent.TimeUnit;
  * This class provides method to calculate order data.
  */
 public class CalculateOrderDataService {
-    private final static Logger LOGGER = LogManager.getLogger(CalculateOrderDataService.class);
-    public Double calculateDistance(Point departurePoint, Point destinationPoint){
-        Double distance = Math.hypot((destinationPoint.getX() - departurePoint.getX()), (destinationPoint.getY() - departurePoint.getY()));
-        return Math.abs(distance);
-    }
-
-    public Double calculateTime(Double distance, Integer averageSpeed){
-        return distance / averageSpeed * 60;
-    }
-
     public BigDecimal calculateCost(Double distance, Long time){
-        return BigDecimal.valueOf(OrderConstant.CYLOMETER_PRICE * distance + OrderConstant.MINUTE_PRICE * time / 60);
+        Long minute = (time % 3600) / 60;
+        return BigDecimal.valueOf(OrderConstant.CYLOMETER_PRICE * distance + OrderConstant.MINUTE_PRICE * minute);
     }
 }

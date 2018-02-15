@@ -1,31 +1,32 @@
 package by.runets.buber.domain.entity;
 
 public class Point {
-    private double x;
-    private double y;
+    private double latitude;
+    private double longitude;
 
     public Point() {
     }
 
     public Point(Double x, Double y) {
-        this.x = x;
-        this.y = y;
+        this.latitude = x;
+        this.longitude = y;
     }
 
-    public Double getX() {
-        return x;
+
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setX(Double x) {
-        this.x = x;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public Double getY() {
-        return y;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setY(Double y) {
-        this.y = y;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @Override
@@ -35,23 +36,23 @@ public class Point {
 
         Point point = (Point) o;
 
-        if (Double.compare(point.x, x) != 0) return false;
-        return Double.compare(point.y, y) == 0;
+        if (Double.compare(point.latitude, latitude) != 0) return false;
+        return Double.compare(point.longitude, longitude) == 0;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        temp = Double.doubleToLongBits(x);
+        temp = Double.doubleToLongBits(latitude);
         result = (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(y);
+        temp = Double.doubleToLongBits(longitude);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
-        return x + " " + y;
+        return latitude + " " + longitude;
     }
 }

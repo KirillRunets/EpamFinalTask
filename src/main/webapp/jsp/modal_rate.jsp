@@ -22,7 +22,9 @@
             <span class="fa fa-star-o" data-rating="5"></span>
             <input type="hidden" name="whatever1" class="rating-value" value="${sessionScope.newOrder.passenger.rating}">
         </div>
-        <button type="submit" onclick="setValue()" class="button-small"><fmt:message key="label.rate" bundle="${rb}"/></button>
+        <div class="button-container">
+            <button type="submit" onclick="setValue()" class="button-small"><fmt:message key="label.rate" bundle="${rb}"/></button>
+        </div>
     </form>
 </body>
 </html>

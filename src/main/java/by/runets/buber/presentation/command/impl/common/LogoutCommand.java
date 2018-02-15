@@ -1,4 +1,4 @@
-package by.runets.buber.presentation.command.impl;
+package by.runets.buber.presentation.command.impl.common;
 
 import by.runets.buber.infrastructure.constant.JspPagePath;
 import by.runets.buber.infrastructure.constant.RequestParameter;

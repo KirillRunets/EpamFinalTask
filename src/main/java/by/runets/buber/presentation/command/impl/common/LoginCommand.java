@@ -1,4 +1,4 @@
-package by.runets.buber.presentation.command.impl;
+package by.runets.buber.presentation.command.impl.common;
 
 import by.runets.buber.application.service.statistic.OrderStatisticService;
 import by.runets.buber.application.service.user.LoginUserService;

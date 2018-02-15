@@ -7,14 +7,12 @@ import by.runets.buber.infrastructure.connection.ConnectionPool;
 import by.runets.buber.infrastructure.connection.ProxyConnection;
 import by.runets.buber.infrastructure.dao.AbstractDAO;
 import by.runets.buber.infrastructure.constant.DatabaseQueryConstant;
-import by.runets.buber.infrastructure.dao.parser.LocationParser;
-import by.runets.buber.infrastructure.exception.ConnectionException;
+import by.runets.buber.infrastructure.parser.LocationParser;
 import by.runets.buber.infrastructure.exception.DAOException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Provide methods to work with car table.

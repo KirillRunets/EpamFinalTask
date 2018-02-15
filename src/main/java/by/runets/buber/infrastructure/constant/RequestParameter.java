@@ -45,5 +45,9 @@ public class RequestParameter {
     public final static String BONUS_TYPE = "bonusType";
     public final static String BONUS_DESCRIPTION = "bonusDescription";
     public final static String BONUS_ID = "bonus_id";
+    public final static String DURATION = "duration";
+    public final static String DISTANCE = "distance";
+    public final static String DEPARTURE_POINT = "departure";
+    public final static String DESTINATION_POINT = "destination";
 
 }

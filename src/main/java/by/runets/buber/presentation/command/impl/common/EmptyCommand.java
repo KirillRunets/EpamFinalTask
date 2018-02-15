@@ -1,4 +1,4 @@
-package by.runets.buber.presentation.command.impl;
+package by.runets.buber.presentation.command.impl.common;
 
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;

@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <label><fmt:message key="label.release_date" bundle="${rb}"/> </label>
-                    <input type="date" name="release_date">
+                    <input type="date" class="custom-date" name="release_date">
                     <button type="submit" class="button button-block"><fmt:message key="label.submit" bundle="${rb}"/></button>
                 </form>
             </c:if>
@@ -82,5 +82,6 @@
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/bootstrap/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/js/load.js"></script>
 </body>
 </html>

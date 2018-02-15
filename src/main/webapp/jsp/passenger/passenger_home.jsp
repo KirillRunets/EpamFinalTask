@@ -72,7 +72,10 @@
                             <p>${sessionScope.USER.account.accountAmount}</p>
                         </td>
                         <td>
-                            <button class="button button-small" id="modal-button"><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                            <form action="${pageContext.request.contextPath}/controller" method="POST">
+                                <input type="hidden" name="command" value="load_map">
+                                <button class="button button-small" ><fmt:message key="label.makeOrder" bundle="${rb}"/></button>
+                            </form>
                         </td>
                     </tr>
                 </table>
@@ -115,20 +118,20 @@
         </div>
     </div>
 </c:if>
-<div id="myModal" class="modal">
+<%--<div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <c:import url="${pageContext.request.contextPath}/jsp/passenger/location_modal.jsp"/>
+        <c:import url="map.jsp" />
     </div>
-</div>
+</div>--%>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
+
 <script src="${pageContext.request.contextPath}/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/jquery-easing/jquery.easing.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/chart/Chart.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/sb-admin.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/chart.js"></script>
 <script src="${pageContext.request.contextPath}/js/load.js"></script>
-<script src="${pageContext.request.contextPath}/js/modal.js"></script>
 <script src="${pageContext.request.contextPath}/js/rating.js"></script>
+<script src="${pageContext.request.contextPath}/js/chart.js"></script>
 </body>
 </html>

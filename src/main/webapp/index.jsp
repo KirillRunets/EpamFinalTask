@@ -10,6 +10,5 @@
 </head>
 <body class="main-body">
     <c:redirect url = "jsp/main.jsp"/>
-    <%--<jsp: page="jsp/main.jsp"/>--%>
 </body>
 </html>

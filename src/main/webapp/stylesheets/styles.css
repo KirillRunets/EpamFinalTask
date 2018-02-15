@@ -261,6 +261,10 @@ body{
     margin: 50px auto;
 }
 
+.section-wrapper{
+    margin-top: 40px;
+}
+
 p[id="email"]{
     color: #179b77;
 }
@@ -532,7 +536,7 @@ p[id="email"]{
 
 .modal-content {
     background: rgb(19, 35, 47);
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 100%; /* Could be more or less, depending on screen size */

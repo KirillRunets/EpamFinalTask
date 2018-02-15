@@ -12,10 +12,10 @@ import by.runets.buber.application.service.statistic.RatingStatisticService;
 import by.runets.buber.application.service.transaction.ReadTransactionService;
 import by.runets.buber.application.service.transaction.RollbackTransactionService;
 import by.runets.buber.application.service.user.*;
-import by.runets.buber.presentation.command.impl.*;
 import by.runets.buber.presentation.command.impl.ban.*;
 import by.runets.buber.presentation.command.impl.bonus.*;
 import by.runets.buber.presentation.command.impl.car.*;
+import by.runets.buber.presentation.command.impl.common.*;
 import by.runets.buber.presentation.command.impl.load.*;
 import by.runets.buber.presentation.command.impl.order.*;
 import by.runets.buber.presentation.command.impl.transaction.RollbackTransactionCommand;
@@ -56,7 +56,7 @@ public enum CommandType {
     ADD_CAR(new CreateCarCommand(new CreateCarService())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ChangePasswordService())),
     MAKE_ORDER(new MakeOrderCommand(new MakeOrderService())),
-    CALCULATE_ORDER_DATA(new CalculateOrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
+    ORDER_DATA(new OrderDataCommand(new CalculateOrderDataService(), new CollectDriversToOrderService())),
     CONFIRM_ORDER(new ConfirmOrderCommand(new ConfirmOrderService())),
     REVOKE_ORDER(new RevokeOrderCommand(new RevokeOrderService())),
     COMPLETE_ORDER(new CompleteOrderCommand(new CompleteOrderService())),
@@ -69,7 +69,8 @@ public enum CommandType {
     DELETE_BONUS(new DeleteBonusCommand(new DeleteBonusService())),
     UPDATE_BONUS(new UpdateBonusCommand(new UpdateBonusService())),
     SHOW_BONUS(new ReadBonusCommand(new ReadBonusService())),
-    SET_BONUS(new SetBonusCommand(new SetBonusService()));
+    SET_BONUS(new SetBonusCommand(new SetBonusService())),
+    LOAD_MAP(new LoadMapCommand());
 
     private Command command;
 

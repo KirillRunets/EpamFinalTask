@@ -23,18 +23,4 @@ public class PasswordEncrypt {
         }
         return md5;
     }
-
-    public static boolean decodePassword(String encryptedPassword, String password){
-        String md5 = null;
-        try{
-            MessageDigest md = MessageDigest.getInstance(ENCRYPTOR);
-            md.update(password.getBytes());
-            byte[] digest = md.digest();
-            md5 = new BigInteger(1, digest).toString(16);
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.fatal(e);
-            throw new RuntimeException(e);
-        }
-        return md5.equals(encryptedPassword);
-    }
 }

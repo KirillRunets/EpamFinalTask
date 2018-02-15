@@ -26,9 +26,6 @@
                         <a href="#"><i class="fa fa-globe fa-lg"></i> <fmt:message key="label.orders" bundle="${rb}"/></a>
                     </a>
                 </li>
-                <li>
-                    <a><i class="fa fa-gift fa-lg"></i> <fmt:message key="label.rewards" bundle="${rb}"/></a>
-                </li>
             </ul>
         </div>
     </div>

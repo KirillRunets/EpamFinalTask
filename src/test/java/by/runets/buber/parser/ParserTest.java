@@ -1,6 +1,6 @@
 package by.runets.buber.parser;
 
-import by.runets.buber.infrastructure.dao.parser.LocationParser;
+import by.runets.buber.infrastructure.parser.LocationParser;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

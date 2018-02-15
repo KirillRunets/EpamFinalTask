@@ -32,10 +32,6 @@ public enum LocaleFileManager {
     }
 
     public String getProperty(String key) {
-        String result = null;
-        if (key != null){
-
-        }
         return resourceBundle.getString(key);
     }
 }

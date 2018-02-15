@@ -40,14 +40,14 @@ public class ChangePasswordCommand implements Command {
                 if (changePasswordService.change(oldPassword, newPassword, new Integer(userId))){
                     page = switchPageByUser(req);
                 } else {
-                    req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CHANGE_PASSWORD_ERROR_LABEL));
+                    req.setAttribute(LabelParameter.ERROR_LABEL_MESSAGE, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CHANGE_PASSWORD_ERROR_LABEL));
                     page = switchPageByUser(req);
                 }
             } catch (ServiceException e) {
                 LOGGER.error(e);
             }
         } else {
-            req.setAttribute(LabelParameter.ERROR_LABEL, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CHANGE_PASSWORD_ERROR_LABEL));
+            req.setAttribute(LabelParameter.ERROR_LABEL_MESSAGE, LocaleFileManager.getLocale(locale).getProperty(PropertyKey.CHANGE_PASSWORD_ERROR_LABEL));
             page = switchPageByUser(req);
         }
 

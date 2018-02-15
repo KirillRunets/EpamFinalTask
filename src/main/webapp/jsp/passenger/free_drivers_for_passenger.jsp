@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/stylesheets/loader.css">
 </head>
 <body class="custom-body">
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -77,8 +78,8 @@
                     <tbody>
                     <tr class="line" id="${sessionScope.newOrder.id}">
                         <td><fmt:formatDate value="${sessionScope.newOrder.orderDate}" /></td>
-                        <td>${sessionScope.newOrder.tripCost}</td>
-                        <td>${sessionScope.newOrder.distance}</td>
+                        <td>${sessionScope.newOrder.tripCost} <fmt:message key="label.systemСost" bundle="${rb}"/></td>
+                        <td>${sessionScope.newOrder.distance} <fmt:message key="label.systemDistance" bundle="${rb}"/></td>
                         <td>${sessionScope.newOrder.startPoint}</td>
                         <td>${sessionScope.newOrder.destinationPoint}</td>
                         <td>${sessionScope.newOrder.passenger.firstName}</td>
@@ -98,11 +99,14 @@
                     </tbody>
                 </table>
                 <input type="hidden" name="command" value="pay_order">
-                <button class="button-small" type="submit"><fmt:message key="label.payOrder" bundle="${rb}" /></button>
+                <div class="button-container">
+                    <button class="button-small" type="submit"><fmt:message key="label.payOrder" bundle="${rb}" /></button>
+                <c:if test="${sessionScope.isRated != true}">
+                    <input type="button" class="button-small" id="modal-button" value="<fmt:message key="label.rate" bundle="${rb}" />"/>
+                </c:if>
+                </div>
             </form>
-            <c:if test="${sessionScope.isRated != true}">
-                <button class="button-small"  id="modal-button"><fmt:message key="label.rate" bundle="${rb}" /></button>
-            </c:if>
+
         </div>
     </div>
 </c:if>
@@ -130,13 +134,10 @@
                             <th><fmt:message key="label.distance" bundle="${rb}"/></th>
                             <th><fmt:message key="label.time" bundle="${rb}"/></th>
                             <th><fmt:message key="label.tripCost" bundle="${rb}"/></th>
-                            <th><fmt:message key="label.averageSpeed" bundle="${rb}"/></th>
                             <th><fmt:message key="label.currentLocation" bundle="${rb}"/></th>
                         </tr>
                         <fmt:formatNumber var="distance" value="${sessionScope.tripDistance}" maxFractionDigits="0"/>
                         <fmt:formatNumber var="time" value="${sessionScope.tripTime}" maxFractionDigits="0"/>
-                        <fmt:formatNumber var="cost" value="${sessionScope.tripCost}" maxFractionDigits="0"/>
-                        <fmt:formatNumber var="averageSpeed" value="${sessionScope.averageSpeed}" maxFractionDigits="0"/>
                         <tr>
                             <td>
                                 <p><number:numberFormatterTag format="##.00" number="${distance}"/> <fmt:message key="label.systemDistance" bundle="${rb}"/> </p>
@@ -145,10 +146,7 @@
                                 <p>${time} <fmt:message key="label.systemTime" bundle="${rb}"/></p>
                             </td>
                             <td>
-                                <p><number:numberFormatterTag format="###.00" number="${cost}"/> <fmt:message key="label.systemСost" bundle="${rb}"/></p>
-                            </td>
-                            <td>
-                                <p>${averageSpeed} <fmt:message key="label.systemSpeed" bundle="${rb}"/></p>
+                                <p>${sessionScope.tripCost} <fmt:message key="label.systemСost" bundle="${rb}"/></p>
                             </td>
                             <td>
                                 <p>${sessionScope.USER.currentLocation}</p>

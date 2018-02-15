@@ -1,14 +1,12 @@
-package by.runets.buber.presentation.command.impl;
+package by.runets.buber.presentation.command.impl.common;
 
 import by.runets.buber.application.service.user.RegisterUserService;
 import by.runets.buber.application.validation.RequestValidator;
 import by.runets.buber.domain.entity.Role;
 import by.runets.buber.domain.entity.User;
 import by.runets.buber.infrastructure.constant.*;
-import by.runets.buber.infrastructure.exception.DAOException;
 import by.runets.buber.infrastructure.exception.ServiceException;
 import by.runets.buber.infrastructure.util.LocaleFileManager;
-import by.runets.buber.infrastructure.util.PasswordEncrypt;
 import by.runets.buber.presentation.command.Command;
 import by.runets.buber.presentation.controller.Router;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 public class SignUpCommand implements Command {
     private final static Logger LOGGER = LogManager.getLogger(SignUpCommand.class);
     private RegisterUserService userService;
-
     public SignUpCommand(RegisterUserService createUserService) {
         userService = createUserService;
     }

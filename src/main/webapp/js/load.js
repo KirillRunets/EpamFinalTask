@@ -128,12 +128,29 @@ function loadCommand(type) {
             document.getElementById('user_command_id').value = type;
             document.getElementById('user_id').value = selectedRowId;
             break;
+        case 'map':
+            console.log('map');
+            document.getElementById('user_command_id').value = 'load_map';
+            break;
     }
 
 }
 
 function submitForm(id) {
     document.getElementById(id).submit();
+}
+
+function go(id) {
+    var distance = document.getElementById('distance_id').value;
+    var duration = document.getElementById('duration_id').value;
+    var departure = document.getElementById('departure_id').value;
+    var destination = document.getElementById('destination_id').value;
+
+    if (distance && duration && departure && destination){
+        document.getElementById(id).submit();
+    } else {
+        alert("Please, fill search box");
+    }
 }
 
 function setCarFormData() {

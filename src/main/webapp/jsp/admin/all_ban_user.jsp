@@ -115,7 +115,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <c:import url="${pageContext.request.contextPath}/jsp/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
